@@ -11,7 +11,7 @@
    <dt>商家管理中心</dt>
    <dd><a href="authenticate.html">我要开店</a></dd>
    <dd><a href="setting.html">店铺设置</a></dd>
-   <dd><a href="seller_product_list.html">商品列表</a></dd>z 
+   <dd><a href="seller_product_list.html">商品列表</a></dd>
    <dd><a href="seller_order_list.html">订单列表</a></dd>
    <dd><a href="offer_list.html">询价单</a></dd>
   </dl>
