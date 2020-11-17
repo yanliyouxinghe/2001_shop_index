@@ -13,4 +13,7 @@ class LoginController extends Controller
     public function reg(){
         return view('login.reg');
     }
+    public function regdo(){
+        
+    }
 }
