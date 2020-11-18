@@ -126,12 +126,12 @@ class LoginController extends Controller
     }
     //执行登录
     public function logindo(Request $request){
-          $data=request()->data['user_plone'];
+          $data=$request->user_plone;
           dd($data);
-          $data=json_encode($data,true);
+        //   $data=json_encode($data,true);
            
-          $user_plone=request()->$data['user_plone'];
-          dd($user_plone);
+        //   $user_plone=request()->$data['user_plone'];
+        //   dd($user_plone);
         // $user_plone = $request->post('user_plone');
         
         // $user_pwd = $request->post('user_pwd');
