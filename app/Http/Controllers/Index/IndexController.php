@@ -11,6 +11,7 @@ class IndexController extends Controller
 {
     /** 前台首页 */
     public function index(){
+<<<<<<< HEAD
         //首页菜单栏
         $url = "http://2001.shop.api.com/cartgory";
         $cartgoryInfo = geturl($url);
@@ -22,6 +23,13 @@ class IndexController extends Controller
          $url = "http://2001.shop.api.com/goodsInfo";
          $goodsInfo= geturl($url);
         return view('index.index',['cartgoryInfo'=>$cartgoryInfo,'slideshow'=>$slideshow,'goodsInfo'=>$goodsInfo['data']]);
+=======
+       
+        //轮播图展示
+        $slideshow = GoodsModel::getslicedata();
+        //dd($slideshow);
+        return view('index.index',['slideshow'=>$slideshow]);
+>>>>>>> 1ca118c4ff1552266e33b04ae55593ce241a5a7b
     }
 
 

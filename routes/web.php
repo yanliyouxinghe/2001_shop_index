@@ -11,11 +11,20 @@
 |
 */
 
+Route::middleware(['header'])->group(function () {
+
+
+<<<<<<< HEAD
+Route::get('/','Index\IndexController@index');  //前台首页
+=======
 
 Route::get('/','Index\IndexController@index');  //前台首页
+
+>>>>>>> 1ca118c4ff1552266e33b04ae55593ce241a5a7b
 Route::any('/goodsinfo','Index\GoodsController@goodsinfo');//详情
 Route::get('/reg','Index\LoginController@reg');//注册
 Route::get('/ser','Index\UserController@ser');//个人中心
 Route::get('/cart','Index\CartController@cart');//头部购物车或购物车列表
 Route::get('/favo','Index\FavoController@favo');//收藏
 Route::post('/logdo','Index\LoginController@logindo');//登录
+});

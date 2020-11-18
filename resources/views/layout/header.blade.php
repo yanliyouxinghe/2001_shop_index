@@ -11,7 +11,7 @@
    <!--topRightNav-->
     <ul class="topRtNav">
      <li><a href="{{url('/ser')}}">个人中心</a></li>
-     <li><a href="{{url('cart')}}" class="cartIcon">购物车<i>0</i></a></li>
+     <li><a href="{{url('/cart')}}" class="cartIcon">购物车<i>{{request()->count_cart['data']}}</i></a></li>
      <li><a href="{{'favo'}}" class="favorIcon">收藏夹</a></li>
      <li><a href="{{url('/ser')}}">商家中心</a></li>
      <li><a href="union_login.html">联盟管理</a></li>
@@ -46,12 +46,13 @@
    </div>
   </div>
   <!--nav-->
+  
   <nav>
     <ul class="wrap navList">
      <li class="category">
       <a>全部产品分类</a>
       <dl class="asideNav indexAsideNav">
-      @foreach($cartgoryInfo as $v)
+      @foreach(request()->cartgoryInfo as $v)
       <dt><a href="{{url('list/'.$v['cat_id'])}}">{{$v['cat_name']}}</a></dt>
         <dd>
           @foreach($v['child'] as $vv)

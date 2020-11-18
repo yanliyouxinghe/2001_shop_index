@@ -11,3 +11,8 @@ class FavoController extends Controller
         return view('favo.favo');
     }
 }
+
+
+
+
+
