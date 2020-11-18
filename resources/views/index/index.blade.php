@@ -61,13 +61,8 @@ $(document).ready(function(){
       <div class="swiper-wrapper">
         @foreach($slideshow as $k=>$v)
         <div class="swiper-slide">
-<<<<<<< HEAD
-         <a href="/goods/{{$v->goods_id}}">
-          <img src="{{$v->goods_img}}"/>
-=======
-         <a href="{{url('/goods/'.$v['goods_id'])}}">
+         <a href="/goods/{{$v['goods_id']}}">
           <img src="{{$v['goods_img']}}"/>
->>>>>>> c2d097f56e411e64a23a02ff9bd092bc43139808
          </a>
         </div>
         @endforeach
@@ -90,67 +85,19 @@ $(document).ready(function(){
       <strong>猜你喜欢</strong>
       <a href="shop_list.html" class="fr">更多</a>
      </dt>
-<<<<<<< HEAD
 
     
-=======
-<<<<<<< HEAD
     @foreach($goodsInfo['goodslove'] as $v)
-=======
- 
-     
->>>>>>> c2d097f56e411e64a23a02ff9bd092bc43139808
-     <dd>
-      <a href="shop.html">
-       <img src="static/upload/002.jpg"/>
-       <h2>DM精品女装</h2>
-      </a>
-     </dd>
-     <dd>
-      <a href="shop.html">
-       <img src="static/upload/003.jpg"/>
-       <h2>DM精品女装</h2>
-      </a>
-     </dd>
-     <dd>
-      <a href="shop.html">
-       <img src="static/upload/004.jpg"/>
-       <h2>DM精品女装</h2>
-      </a>
-     </dd>
-     <dd>
-      <a href="shop.html">
-       <img src="static/upload/005.jpg"/>
-       <h2>DM精品女装</h2>
-      </a>
-     </dd>
-     <dd>
-      <a href="shop.html">
-       <img src="static/upload/006.jpg"/>
-       <h2>DM精品女装</h2>
-      </a>
-     </dd>
->>>>>>> 1ca118c4ff1552266e33b04ae55593ce241a5a7b
+
      <dd>
       <a href="shop.html">
       <img src="{{$v['goods_img']}}"/>
        <h2>{{$v['goods_name']}}</h2>
       </a>
      </dd>
-<<<<<<< HEAD
      @endforeach
    
-=======
-     <dd>
-      <a href="shop.html">
-       <img src="static/upload/008.jpg"/>
-       <h2>DM精品女装</h2>
-      </a>
-     </dd>
-<<<<<<< HEAD
-=======
->>>>>>> 1ca118c4ff1552266e33b04ae55593ce241a5a7b
->>>>>>> c2d097f56e411e64a23a02ff9bd092bc43139808
+  
     </dl>
  </div>
  <!--asdCont-->

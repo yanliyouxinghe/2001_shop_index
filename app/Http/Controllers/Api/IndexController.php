@@ -13,21 +13,19 @@ class IndexController extends Controller
     public function cartgory(){
         $cartgoryInfo = CartgoryModel::get();
         $category = infinite($cartgoryInfo);
-        $reposer = [
-            'code'=>0,
-            'msg'=>'OK',
-        ];
         return json_encode($category);
     }    
 
     /**首页商品表中轮播图数据 */
     public function slideshow(){
         $slideshow = GoodsModel::getslicedata();
+
         $reposer = [
             'code'=>0,
             'msg'=>'OK',
+            'data'=> $slideshow
         ];
-        return json_encode($slideshow);
+        return json_encode($reposer);
     }
 
     /**首页商品数据数据 */
