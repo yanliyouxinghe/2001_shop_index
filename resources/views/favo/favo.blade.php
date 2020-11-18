@@ -39,7 +39,13 @@ $(document).ready(function(){
 </head>
 <body>
 <!--header-->
-@include('layout.header')
+
+ 
+   <!--topLeftNav-->
+   @include('layout.header')
+   <!--topRightNav-->
+ 
+
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑
