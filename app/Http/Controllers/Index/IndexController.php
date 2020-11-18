@@ -37,13 +37,11 @@ class IndexController extends Controller
 
     /** 前台首页 */
     public function index(){
-        //首页菜单栏
-        $data = CartgoryModel::get();
-        $cartgoryInfo = infinite($data);
+       
         //轮播图展示
         $slideshow = GoodsModel::getslicedata();
         //dd($slideshow);
-        return view('index.index',['cartgoryInfo'=>$cartgoryInfo,'slideshow'=>$slideshow]);
+        return view('index.index',['slideshow'=>$slideshow]);
     }
 
 

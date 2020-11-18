@@ -25,6 +25,9 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::any('/','Api\IndexController@index');   //前台首页
     Route::any('goods','Api\GoodsController@goods');//详情
     Route::post('logindo','Api\LoginController@logindo');//执行登录
+    Route::get('cart','Api\CartController@cartdata'); //购物车列表数据
+    Route::get('cart_count','Api\CartController@cart_count'); //购物车数据条数
+
 
 });
 
