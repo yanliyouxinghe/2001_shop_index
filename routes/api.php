@@ -21,5 +21,8 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::get('sendSMS','Api\LoginController@sendSMS');//注册
     Route::post('regdo','Api\LoginController@regdo');//执行注册
     Route::get('logindo','Api\LoginController@logindo');//执行登录
+    Route::any('/','Api\IndexController@index');   //前台首页
 });
+
+  
 
