@@ -25,6 +25,7 @@ $(document).ready(function(){
 <body>
 <!--advertisment<div class="wrap"><img src="upload/banner.jpg"/></div>-->
 <!--header-->
+<<<<<<< HEAD
 <header>
   <!--topNavBg-->
     <!-- 头部 -->
@@ -107,6 +108,9 @@ $(document).ready(function(){
     </nav>
 
  </header>
+=======
+@include('layout.header')
+>>>>>>> a7398c7fa8f6c9e60497ef02fd5dd4ae761327d3
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑

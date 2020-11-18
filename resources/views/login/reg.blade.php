@@ -23,115 +23,7 @@ $(document).ready(function(){
 </head>
 <body>
 <!--header-->
-<header>
-  <!--topNavBg-->
-  @include('layout.header');
-  <!--logoArea-->
-  <div class="wrap logoSearch">
-   <!--logo-->
-   <div class="logo">
-    <h1><img src="static/images/logo.png"/></h1>
-   </div>
-   <!--search-->
-   <div class="search">
-    <ul class="switchNav">
-     <li class="active" id="chanpin">产品</li>
-     <li id="shangjia">商家</li>
-     <li id="zixun">搭配</li>
-     <li id="wenku">文库</li>
-    </ul>
-    <div class="searchBox">
-     <form>
-      <div class="inputWrap">
-      <input type="text" placeholder="输入产品关键词或货号"/>
-      </div>
-      <div class="btnWrap">
-      <input type="submit" value="搜索"/>
-      </div>
-     </form>
-     <a href="#" class="advancedSearch">高级搜索</a>
-    </div>
-   </div>
-  </div>
-  <!--nav-->
-  <nav>
-<ul class="wrap navList">
-<li class="category">
-<a>全部产品分类</a>
-<dl class="asideNav indexAsideNav">
-<dt><a href="channel.html">女装</a></dt>
-<dd>
-<a href="#">夏装新</a>
-<a href="#">连衣裙</a>
-<a href="#">T恤</a>
-<a href="#">衬衫</a>
-<a href="#">裤子</a>
-<a href="#">牛仔裤</a>
-<a href="#">背带裤</a>
-<a href="#">短外套</a>
-<a href="#">时尚外套</a>
-<a href="#">风衣</a>
-<a href="#">毛衣</a>
-<a href="#">背心</a>
-<a href="#">吊带</a>
-<a href="#">民族服装</a>
-</dd>
-<dt><a href="channel.html">男装</a></dt>
-<dd>
-<a href="#">衬衫</a>
-<a href="#">背心</a>
-<a href="#">西装</a>
-<a href="#">POLO衫</a>
-<a href="#">马夹</a>
-<a href="#">皮衣</a>
-<a href="#">毛衣</a>
-<a href="#">针织衫</a>
-<a href="#">牛仔裤</a>
-<a href="#">外套</a>
-<a href="#">夹克</a>
-<a href="#">卫衣</a>
-<a href="#">风衣</a>
-<a href="#">民族风</a>
-<a href="#">原创设计</a>
-<a href="#">大码</a>
-<a href="#">情侣装</a>
-<a href="#">开衫</a>
-<a href="#">运动裤</a>
-<a href="#">工装裤</a>
-</dd>
-</dl>
-</li>
-<li>
-<a href="index.html" class="active">首页</a>
-</li>
-<li>
-<a href="#">时尚搭配</a>
-</li>
-<li>
-<a href="channel.html">原创设计</a>
-</li>
-<li>
-<a href="channel.html">时尚代购</a>
-</li>
-<li>
-<a href="channel.html">民族风</a>
-</li>
-<li>
-<a href="information.html">时尚搭配</a>
-</li>
-<li>
-<a href="library.html">搭配知识</a>
-</li>
-<li>
-<a href="#">促销专区</a>
-</li>
-<li>
-<a href="#">其他</a>
-</li>
-</ul>
-</nav>
-
- </header>
+  @include('layout.header')
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑
@@ -162,26 +54,25 @@ $(document).ready(function(){
   <h2>会员注册</h2>
   <ul>
    <li class="user_icon">
-    <input type="text" class="textbox" placeholder="手机号码"/>
+    <input type="text" class="textbox" name="user_plone" placeholder="手机号码"/>
    </li>
    <li class="link_li">
-    <input type="button" value="获取手机校验码" class="get_num_btn"/>
+    <button type="button" id="aaa" value="获取手机校验码" class="get_num_btn"/>获取手机校验码</button>
    </li>
    <li class="user_cc">
-    <input type="text" class="textbox" placeholder="手机校验码"/>
+    <input type="text" class="textbox" name="code" placeholder="手机校验码"/>
    </li>
    <li class="user_pwd">
-    <input type="password" class="textbox" placeholder="设置密码"/>
+    <input type="password" class="textbox" name="user_pwd" placeholder="设置密码"/>
    </li>
    <li class="user_pwd">
-    <input type="password" class="textbox" placeholder="确认密码"/>
+    <input type="password" class="textbox" name="user_pwds" placeholder="确认密码"/>
    </li>
    <li class="link_li">
-    <label><input type="checkbox"/><a>阅读注册协议</a></label>
-    <a href="login.html" title="登录账号" class="fr">已有账号，立即登录？</a>
+    <a href="{{url('/login')}}" title="登录账号" class="fr">已有账号，立即登录？</a>
    </li>
    <li class="link_li">
-    <input type="button" value="立即注册" class="sbmt_btn"/>
+    <input type="button" id="aww" value="立即注册" class="sbmt_btn"/>
    </li>
   </ul>
  </div>
@@ -190,3 +81,93 @@ $(document).ready(function(){
 @include('layout.foot');
 </body>
 </html>
+<script src="/static/js/jquery.js"></script>
+<script>
+    $(document).on('click','#aww',function(){
+      var user_plone = $('input[name="user_plone"]').val();
+      var user_pwd = $('input[name="user_pwd"]').val();
+      var user_pwds = $('input[name="user_pwds"]').val();
+      var code = $('input[name="code"]').val();
+            // alert(code);
+      $.post('http://2001.shop.api.com/regdo',{user_plone:user_plone,user_pwd:user_pwd,user_pwds:user_pwds,code:code},function (result) {
+            if(result.code=='00001'){
+                alert(result.msg);
+            }
+            if(result.code=='00002'){
+                alert(result.msg);
+            }
+            if(result.code=='00003'){
+                alert(result.msg);
+            }
+            if(result.code=='00004'){
+                alert(result.msg);
+            }
+            if(result.code=='00000'){
+                location.href = "/login"
+            }else{
+                alert(result.msg);
+            }
+        },'json')
+    });
+    $('button').click(function () {
+        var count = 60; //间隔函数，1秒执行
+        var InterValObj1; //timer变量，控制时间
+        var count1; //当前剩余秒数
+          // alert(111);
+            count1=count; 		 
+          
+            // 设置button效果，开始计时
+            $("#aaa").attr("disabled", "true");
+            $("#aaa").val( + count1 + "秒再获取");
+            InterValObj1=window.setInterval(SetRemainTime1,1000); //启动计时器，1秒执行一次
+            // 向后台发送处理数据
+            $.ajaxSetup({
+              headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+            }); 
+
+
+              function SetRemainTime1(){
+                if (count1 == 0) {                
+                  window.clearInterval(InterValObj1);//停止计时器
+                  $("#aaa").removeAttr("disabled");//启用按钮
+                  $("#aaa").val("重新发送");
+                }else{
+                  count1--;
+                  $("#aaa").val( + count1 + "秒再获取");
+                }
+		          }
+
+
+
+
+
+        var name = $('input[name="user_plone"]').val();
+        // alert(name);
+        var mobilereg = /^1[3|5|6|7|8|9]\d{9}$/;
+        if(mobilereg.test(name)){
+            //发送手机号验证码
+            $.get('http://2001.shop.api.com/sendSMS',{name:name},function (res) {
+                if(res.code=='00001'){
+                    alert(res.msg);
+                }
+                if(res.code=='00000'){
+                    alert(res.msg);
+                }
+                if(res.code=='00002'){
+                    alert(res.msg);
+                }
+            },'json');
+            return;
+        }
+        alert('请输入正确的手机号');
+        return;
+    })
+
+
+
+
+
+</script>
+  

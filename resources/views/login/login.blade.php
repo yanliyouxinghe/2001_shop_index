@@ -23,115 +23,7 @@ $(document).ready(function(){
 </head>
 <body>
 <!--header-->
-<header>
-  <!--topNavBg-->
-  @include('layout.header');
-  <!--logoArea-->
-  <div class="wrap logoSearch">
-   <!--logo-->
-   <div class="logo">
-    <h1><img src="static/images/logo.png"/></h1>
-   </div>
-   <!--search-->
-   <div class="search">
-    <ul class="switchNav">
-     <li class="active" id="chanpin">产品</li>
-     <li id="shangjia">商家</li>
-     <li id="zixun">搭配</li>
-     <li id="wenku">文库</li>
-    </ul>
-    <div class="searchBox">
-     <form>
-      <div class="inputWrap">
-      <input type="text" placeholder="输入产品关键词或货号"/>
-      </div>
-      <div class="btnWrap">
-      <input type="submit" value="搜索"/>
-      </div>
-     </form>
-     <a href="#" class="advancedSearch">高级搜索</a>
-    </div>
-   </div>
-  </div>
-  <!--nav-->
-  <nav>
-<ul class="wrap navList">
-<li class="category">
-<a>全部产品分类</a>
-<dl class="asideNav indexAsideNav">
-<dt><a href="channel.html">女装</a></dt>
-<dd>
-<a href="#">夏装新</a>
-<a href="#">连衣裙</a>
-<a href="#">T恤</a>
-<a href="#">衬衫</a>
-<a href="#">裤子</a>
-<a href="#">牛仔裤</a>
-<a href="#">背带裤</a>
-<a href="#">短外套</a>
-<a href="#">时尚外套</a>
-<a href="#">风衣</a>
-<a href="#">毛衣</a>
-<a href="#">背心</a>
-<a href="#">吊带</a>
-<a href="#">民族服装</a>
-</dd>
-<dt><a href="channel.html">男装</a></dt>
-<dd>
-<a href="#">衬衫</a>
-<a href="#">背心</a>
-<a href="#">西装</a>
-<a href="#">POLO衫</a>
-<a href="#">马夹</a>
-<a href="#">皮衣</a>
-<a href="#">毛衣</a>
-<a href="#">针织衫</a>
-<a href="#">牛仔裤</a>
-<a href="#">外套</a>
-<a href="#">夹克</a>
-<a href="#">卫衣</a>
-<a href="#">风衣</a>
-<a href="#">民族风</a>
-<a href="#">原创设计</a>
-<a href="#">大码</a>
-<a href="#">情侣装</a>
-<a href="#">开衫</a>
-<a href="#">运动裤</a>
-<a href="#">工装裤</a>
-</dd>
-</dl>
-</li>
-<li>
-<a href="index.html" class="active">首页</a>
-</li>
-<li>
-<a href="#">时尚搭配</a>
-</li>
-<li>
-<a href="channel.html">原创设计</a>
-</li>
-<li>
-<a href="channel.html">时尚代购</a>
-</li>
-<li>
-<a href="channel.html">民族风</a>
-</li>
-<li>
-<a href="information.html">时尚搭配</a>
-</li>
-<li>
-<a href="library.html">搭配知识</a>
-</li>
-<li>
-<a href="#">促销专区</a>
-</li>
-<li>
-<a href="#">其他</a>
-</li>
-</ul>
-</nav>
-
- </header>
+ @include('layout.header');
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑
@@ -162,17 +54,17 @@ $(document).ready(function(){
   <h2>会员登录</h2>
   <ul>
    <li class="user_icon">
-    <input type="text" class="textbox" placeholder="账号"/>
+    <input type="text" name="user_plone" class="textbox" placeholder="账号"/>
    </li>
    <li class="user_pwd">
-    <input type="password" class="textbox" placeholder="密码"/>
+    <input type="password" name="user_pwd" class="textbox" placeholder="密码"/>
    </li>
    <li class="link_li">
     <a href="{{url('/reg')}}" title="注册新用户" class="fl">注册新用户</a>
     <a href="find_pwd.html" title="忘记密码" class="fr">忘记密码？</a>
    </li>
    <li class="link_li">
-    <input type="button" value="立即登录" class="sbmt_btn"/>
+    <input type="button" id="login" value="立即登录" class="sbmt_btn"/>
    </li>
   </ul>
  </div>
@@ -181,3 +73,35 @@ $(document).ready(function(){
 @include('layout.foot');
 </body>
 </html>
+<script src="/static/js/jquery.js"></script>
+<script>
+     $("#login").click(function () {
+        // alert(111);
+        var user_plone = $('input[name="user_plone"]').val();
+       
+        var user_pwd = $('input[name="user_pwd"]').val();
+
+        // $.getJSON("http://2001.shop.api.com/logindo?user_plone="+user_plone+"&user_pwd="+user_pwd+"&jsoncallback=?", function(data){
+        //   alert(data);
+        // });
+        //  console.log(user_pwd);
+        $.post('/logdo',{'user_plone':user_plone,'user_pwd':user_pwd},function (res) {
+            console.log(res);
+            // if(res.code=='00001'){
+            //     alert(res.msg);
+            // }
+            // if(res.code=='00002'){
+            //     alert(res.msg);
+            // }
+            // if(res.code=='00000'){
+            //     location.href = "/"
+            // }
+        },'json');
+    });
+
+
+
+
+
+
+</script>
