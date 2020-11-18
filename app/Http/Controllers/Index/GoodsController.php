@@ -10,7 +10,7 @@ class GoodsController extends Controller
     function goodsinfo(){
         // dd('123');
         //$url = 'http://localhost/testmysql.php';
-        $url = 'http://2001.shop.index.com/api/goods';
+        $url = 'http://2001.shop.api.com/goods';
         // dd($url);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url );
