@@ -45,7 +45,7 @@ $(document).ready(function(){
    });
    
  </script>
- 
+ @if(count($cart['data']) > 0)
 <section class="wrap" style="margin-top:20px;overflow:hidden;">
  <table class="order_table">
   <tr>
@@ -58,66 +58,50 @@ $(document).ready(function(){
    <th>小计</th>
    <th>操作</th>
   </tr>
+
+   @foreach($cart['data'] as $v)
   <tr>
    <td class="center"><input type="checkbox"/></td>
-   <td class="center"><a href="product.html"><img src="static/upload/goods.jpg" style="width:50px;height:50px;"/></a></td>
-   <td><a href="product.html">这里是产品名称</a></td>
+   <td class="center"><a href="product.html"><img src="{{$v['goods_thumb']}}" style="width:50px;height:50px;"/></a></td>
+   <td><a href="product.html">{{$v['goods_name']}}</a></td>
    <td>
     <p>颜色：黑色</p>
     
     <p>规格：M码</p>
    </td>
-   <td class="center"><span class="rmb_icon">15.88</span></td>
+   <td class="center"><span class="rmb_icon">{{$v['shop_price']}}</span></td>
    <td class="center">
     <input type="button" value="-" class="jj_btn"/>
-    <input type="text" value="1" class="number" readonly/>
+    <input type="text" value="{{$v['buy_number']}}" class="number" readonly/>
     <input type="button" value="+" class="jj_btn"/>
    </td>
    <td class="center"><strong class="rmb_icon">9.00</strong></td>
    <td class="center"><a>删除</a></td>
   </tr>
-  <tr>
-   <td class="center"><input type="checkbox"/></td>
-   <td class="center"><a href="product.html"><img src="static/upload/goods007.jpg" style="width:50px;height:50px;"/></a></td>
-   <td style="width:200px;"><a href="product.html">这里是产品名称</a></td>
-   <td>
-    <p>颜色：黑色</p>
-    
-    <p>规格：M码</p>
-   </td>
-   <td class="center"><span class="rmb_icon">15.88</span></td>
-   <td class="center">
-    <input type="button" value="-" class="jj_btn"/>
-    <input type="text" value="1" class="number"/>
-    <input type="button" value="+" class="jj_btn"/>
-   </td>
-   <td class="center"><strong class="rmb_icon">9.00</strong></td>
-   <td class="center"><a>删除</a></td>
-  </tr>
-  <tr>
-   <td class="center"><input type="checkbox"/></td>
-   <td class="center"><a href="product.html"><img src="static/upload/goods008.jpg" style="width:50px;height:50px;"/></a></td>
-   <td style="width:200px;"><a href="product.html">这里是产品名称</a></td>
-   <td>
-    <p>颜色：黑色</p>
-    
-    <p>规格：M码</p>
-   </td>
-   <td class="center"><span class="rmb_icon">15.88</span></td>
-   <td class="center">
-    <input type="button" value="-" class="jj_btn"/>
-    <input type="text" value="1" class="number"/>
-    <input type="button" value="+" class="jj_btn"/>
-   </td>
-   <td class="center"><strong class="rmb_icon">9.00</strong></td>
-   <td class="center"><a>删除</a></td>
-  </tr>
+   @endforeach
+
  </table>
  <div class="order_btm_btn">
-  <a href="index.html" class="link_btn_01 buy_btn"/>继续购买</a>
+  <a href="/" class="link_btn_01 buy_btn"/>继续购买</a>
   <a href="order_confirm.html" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon">0.00</strong>立即结算</a>
  </div>
 </section>
+@else
+<center><table>
+      <tr>
+        <td><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2601129021,2880906803&fm=26&gp=0.jpg" alt=""></td>
+        <td> <div class="order_btm_btn">
+              <h1 style="color:red">购物车空空的哦~，去看看心仪的商品吧~</h1>
+              <a href="/" class="link_btn_01 buy_btn"/>去购物</a>
+            </div>
+       </td>
+      </tr>
+    </table>
+</center>
+@endif
+
+
+
 <!--footer-->
 @include('layout.foot');
 </body>

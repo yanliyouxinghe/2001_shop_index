@@ -11,7 +11,11 @@ class GoodsController extends Controller
         // dd('123');
         //dd($id);
         //$url = 'http://localhost/testmysql.php';
+<<<<<<< HEAD
         $url = 'http://2001.shop.api.com/goods/'.$id;
+=======
+         $url = 'http://2001.shop.api.com/goods';
+>>>>>>> c2d097f56e411e64a23a02ff9bd092bc43139808
         // dd($url);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url );
