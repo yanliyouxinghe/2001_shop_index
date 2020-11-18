@@ -61,7 +61,7 @@ $(document).ready(function(){
       <div class="swiper-wrapper">
         @foreach($slideshow as $k=>$v)
         <div class="swiper-slide">
-         <a href="{{url('/goods/'.$v->goods_id)}}">
+         <a href="/goods/{{$v->goods_id}}">
           <img src="{{$v->goods_img}}"/>
          </a>
         </div>
@@ -85,17 +85,9 @@ $(document).ready(function(){
       <strong>优秀商家推荐</strong>
       <a href="shop_list.html" class="fr">更多</a>
      </dt>
- 
-     <dd>
-       @foreach($hot_goods as $v)
-      <a href="shop.html">
-       <img src="{{$v->goods_img}}"/>
-       <h2>{{$v->goods_name}}</h2>
-      </a>
-       @endforeach
-     </dd>
+
     
-     <!-- <dd>
+     <dd>
       <a href="shop.html">
        <img src="static/upload/002.jpg"/>
        <h2>DM精品女装</h2>
@@ -136,7 +128,7 @@ $(document).ready(function(){
        <img src="static/upload/008.jpg"/>
        <h2>DM精品女装</h2>
       </a>
-     </dd> -->
+     </dd>
     </dl>
  </div>
  <!--asdCont-->
