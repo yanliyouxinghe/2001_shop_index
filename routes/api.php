@@ -22,8 +22,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::domain('2001.shop.api.com')->group(function () {
     Route::get('sendSMS','Api\LoginController@sendSMS');//注册
     Route::post('regdo','Api\LoginController@regdo');//执行注册
+<<<<<<< HEAD
+    Route::get('logindo','Api\LoginController@logindo');//执行登录
+    Route::any('/','Api\IndexController@index');   //前台首页
+=======
     Route::any('goods','Api\GoodsController@goods');//详情
     Route::post('logindo','Api\LoginController@logindo');//执行登录
 
+>>>>>>> a805ec9dd8f56b3f421fa7c5e41cfd7aa0426337
 });
+
+  
 

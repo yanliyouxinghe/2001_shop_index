@@ -25,7 +25,10 @@ $(document).ready(function(){
 <body>
 <!--advertisment<div class="wrap"><img src="upload/banner.jpg"/></div>-->
 <!--header-->
-@include('layout.header')
+<!-- 头部 -->
+   @include('layout.header')
+
+ 
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑
@@ -54,44 +57,45 @@ $(document).ready(function(){
  <div class="IdxmainArea">
     <!--slide-->
     <div id="slide">
+     <!-- 轮播图 -->
       <div class="swiper-wrapper">
+        @foreach($slideshow as $k=>$v)
         <div class="swiper-slide">
-         <a href="#">
-          <img src="static/upload/slide01.jpg"/>
+         <a href="{{url('/goods/'.$v->goods_id)}}">
+          <img src="{{$v->goods_img}}"/>
          </a>
         </div>
-        <div class="swiper-slide">
-         <a href="#">
-          <img src="static/upload/slide02.jpg"/>
-         </a>
-        </div>
-        <div class="swiper-slide">
-         <a href="#">
-          <img src="static/upload/slide03.jpg"/>
-         </a>
-        </div>
+        @endforeach
       </div>
+     
       <div class="pagination"></div>  
     </div>
+
     <!--singleAd-->
     <div class="singleAd">
      <a href="#">
       <img src="static/upload/sigleAd.jpg"/>
      </a>
     </div>
+
+    
      <!--bestShop-->
     <dl class="bestShop">
      <dt>
       <strong>优秀商家推荐</strong>
       <a href="shop_list.html" class="fr">更多</a>
      </dt>
+ 
      <dd>
+       @foreach($hot_goods as $v)
       <a href="shop.html">
-       <img src="static/upload/001.jpg"/>
-       <h2>DM精品女装</h2>
+       <img src="{{$v->goods_img}}"/>
+       <h2>{{$v->goods_name}}</h2>
       </a>
+       @endforeach
      </dd>
-     <dd>
+    
+     <!-- <dd>
       <a href="shop.html">
        <img src="static/upload/002.jpg"/>
        <h2>DM精品女装</h2>
@@ -132,7 +136,7 @@ $(document).ready(function(){
        <img src="static/upload/008.jpg"/>
        <h2>DM精品女装</h2>
       </a>
-     </dd>
+     </dd> -->
     </dl>
  </div>
  <!--asdCont-->
@@ -192,87 +196,89 @@ $(document).ready(function(){
  </h2>
  <div class="ltArea">
   <!--ad:category pic-->
-   <a href="product_list.html"><img src="static/upload/bestCategoryPic01.jpg"/></a>
+   <a href="https://www.taobao.com/">
+   <script src="/static/ads/1.js"></script>
+   </a>
  </div>
  <div class="ctLi">
   <ul>
    <li>
-    <a href="product.html">
-     <img src="static/upload/goods001.jpg"/>
-     <h3>2019时尚新款</h3>
+    <a href="https://www.jd.com/">
+     <h3>2020时尚新款</h3>
+     <script src="/static/ads/2.js"></script>
+     <p><span>350.00</span></p>
+    </a>
+   </li>
+   <li>
+   <a href="https://www.jd.com/">
+     <h3>2020时尚新款</h3>
+     <script src="/static/ads/3.js"></script>
+     <p><span>450.00</span></p>
+    </a>
+   </li>
+   <li>
+    <a href="https://www.jd.com/">
+    <script src="/static/ads/4.js"></script>
+     <h3>2020时尚新款</h3>
      <p><span>1000.00</span></p>
     </a>
    </li>
    <li>
-    <a href="product.html">
-     <img src="static/upload/goods003.jpg"/>
-     <h3>2019时尚新款</h3>
-     <p><span>545.00</span></p>
+    <a href="https://www.taobao.com/">
+    <script src="/static/ads/5.js"></script>
+     <h3>2020时尚新款</h3>
+     <p><span>1200.00</span></p>
     </a>
    </li>
    <li>
-    <a href="product.html">
-     <img src="static/upload/goods004.jpg"/>
-     <h3>2019时尚新款</h3>
-     <p><span>1000.00</span></p>
-    </a>
-   </li>
-   <li>
-    <a href="product.html">
-     <img src="static/upload/goods003.jpg"/>
-     <h3>2019时尚新款</h3>
-     <p><span>1000.00</span></p>
-    </a>
-   </li>
-   <li>
-    <a href="product.html">
-     <img src="static/upload/goods001.jpg"/>
-     <h3>2019时尚新款</h3>
+    <a href="https://www.taobao.com/">
+    <script src="/static/ads/6.js"></script>
+     <h3>2020时尚新款</h3>
      <p><span>980.00</span></p>
     </a>
    </li>
    <li>
-    <a href="product.html">
-     <img src="static/upload/goods002.jpg"/>
-     <h3>2019时尚新款</h3>
-     <p><span>642.00</span></p>
+   <a href="https://www.jd.com/">
+    <script src="/static/ads/7.js"></script>
+     <h3>2020时尚新款</h3>
+     <p><span>1300.00</span></p>
     </a>
    </li>
    <li>
-    <a href="product.html">
-     <img src="static/upload/goods004.jpg"/>
-     <h3>2019时尚新款</h3>
-     <p><span>793.00</span></p>
+   <a href="https://www.jd.com/">
+    <script src="/static/ads/8.js"></script>
+     <h3>2020时尚新款</h3>
+     <p><span>1400.00</span></p>
     </a>
    </li>
    <li>
-    <a href="product.html">
-     <img src="static/upload/goods001.jpg"/>
-     <h3>2019时尚新款</h3>
-     <p><span>755.00</span></p>
+    <a href="https://www.jd.com/">
+    <script src="/static/ads/9.js"></script>
+     <h3>2020时尚新款</h3>
+     <p><span>1400.00</span></p>
     </a>
    </li>
    <li>
-    <a href="product.html">
-     <img src="static/upload/goods002.jpg"/>
-     <h3>2019时尚新款</h3>
-     <p><span>360.00</span></p>
+   <a href="https://www.jd.com/">
+    <script src="/static/ads/10.js"></script>
+     <h3>2020时尚新款</h3>
+     <p><span>1400.00</span></p>
     </a>
    </li>
    <li>
-    <a href="product.html">
-     <img src="static/upload/goods003.jpg"/>
-     <h3>2019时尚新款</h3>
-     <p><span>1255.00</span></p>
+   <a href="https://www.jd.com/">
+    <script src="/static/ads/11.js"></script>
+     <h3>2020时尚新款</h3>
+     <p><span>1400.00</span></p>
     </a>
    </li>
   </ul>
   <!--bestBrand-->
   <div class="idxBrandLi">
-   <a href="shop.html"><img src="static/upload/brandLogo01.jpg"/></a>
-   <a href="shop.html"><img src="static/upload/brandLogo02.jpg"/></a>
-   <a href="shop.html"><img src="static/upload/brandLogo03.jpg"/></a>
-   <a href="shop.html"><img src="static/upload/brandLogo04.jpg"/></a>
+   <a href="https://www.jd.com/"><script src="/static/ads/12.js"></script></a>
+   <a href="https://www.taobao.com/"><script src="/static/ads/13.js"></script></a>
+   <a href="https://www.jd.com/"><script src="/static/ads/14.js"></script></a>
+   <a href="https://www.taobao.com/"><script src="/static/ads/15.js"></script></a>
   </div>
  </div>
 </section>
