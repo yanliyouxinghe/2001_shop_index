@@ -43,21 +43,7 @@ class IndexController extends Controller
         //轮播图展示
         $slideshow = GoodsModel::getslicedata();
         //dd($slideshow);
-        //猜你喜欢
-        $hitgoods = Redis::zrevrange('hit',0,5);
-        //  dump($hitgoods);
-         if(count($hitgoods)){
-             $hit_goods_id = [];
-             // dump($hit_goods_id);
-             foreach($hitgoods as $v){
-                 $hitsarr = explode('_',$v);
-                 $hit_goods_id[] = $hitsarr[1];
-             }
-            //  dump($hit_goods_id);
-             $hot_goods = GoodsModel::whereIn('goods_id',$hit_goods_id)->get();
-            // dump($hot_goods);
-         }
-        return view('index.index',['cartgoryInfo'=>$cartgoryInfo,'slideshow'=>$slideshow,'hot_goods'=>$hot_goods]);
+        return view('index.index',['cartgoryInfo'=>$cartgoryInfo,'slideshow'=>$slideshow]);
     }
 
 
