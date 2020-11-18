@@ -10,19 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-<<<<<<< HEAD
 
 
 Route::get('/','Index\IndexController@index');  //前台首页
-=======
-// 首页
-Route::get('/', function () {
-    return view('index.index');
-});
+
 
 Route::any('/goodsinfo','Index\GoodsController@goodsinfo');//详情
->>>>>>> a805ec9dd8f56b3f421fa7c5e41cfd7aa0426337
-Route::get('/login','Index\LoginController@login');//登录
 Route::get('/reg','Index\LoginController@reg');//注册
 Route::get('/ser','Index\UserController@ser');//个人中心
 Route::get('/cart','Index\CartController@cart');//头部购物车或购物车列表
