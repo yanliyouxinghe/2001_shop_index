@@ -85,7 +85,7 @@ $(document).ready(function(){
         //   alert(data);
         // });
         //  console.log(user_pwd);
-        $.post('/logdo',{'user_plone':user_plone,'user_pwd':user_pwd},function (res) {
+        $.post('/logdo',{user_plone:user_plone,user_pwd:user_pwd},function (res) {
             console.log(res);
             // if(res.code=='00001'){
             //     alert(res.msg);

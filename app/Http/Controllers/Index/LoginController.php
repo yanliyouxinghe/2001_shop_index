@@ -20,8 +20,8 @@ class LoginController extends Controller
        $data['user_pwd'] = $request->user_pwd;
      
        $url = "http://2001.shop.api.com/logindo";
-           $reg=$this->posturl($url,$data);
-           dd($reg);
+       $reg=$this->posturl($url,$data);
+        dd($reg);
 
     }
 
@@ -29,7 +29,7 @@ class LoginController extends Controller
     public function posturl($url,$data){
          
             $data  = json_encode($data);    
-           
+            
             $headerArray =["Content-type:application/json;charset='utf-8'","Accept:application/json"];
             $curl = curl_init();//初始化
             curl_setopt($curl, CURLOPT_URL, $url);
@@ -42,8 +42,5 @@ class LoginController extends Controller
             $output = curl_exec($curl);
             curl_close($curl);
             return json_decode($output,true);
-        }
-           
-    
-    
+        } 
 }
