@@ -24,7 +24,7 @@ class IndexController extends Controller
         $token = '';
         $url = '';
         $header = [];
-        $userinfo = 
+        // $userinfo = 
     }
 
     public function getcurl(){

@@ -25,89 +25,10 @@ $(document).ready(function(){
 <body>
 <!--advertisment<div class="wrap"><img src="upload/banner.jpg"/></div>-->
 <!--header-->
-<<<<<<< HEAD
-<header>
-  <!--topNavBg-->
-    <!-- 头部 -->
+<!-- 头部 -->
    @include('layout.header')
-  <!--logoArea-->
-  <div class="wrap logoSearch">
-   <!--logo-->
-   <div class="logo">
-    <h1><img src="static/images/logo.png"/></h1>
-   </div>
-   <!--search-->
-   <div class="search">
-    <ul class="switchNav">
-     <li class="active" id="chanpin">产品</li>
-     <li id="shangjia">商家</li>
-     <li id="zixun">搭配</li>
-     <li id="wenku">文库</li>
-    </ul>
-    <div class="searchBox">
-     <form>
-      <div class="inputWrap">
-      <input type="text" placeholder="输入产品关键词或货号"/>
-      </div>
-      <div class="btnWrap">
-      <input type="submit" value="搜索"/>
-      </div>
-     </form>
-     <a href="#" class="advancedSearch">高级搜索</a>
-    </div>
-   </div>
-  </div>
-  <!--nav-->
-  <nav>
-    <ul class="wrap navList">
-     <li class="category">
-      <a>全部产品分类</a>
-      <dl class="asideNav indexAsideNav">
-      @foreach($cartgoryInfo as $v)
-      <dt><a href="{{url('list/'.$v['cat_id'])}}">{{$v['cat_name']}}</a></dt>
-        <dd>
-          @foreach($v['child'] as $vv)
-          <a href="{{url('list/'.$vv['cat_id'])}}">{{$vv['cat_name']}}</a>
-          @endforeach
-        </dd>
-        @endforeach
-      </dl>
-      </li>
 
-      <li>
-          <a href="index.html" class="active">首页</a>
-          </li>
-          <li>
-          <a href="#">时尚搭配</a>
-          </li>
-          <li>
-          <a href="channel.html">原创设计</a>
-          </li>
-          <li>
-          <a href="channel.html">时尚代购</a>
-          </li>
-          <li>
-          <a href="channel.html">民族风</a>
-          </li>
-          <li>
-          <a href="information.html">时尚搭配</a>
-          </li>
-          <li>
-          <a href="library.html">搭配知识</a>
-          </li>
-          <li>
-          <a href="#">促销专区</a>
-          </li>
-          <li>
-          <a href="#">其他</a>
-          </li>
-      </ul>
-    </nav>
-
- </header>
-=======
-@include('layout.header')
->>>>>>> a7398c7fa8f6c9e60497ef02fd5dd4ae761327d3
+ 
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑
