@@ -13,8 +13,6 @@
 
 
 Route::get('/','Index\IndexController@index');  //前台首页
-
-
 Route::any('/goodsinfo','Index\GoodsController@goodsinfo');//详情
 Route::get('/reg','Index\LoginController@reg');//注册
 Route::get('/ser','Index\UserController@ser');//个人中心
