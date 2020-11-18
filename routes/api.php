@@ -16,3 +16,15 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+Route::domain('2001.shop.api.com')->group(function () {
+    Route::get('sendSMS','Api\LoginController@sendSMS');//注册
+    Route::post('regdo','Api\LoginController@regdo');//执行注册
+    Route::get('logindo','Api\LoginController@logindo');//执行登录
+
+
+    Route::any('goods','Api\GoodsController@goods');//详情
+});
+
