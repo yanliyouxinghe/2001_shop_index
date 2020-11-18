@@ -8,13 +8,12 @@ use App\Model\GoodsModel;
 class GoodsController extends Controller
 {
     public function goods(){
-        // $goodsinfo = \DB::table('sh_goods')
-        //     ->where('goods_id',1)
-        //     ->join('sh_brand','sh_goods.brand.id','=','sh_brand.brand_id')
-        //     ->select('sh_goods.*','sh_brand.*')
-        //     ->get();
-
-       $goodsinfo=GoodsModel::where('goods_id',1)->get();
+        $goodsinfo = \DB::table('sh_goods')
+            ->where('goods_id',1)
+            ->join('sh_brand','sh_goods.brand.id','=','sh_brand.brand_id')
+            ->select('sh_goods.*','sh_brand.*')
+            ->select();
+       //$goodsinfo=GoodsModel::where('goods_id',1)->get();
         return $goodsinfo;
     }
 }

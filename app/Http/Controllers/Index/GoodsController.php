@@ -20,7 +20,7 @@ class GoodsController extends Controller
         curl_setopt($ch, CURLOPT_HEADER,0);
         $goodsinfo = curl_exec($ch);
         $goodsinfo=json_decode($goodsinfo);
-    //    dd($goodsinfo);
+       dd($goodsinfo);
         curl_close($ch);
         // exit()
         return view('/goods/goodsinfo',['goodsinfo'=>$goodsinfo]);
