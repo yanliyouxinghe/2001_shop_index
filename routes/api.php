@@ -37,6 +37,11 @@ Route::domain('2001.shop.api.com')->group(function () {
 
     Route::get('cart','Api\CartController@cartdata'); //购物车列表数据
     Route::get('cart_count','Api\CartController@cart_count'); //购物车数据条数
+    Route::get('getsondata','Api\UserController@getsondata'); //三级联动
+    Route::get('store','Api\UserController@store'); //添加地址
+    Route::get('list','Api\UserController@list'); //地址列表
+
+    
 });
 
   

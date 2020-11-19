@@ -39,9 +39,8 @@ $(document).ready(function(){
 </head>
 <body>
 <!--header-->
-<<<<<<< HEAD
-@include('layout.header')
-=======
+
+
 
  
    <!--topLeftNav-->
@@ -49,7 +48,6 @@ $(document).ready(function(){
    <!--topRightNav-->
  
 
->>>>>>> main
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑

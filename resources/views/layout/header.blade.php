@@ -4,7 +4,12 @@
    <div class="wrap">
    <!--topLeftNav-->
     <ul class="topLtNav">
-     <li><a href="{{url('/login')}}" class="obviousText">亲，请登录</a></li>
+     @if(!session('user_plone'))
+                            <li><a href="{{url('/login')}}" class="obviousText">亲，请登录</a></li>
+                                @else
+                            <li><span>欢迎   登录</span></li> 
+                        @endif
+    
      <li><a href="{{url('/reg')}}">注册</a></li>
      <li><a href="#">移动端</a></li>
     </ul>

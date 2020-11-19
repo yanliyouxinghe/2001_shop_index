@@ -5,7 +5,7 @@
    <dd><a href="order_list.html">我的订单</a></dd>
    <dd><a href="price_list.html">我的询价单</a></dd>
    <dd><a href="favorite.html">我的收藏</a></dd>
-   <dd><a href="address.html">我的地址库</a></dd>
+   <dd><a href="{{url('/address')}}">我的地址库</a></dd>
   </dl>
   <!-- <dl> -->
    <!-- <dt>商家管理中心</dt>
