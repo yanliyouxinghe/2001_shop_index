@@ -36,14 +36,17 @@
         "psr-4": {
             "App\\": "app/"
         },
+        "files": [
+            "app/Common/functions.php",
+            "app/Common/gong.php",
+            "app/Common/jwt.php"
+
+        ],
         "classmap": [
             "database/seeds",
             "database/factories"
-        ],
-        "files":[
-            "app/Common/gong.php",
-            "app/Common/jwt.php"
         ]
+       
     },
     "autoload-dev": {
         "psr-4": {

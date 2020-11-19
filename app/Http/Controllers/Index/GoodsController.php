@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class GoodsController extends Controller
 {
-    function goodsinfo(){
-        // dd('123');
-        //$url = 'http://localhost/testmysql.php';
-        $url = 'http://2001.shop.api.com/goods';
+    function goodsinfo($id){
+  
+        $url = 'http://2001.shop.api.com/goods/'.$id;
+         $url = 'http://2001.shop.api.com/goods';
         // dd($url);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url );
@@ -18,11 +18,17 @@ class GoodsController extends Controller
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         //参数为0表示不带头文件，为1表示带头文件
         curl_setopt($ch, CURLOPT_HEADER,0);
-        $goodsinfo = curl_exec($ch);
-        $goodsinfo=json_decode($goodsinfo);
-    //    dd($goodsinfo);
+        $data = curl_exec($ch);
+        // dd($goodsinfo);
+        $data=json_decode($data,true);
+
+        // $goodsinfo=json_decode($data['goodsinfo']);
+        // dd($data['goodsinfo']);
+        // dd($data);
         curl_close($ch);
         // exit()
-        return view('/goods/goodsinfo',['goodsinfo'=>$goodsinfo]);
+        //规格属性
+        
+        return view('/goods/goodsinfo',['goodsinfo'=>$data['goodsinfo'],'attr'=>$data['attr']]);
     }
 }

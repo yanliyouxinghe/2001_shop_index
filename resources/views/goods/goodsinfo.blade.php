@@ -191,6 +191,7 @@ $(document).ready(function(){
 </aside>
 <section class="wrap product_detail">
  <!--img:left-->
+ @foreach($goodsinfo as $v)
  <div class="gallery">
   <div>
     <div id="preview" class="spec-preview"> <span class="jqzoom"><img jqimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" /></span> </div>
@@ -220,19 +221,19 @@ $(document).ready(function(){
  <div class="rt_infor">
   <!--lt_infor-->
   <div class="goods_infor">
-  @foreach($goodsinfo as $v)
-   <h2>{{$v->goods_name}}</h2>
+  
+   <h2>{{$v['goods_name']}}</h2>
    <ul>
     <li>
      <dl class="horizontal">
       <dt>价格：</dt>
-      <dd><strong class="rmb_icon univalent">{{$v->shop_price}}</strong></dd>
+      <dd><strong class="rmb_icon univalent">{{$v['shop_price']}}</strong></dd>
      </dl>
     </li>
     <li>
      <dl class="horizontal">
       <dt>品牌：</dt>
-      <dd><em>品牌名</time></em>
+      <dd><em>{{$v['brand_name']}}</time></em>
      </dl>
     </li>
     <li class="statistics">
@@ -250,16 +251,14 @@ $(document).ready(function(){
      </dl>
     </li>
     <li>
+    @foreach($attr as $vv)
      <dl class="horizontal horizontal_attr">
-      <dt>规格：</dt>
+      <dt>{{$vv['attr_name']}}</dt>
       <dd>
-       <label><input type="radio" name="guige"/>S码</label>
-       <label><input type="radio" name="guige"/>M码</label>
-       <label><input type="radio" name="guige"/>L码</label>
-       <label><input type="radio" name="guige"/>XL码</label>
-       <label><input type="radio" name="guige"/>XXL码</label>
+       <label><input type="radio" name="guige"/>{{$vv['attr_values']}}</label>
       </dd>
      </dl>
+     @endforeach
     </li>
     <li>
      <dl class="horizontal horizontal_attr">
@@ -279,7 +278,7 @@ $(document).ready(function(){
        <input type="button" value="-" class="jj_btn"/>
        <input type="text" value="1" readonly class="num"/>
        <input type="button" value="+" class="jj_btn"/>
-       <span>库存：2580件</span>
+       <span>库存：{{$v['goods_number']}}件</span>
       </dd>
      </dl>
     </li>
@@ -290,7 +289,7 @@ $(document).ready(function(){
     </li>
    </ul>
   </div>
-  @endforeach
+ 
   <!--rt_infor-->
   <div class="shop_infor">
    <dl class="business_card">
@@ -319,16 +318,9 @@ $(document).ready(function(){
   </ul>
   <!--商品详情-->
   <div class="cont_wrap active">
-   该商品参与了公益宝贝计划，卖家承诺每笔成交将为壹乐园计划捐赠0.02元。该商品已累积捐赠24560笔。
-善款用途简介：基于游戏教育在儿童成长中的重要性，壹基金设立了“壹乐园计划”，帮助提供滑梯、攀爬架、跷跷板、秋千、乒乓球桌等，为灾后及贫困地区的孩子们搭建课<br/>
-该商品参与了公益宝贝计划，卖家承诺每笔成交将为壹乐园计划捐赠0.02元。该商品已累积捐赠24560笔。
-善款用途简介：基于游戏教育在儿童成长中的重要性，壹基金设立了“壹乐园计划”，帮助提供滑梯、攀爬架、跷跷板、秋千、乒乓球桌等，为灾
-  <img src="/jyl/upload/goods005.jpg"/><br/>
-   该商品参与了公益宝贝计划，卖家承诺每笔成交将为壹乐园计划捐赠0.02元。该商品已累积捐赠24560笔。
-善款用途简介：基于游戏教育在儿童成长中的重要性，壹基金设立了“壹乐园计划”，帮助提供滑梯、攀爬架、跷跷板、秋千、乒乓球桌等，为灾后及贫困地区的孩子们搭建课<br/>
-该商品参与了公益宝贝计划，卖家承诺每笔成交将为壹乐园计划捐赠0.02元。该商品已累积捐赠24560笔。
-善款用途简介：基于游戏教育在儿童成长中的重要性，壹基金设立了“壹乐园计划”，帮助提供滑梯、攀爬架、跷跷板、秋千、乒乓
+  {!!$v['goods_desc']!!}
   </div>
+  @endforeach
   <!--商品评价-->
   <div class="cont_wrap">
    <table class="table">
@@ -337,17 +329,9 @@ $(document).ready(function(){
      <td width="60%">这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦</td>
      <td width="20%" align="center"><time>2013-01-13 15:06</time></td>
     </tr>
-    <tr>
-     <td width="20%" align="center">彭**法</td>
-     <td width="60%">这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦</td>
-     <td width="20%" align="center"><time>2013-01-13 15:06</time></td>
-    </tr>
-    <tr>
-     <td width="20%" align="center">代**彭</td>
-     <td width="60%">这里是评论内容哦这里是评论内容哦这里是评论内容哦容哦这里是评论内容哦这里是评论内容哦这里是评论容哦这里是评论内容哦这里是评论内容哦这里是评论容哦这里是评论内容哦这里是评论内容哦这里是评论容哦这里是评论内容哦这里是评论内容哦这里是评论容哦这里是评论内容哦这里是评论内容哦这里是评论容哦这里是评论内容哦这里是评论内容哦这里是评论容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦</td>
-     <td width="20%" align="center"><time>2013-01-13 15:06</time></td>
-    </tr>
+   
    </table>
+   
    <!--分页-->
    <div class="paging">
     <a>第一页</a>
@@ -376,25 +360,8 @@ $(document).ready(function(){
      <td align="center"><b>1</b></td>
      <td align="center"><time>2013-01-13 15:25:39</time></td>
     </tr>
-    <tr>
-     <td align="center">李**强</td>
-     <td>
-      <p>颜色：黑色<p>
-      <p>规格：L<p>
-     </td>
-     <td align="center"><b>1</b></td>
-     <td align="center"><time>2013-01-13 15:25:39</time></td>
-    </tr>
-    <tr>
-     <td align="center">葛**华</td>
-     <td>
-      <p>颜色：白色<p>
-      <p>规格：XL<p>
-     </td>
-     <td align="center"><b>5</b></td>
-     <td align="center"><time>2013-01-13 15:25:39</time></td>
-    </tr>
    </table>
+  
    <!--分页-->
    <div class="paging">
     <a>第一页</a>
