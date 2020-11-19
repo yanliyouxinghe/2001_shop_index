@@ -191,7 +191,8 @@ $(document).ready(function(){
 </aside>
 <section class="wrap product_detail">
  <!--img:left-->
- @foreach($goodsinfo as $v)
+
+
  <div class="gallery">
   <div>
     <div id="preview" class="spec-preview"> <span class="jqzoom"><img jqimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" /></span> </div>
@@ -220,8 +221,8 @@ $(document).ready(function(){
  <!--text:right-->
  <div class="rt_infor">
   <!--lt_infor-->
+  @foreach($goodsinfo as $v)
   <div class="goods_infor">
-  
    <h2>{{$v['goods_name']}}</h2>
    <ul>
     <li>
@@ -233,7 +234,7 @@ $(document).ready(function(){
     <li>
      <dl class="horizontal">
       <dt>品牌：</dt>
-      <dd><em>{{$v['brand_name']}}</time></em>
+      <dd><em><time>{{$v['brand_name']}}</time></em>
      </dl>
     </li>
     <li class="statistics">
@@ -251,45 +252,37 @@ $(document).ready(function(){
      </dl>
     </li>
     <li>
-    @foreach($attr as $vv)
+    @foreach($attr as $kk => $vv)
      <dl class="horizontal horizontal_attr">
-      <dt>{{$vv['attr_name']}}</dt>
+      <dt>{{$vv['attr_name']}}</dt>      
       <dd>
-       <label><input type="radio" name="guige"/>{{$vv['attr_values']}}</label>
+      @php $i=0; @endphp
+      @foreach($vv['attr_value'] as $kkk => $vvv)
+       <label><input type="radio" name="guige"/ goods_attr_id="{{$kkk}}" @if($i==0) class="selected" @endif >{{$vvv}}</label>
+      @endforeach
+      @php $i++; @endphp
       </dd>
      </dl>
      @endforeach
-    </li>
-    <li>
-     <dl class="horizontal horizontal_attr">
-      <dt>颜色：</dt>
-      <dd>
-       <label><input type="radio" name="yanse"/>黑色</label>
-       <label><input type="radio" name="yanse"/>蓝色</label>
-       <label><input type="radio" name="yanse"/>白色</label>
-      </dd>
-     </dl>
-    </li>
-    </li>
     <li>
      <dl class="horizontal horizontal_attr">
       <dt>数量：</dt>
       <dd>
        <input type="button" value="-" class="jj_btn"/>
-       <input type="text" value="1" readonly class="num"/>
+       <input type="text" value="1" readonly class="num buy_number"/>
        <input type="button" value="+" class="jj_btn"/>
-       <span>库存：{{$v['goods_number']}}件</span>
+       <span>库存：件</span>
       </dd>
      </dl>
     </li>
     <li class="last_li">
        <input type="button" value="立即询价" class="buy_btn" onClick="alert('询价请求已推送至商家，请耐心等待！');"/>
        <input type="button" value="立即购买" class="buy_btn" onClick="javascript:location.href='cart.html'"/>
-       <input type="button" value="加入购物车" class="add_btn"/>
+       <input type="button" value="加入购物车" class="add_btn  add"/>
     </li>
    </ul>
   </div>
- 
+
   <!--rt_infor-->
   <div class="shop_infor">
    <dl class="business_card">
@@ -309,6 +302,7 @@ $(document).ready(function(){
  </div>
 </section>
 <!--detail-->
+
 <section class="wrap product_detail_btm">
  <article>
   <ul class="item_tab">
@@ -317,8 +311,10 @@ $(document).ready(function(){
    <li><a>成交记录（1892）</a></li>
   </ul>
   <!--商品详情-->
+
+
   <div class="cont_wrap active">
-  {!!$v['goods_desc']!!}
+{!! $v['goods_desc'] !!}
   </div>
   @endforeach
   <!--商品评价-->
@@ -479,3 +475,28 @@ $(document).ready(function(){
 </footer>
 </body>
 </html>
+<script src="/static/js/jquery.js"></script>
+<script>
+$(function(){
+    //加入购物车
+    $('.add').click(function(){
+        //商品id
+        
+         //商品id
+         var goods_id = "{{$v['goods_id']}}";
+        
+        //购买数量
+        var buy_number = $('.buy_number').val();
+        //  alert(buy_number);  
+    })
+        //属性id
+        var goods_attr_id = new Array();
+        $('.selected').click(function(i){
+          
+          goods_attr_id.push($(this).attr('goods_attr_id'));
+          alert(goods_attr_id);
+        })
+   
+})
+</script>
+

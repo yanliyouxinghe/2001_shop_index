@@ -19,10 +19,11 @@ Route::get('/','Index\IndexController@index');  //前台首页
 
 
 
-Route::any('/goods/{goods_id}','Index\GoodsController@goodsinfo');//详情
+Route::get('/goods/{goods_id}','Index\GoodsController@goodsinfo');//详情
+
 Route::get('/login','Index\LoginController@login');//登录
 
-Route::any('/goodsinfo','Index\GoodsController@goodsinfo');//详情
+
 Route::get('/reg','Index\LoginController@reg');//注册
 Route::get('/ser','Index\UserController@ser');//个人中心
 Route::get('/cart','Index\CartController@cart');//头部购物车或购物车列表

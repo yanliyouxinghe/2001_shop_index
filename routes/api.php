@@ -24,7 +24,7 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('regdo','Api\LoginController@regdo');//执行注册
     Route::any('/','Api\IndexController@index');   //前台首页
 
-    Route::any('goods/{goods_id}','Api\GoodsController@goods');//详情
+    Route::get('goods/{goods_id}','Api\GoodsController@goods');//详情
 
     Route::any('cartgory','Api\IndexController@cartgory'); //首页菜单栏分类数据
     Route::any('slideshow','Api\IndexController@slideshow'); //首页商品表轮播图数据
