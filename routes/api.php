@@ -29,8 +29,9 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::any('cartgory','Api\IndexController@cartgory'); //首页菜单栏分类数据
     Route::any('slideshow','Api\IndexController@slideshow'); //首页商品表轮播图数据
     Route::get('goodsInfo','Api\IndexController@goodsInfo'); //首页商品表数据
-
-    Route::post('logindo','Api\LoginController@logindo');//执行登录<<<<<<< HEAD
+    Route::get('getlist/{id}','Api\ListController@getlist'); //列表页品牌数据
+    // Route::post('getprice/{id}','Api\ListController@getprice'); //列表页价格数据
+    Route::post('logindo','Api\LoginController@logindo');//执行登录
 
     Route::get('cart','Api\CartController@cartdata'); //购物车列表数据
     Route::get('cart_count','Api\CartController@cart_count'); //购物车数据条数

@@ -17,7 +17,6 @@ function geturl($url){
 
 
 //post请求方式
-
 function posturl($url,$data){
     $data  = json_encode($data);    
     $headerArray =["Content-type:application/json;charset='utf-8'","Accept:application/json"];

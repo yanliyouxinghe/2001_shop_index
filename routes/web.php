@@ -16,7 +16,7 @@ Route::middleware(['header'])->group(function () {
 
 
 Route::get('/','Index\IndexController@index');  //前台首页
-
+Route::get('/list/{id}','Index\ListController@list');  //列表页
 
 
 Route::any('/goods/{goods_id}','Index\GoodsController@goodsinfo');//详情
