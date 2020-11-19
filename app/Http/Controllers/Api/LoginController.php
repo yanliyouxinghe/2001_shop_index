@@ -24,21 +24,21 @@ class LoginController extends Controller
         $t = UserModel::where(['user_plone'=>$user_plone])->first();
         if($t){
              $data=[
-                    'code'=>00001,
+                    'code'=>'00001',
                     'message'=>'手机号已存在',
                     'result'=>''
                 ];
         }
         if($len<6){
              $data=[
-                    'code'=>00003,
+                    'code'=>'00003',
                     'message'=>'密码长度不能小于六位',
                     'result'=>''
                 ];
         }
         if($user_pwds != $user_pwd){
              $data=[
-                    'code'=>00004,
+                    'code'=>'00004',
                     'message'=>'确认密码与密码不一致',
                     'result'=>''
                 ];
@@ -51,13 +51,13 @@ class LoginController extends Controller
         $res = UserModel::insert($data);
         if(!$res){
              $data=[
-                    'code'=>00005,
+                    'code'=>'00005',
                     'message'=>'注册失败',
                     'result'=>''
                 ];
         }else{
              $data=[
-                    'code'=>00000,
+                    'code'=>'00000',
                     'message'=>'注册成功',
                     'result'=>''
                 ];
