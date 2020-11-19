@@ -8,6 +8,7 @@ use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
 use App\Model\UserModel;
+use App\Common\jwt;
 class LoginController extends Controller
 {
      //执行
@@ -126,8 +127,18 @@ class LoginController extends Controller
     }
     //执行登录
     public function logindo(Request $request){
-          $data=$request->user_plone;
-          dd($data);
+          $data=$request->all();
+            // dd($data);
+          $user = UserModel::where(['user_plone'=>$data['user_plone']])->first();
+        //   dd($user);
+          if(!$user){
+              return json_encode(['code'=>'00002','msg'=>'没有此账号或账号错误']);
+          }
+         // return json_encode($user,JSON_UNESCAPED_UNICODE);
+        //   dd($user->user_id);
+          $token =  jwt::instance()->setuid($user->user_id)->encode()->gettoken();
+        //   dd($token);
+        return json_encode(['code'=>'00000','msg'=>'登录成功','token'=>$token]);
         //   $data=json_encode($data,true);
            
         //   $user_plone=request()->$data['user_plone'];
@@ -164,5 +175,21 @@ class LoginController extends Controller
         //     }
         //    return json_encode($jyl,JSON_UNESCAPED_UNICODE);
         // }
+    }
+    public function getuserinfo(){
+        $token = request()->header('token');
+        if(!$token){
+            return json_encode(['code'=>'00004','msg'=>'缺少参数']);
+        }
+        // dd($token);
+        //验证token
+        $jwt = jwt::instance();
+        $jwt->decode($token);
+      //  dd($jwt->checksign());
+        if($jwt->validate() && $jwt->checksign()){
+            //根据token获取UID
+            $uid = $jwt->getuid();
+            // dd($uid);
+        }
     }
 }
