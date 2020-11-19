@@ -28,4 +28,13 @@ Route::get('/ser','Index\UserController@ser');//个人中心
 Route::get('/cart','Index\CartController@cart');//头部购物车或购物车列表
 Route::get('/favo','Index\FavoController@favo');//收藏
 Route::post('/logdo','Index\LoginController@logindo');//登录
+Route::post('/cart_del','Index\CartController@cart_del');//购物车删除
+Route::post('/buy_jian','Index\CartController@buy_jian');//购物车减号
+Route::post('/buy_jia','Index\CartController@buy_jia');//购物车加号
+
+
+
+
+
+
 });
