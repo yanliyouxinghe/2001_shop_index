@@ -86,10 +86,11 @@ $(document).ready(function(){
         // });
         //  console.log(user_pwd);
         $.post('/logdo',{user_plone:user_plone,user_pwd:user_pwd},function (res) {
-            console.log(res);
-            // if(res.code=='00001'){
-            //     alert(res.msg);
-            // }
+            // console.log(res);
+            if(res.code=='00000'){
+                alert(res.msg);
+                 location.href = "/"
+            }
             // if(res.code=='00002'){
             //     alert(res.msg);
             // }

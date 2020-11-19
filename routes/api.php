@@ -24,6 +24,7 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('regdo','Api\LoginController@regdo');//执行注册
     Route::any('goods','Api\GoodsController@goods');//详情
     Route::post('logindo','Api\LoginController@logindo');//执行登录
+    Route::any('getuserinfo','Api\LoginController@getuserinfo');//
 
 });
 
