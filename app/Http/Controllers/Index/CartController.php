@@ -1,15 +1,16 @@
 <?php
-
 namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use PhpParser\Node\Stmt\Foreach_;
+
 class CartController extends Controller
 {
     public function cart(){
 
         $cart = $this->getdata();
-        // dd($cart);
+        // print_r($cart);die;
        return view('cart.cart',compact('cart'));
     }
 
@@ -52,6 +53,7 @@ class CartController extends Controller
         }
     }
     
+    //加号
     public function buy_jia(){
         $data['cart_id'] = request()->cart_id;
         
@@ -65,6 +67,24 @@ class CartController extends Controller
         }
     }
    
-
+    //购物车总价格
+    public function cart_zprice(){
+        $cart_ids = request()->cart_ids;
+        $url = "http://2001.shop.api.com/cart_zprice";
+        $zprice = posturl($url,$cart_ids);
+        $zprices = $zprice['data'][0]['total'];
+        if($zprices){
+            return json_encode(['code'=>0,'msg'=>'OK','zprice'=>$zprices]);
+        }else{
+            return json_encode(['code'=>1,'msg'=>'Error']);
+        }
+    }
 
 }
+
+
+
+
+
+
+       

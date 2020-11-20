@@ -61,13 +61,13 @@ $(document).ready(function(){
 
    @foreach($cart['data'] as $v)
   <tr>
-   <td class="center"><input type="checkbox" class="check2"/></td>
-   <td class="center"><a href="product.html"><img src="{{$v['goods_thumb']}}" style="width:50px;height:50px;"/></a></td>
-   <td><a href="product.html">{{$v['goods_name']}}</a></td>
+   <td class="center"><input type="checkbox" cart_id="{{$v['cart_id']}}" class="check2"/></td>
+   <td class="center"><a href="/goods/{{$v['goods_id']}}"><img src="{{$v['goods_thumb']}}" style="width:50px;height:50px;"/></a></td>
+   <td><a href="/goods/{{$v['goods_id']}}">{{$v['goods_name']}}</a></td>
    <td>
-    <p>颜色：黑色</p>
-    
-    <p>规格：M码</p>
+     @foreach($v['attr_nane'] as $vv)
+      <p>{{$vv}}</p></br>
+     @endforeach
    </td>
    <td class="center"><span class="rmb_icon">{{$v['shop_price']}}</span></td>
    <td class="center">
@@ -83,7 +83,7 @@ $(document).ready(function(){
  </table>
  <div class="order_btm_btn">
   <a href="/" class="link_btn_01 buy_btn"/>继续购买</a>
-  <a href="order_confirm.html" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon">0.00</strong>立即结算</a>
+  <a href="order_confirm.html" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon zprice">0.00</strong>立即结算</a>
  </div>
 </section>
 @else
@@ -113,12 +113,56 @@ $(document).ready(function(){
      var _this = $(this);
     if(_this.prop('checked') == true){
         $('.check2').prop('checked',true);
+        //获取总价
+        var cart_ids = getcart();
+        getxiaoji(cart_ids);
     }else{
       $('.check2').prop('checked',false);
+      $('.zprice').html('0.00');
     }
     });
 
+    //获取选中的id
+    function getcart(){
+      var cart_ids = new Array();
+      $('.check2:checked').each(function(){
+            var cart_id = $(this).attr('cart_id');
+            cart_ids.push(cart_id);
+        });
+        return cart_ids;
+    }
+   
+    $(document).on('click','.check2',function(){
+      var cart_ids = getcart();
+      if(cart_ids.length==0){
+        $('.zprice').html('0.00');
+      }else{
+        getxiaoji(cart_ids);
+      }
+       
+    });
 
+    //计算小计
+    function getxiaoji(cart_ids){
+        if(!cart_ids){
+          return;
+        }
+      $.ajax({
+        url:'/cart_zprice',
+        dataType :'json',
+        type : 'post',
+        data : {'cart_ids':cart_ids},
+        success:function(reg){
+          if(reg.code==0){
+            $('.zprice').html(reg.zprice);
+          }else{
+              alert(reg.msg);
+          }
+        }
+      });
+    
+
+    }
 //删除
     $(document).on('click','.del',function(){
         var _this = $(this);
@@ -140,7 +184,9 @@ $(document).ready(function(){
 
 //购买数量减号
     $(document).on('click','.jian',function(){
+      
       var _this = $(this);
+      _this.parent().siblings().find('.check2').prop('checked',true);
       var cart_id = _this.prev().val();
       //最初的购买数量
       var one_buy = parseInt(_this.next().val());
@@ -150,6 +196,8 @@ $(document).ready(function(){
         $.post('/buy_jian',{cart_id:cart_id},function(resler){
             if(resler.code==0){
               _this.parent().next().find('.price').text(resler.price.price);
+              var cart_ids = getcart();
+            getxiaoji(cart_ids);
             }else{
               _this.next().val(one_buy);
             }
@@ -164,6 +212,8 @@ $(document).ready(function(){
     //购买数量加号
     $(document).on('click','.jia',function(){
         var _this = $(this);
+      _this.parent().siblings().find('.check2').prop('checked',true);
+
         var cart_id = _this.prev().prev().prev().val();
         var one_buy = _this.prev().val();
         if(!one_buy){
@@ -171,9 +221,11 @@ $(document).ready(function(){
         }
         $.post('buy_jia',{cart_id:cart_id},function(ret){
           if(ret.code==0){
-
+            // console.log(ret);
             _this.prev().val(parseInt(one_buy)+1);
             _this.parent().next().find('.price').text(ret.price.price);
+            var cart_ids = getcart();
+        getxiaoji(cart_ids);
           }else{
             alert(ret.msg);
           }

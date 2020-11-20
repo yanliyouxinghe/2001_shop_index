@@ -39,7 +39,10 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::get('cart_count','Api\CartController@cart_count'); //购物车数据条数
     Route::post('cart_del','Api\CartController@cart_del'); //购物车删除
     Route::post('buy_jian','Api\CartController@buy_jian'); //减少购买数量
-    Route::post('buy_jia','Api\CartController@buy_jia'); //减少购买数量
+    Route::post('buy_jia','Api\CartController@buy_jia'); //加购买数量
+    Route::post('cart_zprice','Api\CartController@cart_zprice'); //总价格
+
+    
 
 
     

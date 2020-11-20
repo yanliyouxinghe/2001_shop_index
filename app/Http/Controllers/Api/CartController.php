@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\CartModel;
 use App\Model\GoodsModel;
+use App\Model\Goods_AttrModel;
+use App\Model\GoodsAttrModel;
 use Illuminate\Support\Facades\DB;
 class CartController extends Controller
 {   
@@ -13,10 +15,25 @@ class CartController extends Controller
     //购物车列表数据
     public function cartdata(){
         $token = '2';
+        
         $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_thumb')
                     ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
                     ->where('user_id',$token)
                     ->get();
+
+        foreach ($cart_data as $key=>$val){
+            $attr_name =[];
+            $attr_data = explode("|",$val['goods_attr_id']);
+            foreach($attr_data as $k=>$v){
+                $attr_Data=Goods_AttrModel::select('sh_goods_attr.attr_value','sh_attribute.attr_name')
+                     ->leftjoin('sh_attribute','sh_goods_attr.attr_id','=','sh_attribute.attr_id')
+                     ->where(['goods_attr_id'=>$v])
+                     ->get();
+            $attr_name[]= $attr_Data[0]['attr_name'].":".$attr_Data[0]['attr_value'];               
+            }
+            $val['attr_nane']=$attr_name;
+        }
+        // dd($cart_data);
         if(!count($cart_data)){
             $respoer = [
                 'code'=>1,
@@ -68,6 +85,7 @@ class CartController extends Controller
     	return json_encode($respoer);
     }
 
+    //减号
     public function buy_jian(){
         $token = '2';
         $cart_id = request()->input('cart_id');
@@ -89,7 +107,7 @@ class CartController extends Controller
     	return json_encode($respoer);
     }
 
-
+    //加号
     public function buy_jia(){
         $token = '2';
         $cart_id = request()->input('cart_id');
@@ -130,9 +148,31 @@ class CartController extends Controller
             ];
             return json_encode($respoer);die;
         }
-         
-        
     }
+
+
+        //购物车总价格
+        public function cart_zprice(){
+            $token = '2';
+            $cart_ids = request()->all()?:request()->getContent();
+            $cart_ids = implode($cart_ids,',');
+             $total = DB::select("select sum(buy_number*shop_price) as total from sh_cart where cart_id in ($cart_ids)");
+            $respoer = [
+                'code'=>'0',
+                'msg'=>'OK',
+                'data'=>$total
+            ];   
+            return json_encode($respoer);
+
+
+        }
+
+        
+        public function is_not_json($str){
+            return is_null(json_decode($str));
+        }
+
+
 
    
 }
