@@ -29,4 +29,7 @@ Route::get('/address','Index\UserController@address');//收货地址
 Route::get('/cart','Index\CartController@cart');//头部购物车或购物车列表
 Route::get('/favo','Index\FavoController@favo');//收藏
 Route::post('/logdo','Index\LoginController@logindo');//登录
+Route::get('/order','Index\OrderController@order');//订单
+Route::get('/profile','Index\ProfileController@profile');//个人资料
+Route::get('/changepass','Index\ProfileController@changepass');//修改密码
 });

@@ -2,9 +2,8 @@
   <aside class="user_aside_nav">
   <dl>
    <dt>买家中心</dt>
-   <dd><a href="order_list.html">我的订单</a></dd>
-   <dd><a href="price_list.html">我的询价单</a></dd>
-   <dd><a href="favorite.html">我的收藏</a></dd>
+   <dd><a href="{{url('/order')}}">我的订单</a></dd>
+   <dd><a href="{{url('/favo')}}">我的收藏</a></dd>
    <dd><a href="{{url('/address')}}">我的地址库</a></dd>
   </dl>
   <!-- <dl> -->
@@ -17,9 +16,7 @@
   <!-- </dl> -->
   <dl>
    <dt>控制面板</dt>
-   <dd><a href="message.html">站内短消息</a></dd>
-   <dd><a href="account.html">资金管理</a></dd>
-   <dd><a href="profile.html">个人资料</a></dd>
-   <dd><a href="change_password.html">修改密码</a></dd>
+   <dd><a href="{{url('/profile')}}">个人资料</a></dd>
+   <dd><a href="{{url('/changepass')}}">修改密码</a></dd>
   </dl>
  </aside>

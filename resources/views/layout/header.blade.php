@@ -4,7 +4,7 @@
    <div class="wrap">
    <!--topLeftNav-->
     <ul class="topLtNav">
-     @if(!session('user_plone'))
+     @if(!('user_plone'))
                             <li><a href="{{url('/login')}}" class="obviousText">亲，请登录</a></li>
                                 @else
                             <li><span>欢迎   登录</span></li> 
