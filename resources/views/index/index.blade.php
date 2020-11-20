@@ -61,7 +61,7 @@ $(document).ready(function(){
       <div class="swiper-wrapper">
         @foreach($slideshow as $k=>$v)
         <div class="swiper-slide">
-         <a href="/goods/{{$v['goods_id']}}">
+         <a href="{{url('goods/'.$v['goods_id'])}}">
           <img src="{{$v['goods_img']}}"/>
          </a>
         </div>

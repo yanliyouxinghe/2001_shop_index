@@ -11,17 +11,24 @@ class ListController extends Controller
 {
     public function list($id){  
         /**获取商品的品牌和价格数据 */
-        // $data['id'] = $id;
-        $url = 'http://2001.shop.api.com/getlist/'.$id;
-       
-        $getlist=geturl($url);
-        // dd($getlist);
+        $query=request()->all();
+        $query = $_SERVER['REDIRECT_QUERY_STRING']??'';
+        $query = $query?'?'.$query:'';
+        
+        $url = 'http://2001.shop.api.com/getlist/'.$id.$query;
+        // dd($url);
+
+        $urls = request()->url();
+
+        $getlist = geturl($url);
+        //  dd($getlist);
         $brandInfo=$getlist['data']['brandInfo'];
         $priceInfo=$getlist['data']['priceInfo'];
         $goodsInfo=$getlist['data']['goodsInfo'];
+  
         // dd($brandInfo);
        // dd($priceInfo);
 
-        return view('list.list',['brandInfo'=>$brandInfo,'priceInfo'=>$priceInfo,'goodsInfo'=>$goodsInfo]);
+        return view('list.list',['brandInfo'=>$brandInfo,'priceInfo'=>$priceInfo,'goodsInfo'=>$goodsInfo,'urls'=>$urls]);
     }
 }
