@@ -6,32 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\CartModel;
 use App\Model\GoodsModel;
-<<<<<<< HEAD
-=======
 use App\Model\Goods_AttrModel;
 use App\Model\GoodsAttrModel;
 use Illuminate\Support\Facades\DB;
->>>>>>> b43cd6c19b6aa88e2f4a5c1530bad1b8e0d7a1cc
 class CartController extends Controller
 {   
-    //加入购物车
-    public function addcart(){
-        $data=request()->getContent();
-        
-        $data=json_decode($data);
-        // echo $data;die;
-        dd($data);
-        // $goods_id=$data['goods_id'];
-        
-        // $goods = GoodsModel::select('goods_id','goods_name','goods_price','is_show','goods_num')->find($data['goods_id']);
-        // dd($goods);
-       
-       
-        // $goods_id=request()->getContent('goods_id');
-        //  dd($data);
-    //   dd($goods_id);
-    // return $data;
-    }
 
     //购物车列表数据
     public function cartdata(){

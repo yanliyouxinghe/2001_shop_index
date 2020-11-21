@@ -3,14 +3,10 @@ namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-<<<<<<< HEAD
 use App\Model\CartModel;
 use App\Model\GoodsModel;
 use App\Model\ProductModel;
-=======
 use PhpParser\Node\Stmt\Foreach_;
-
->>>>>>> b43cd6c19b6aa88e2f4a5c1530bad1b8e0d7a1cc
 class CartController extends Controller
 {
     public function cart(){
@@ -56,8 +52,6 @@ class CartController extends Controller
         if($goods_attr_id){
             $goods_attr_id = implode('|',$goods_attr_id); //imploade 将数组用|分割成字符串
             // dump($goods_attr_id);
-
-<<<<<<< HEAD
             $product = ProductModel::select('product_id','product_number','product_sn')->where(['goods_id'=>$goods_id,'goods_attr'=>$goods_attr_id])->first();
             // dd($product);
             if($product->product_number<$buy_number){
@@ -107,8 +101,10 @@ class CartController extends Controller
         }
            
     }
-}
-=======
+
+
+
+
     //购物车删除
     public function cart_del(){
         $data['cart_id'] = request()->cart_id;
@@ -168,10 +164,3 @@ class CartController extends Controller
 
 }
 
-
-
-
-
-
-       
->>>>>>> b43cd6c19b6aa88e2f4a5c1530bad1b8e0d7a1cc
