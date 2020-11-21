@@ -32,4 +32,9 @@ Route::post('/logdo','Index\LoginController@logindo');//登录
 Route::get('/order','Index\OrderController@order');//订单
 Route::get('/profile','Index\ProfileController@profile');//个人资料
 Route::get('/changepass','Index\ProfileController@changepass');//修改密码
+
+
+
+Route::get('/reg','Admin\BusinessController@reg');//商家后太注册
+Route::get('/business','Admin\BusinessController@business');//商家后台登录
 });
