@@ -29,6 +29,7 @@ $(document).ready(function(){
   //radio
   $(".horizontal_attr label").click(function(){
 	  $(this).addClass("isTrue").siblings().removeClass("isTrue");
+    
 	  });
 });
 </script>
@@ -256,11 +257,12 @@ $(document).ready(function(){
      <dl class="horizontal horizontal_attr">
       <dt>{{$vv['attr_name']}}</dt>      
       <dd>
-      @php $i=0; @endphp
+     @php $i=0; @endphp
       @foreach($vv['attr_value'] as $kkk => $vvv)
-       <label><input type="radio" name="guige"/ goods_attr_id="{{$kkk}}" @if($i==0) class="selected" @endif >{{$vvv}}</label>
+       <label  @if($i==0) class="isTrue" @endif  goods_attr_id="{{$kkk}}">{{$vvv}}</label>
+       @php $i++;@endphp
       @endforeach
-      @php $i++; @endphp
+     
       </dd>
      </dl>
      @endforeach
@@ -271,7 +273,7 @@ $(document).ready(function(){
        <input type="button" value="-" class="jj_btn"/>
        <input type="text" value="1" readonly class="num buy_number"/>
        <input type="button" value="+" class="jj_btn"/>
-       <span>库存：件</span>
+       <span>库存：{{$v['goods_number']}}件</span>
       </dd>
      </dl>
     </li>
@@ -480,23 +482,39 @@ $(document).ready(function(){
 $(function(){
     //加入购物车
     $('.add').click(function(){
-        //商品id
-        
          //商品id
          var goods_id = "{{$v['goods_id']}}";
-        
+        // alert(goods_id);
         //购买数量
         var buy_number = $('.buy_number').val();
         //  alert(buy_number);  
-    })
-        //属性id
         var goods_attr_id = new Array();
-        $('.selected').click(function(i){
-          
-          goods_attr_id.push($(this).attr('goods_attr_id'));
-          alert(goods_attr_id);
-        })
-   
+    //属性id
+        $('.isTrue').each(function(i){
+         goods_attr_id.push($(this).attr('goods_attr_id'));
+                  // alert(goods_attr_id);
+                  // alert(goods_attr_id);  
+          })
+          $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id},function(res){
+              
+			//未登录
+            if(res.code=='1001'){
+                alert(res.msg);
+                location.href="/login?refer="+location.href;
+            }
+			//缺少参数  商品下架  货品不足
+            if(res.code=='1003' || res.code=='1004' || res.code=='1005'){
+                alert(res.msg);
+            }
+			
+			//加入购物车成功
+            if(res.code=='0'){
+              alert(res.msg);
+              location.href="/cart";
+            }
+        },'json')
+         
+      })
 })
 </script>
 

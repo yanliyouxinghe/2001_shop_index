@@ -20,7 +20,7 @@ Route::get('/','Index\IndexController@index');  //前台首页
 
 
 Route::get('/goods/{goods_id}','Index\GoodsController@goodsinfo');//详情
-
+Route::post('/addcart','Index\CartController@addcart');//加入购物车
 Route::get('/login','Index\LoginController@login');//登录
 
 
