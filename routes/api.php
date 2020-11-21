@@ -22,10 +22,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::domain('2001.shop.api.com')->group(function () {
     Route::get('sendSMS','Api\LoginController@sendSMS');//注册
     Route::post('regdo','Api\LoginController@regdo');//执行注册
+<<<<<<< HEAD
     Route::get('/','Api\IndexController@index');   //前台首页
+=======
+>>>>>>> 04ef5d967f84fb55355a5d039ea3de8d36b7dbee
 
-    Route::any('goods/{goods_id}','Api\GoodsController@goods');//详情
+    // Route::any('goods','Api\GoodsController@goods');//详情
+    Route::any('getuserinfo','Api\LoginController@getuserinfo');//
+    Route::any('/','Api\IndexController@index');   //前台首页
 
+    Route::get('goods/{goods_id}','Api\GoodsController@goods');//详情
+    Route::post('addcart','Api\CartController@addcart');//加入购物车
     Route::any('cartgory','Api\IndexController@cartgory'); //首页菜单栏分类数据
     Route::any('slideshow','Api\IndexController@slideshow'); //首页商品表轮播图数据
     Route::get('goodsInfo','Api\IndexController@goodsInfo'); //首页商品表数据
@@ -34,8 +41,25 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::get('cartgoodsinfo','Api\OrderController@cartgoodsinfo');    //提交订单页面商品数据
 
     Route::post('logindo','Api\LoginController@logindo');//执行登录
+<<<<<<< HEAD
+=======
+
+>>>>>>> 04ef5d967f84fb55355a5d039ea3de8d36b7dbee
     Route::get('cart','Api\CartController@cartdata'); //购物车列表数据
     Route::get('cart_count','Api\CartController@cart_count'); //购物车数据条数
+    Route::post('cart_del','Api\CartController@cart_del'); //购物车删除
+    Route::post('buy_jian','Api\CartController@buy_jian'); //减少购买数量
+    Route::post('buy_jia','Api\CartController@buy_jia'); //加购买数量
+    Route::post('cart_zprice','Api\CartController@cart_zprice'); //总价格
+
+    
+
+
+    
+
+    
+
+    
 });
 
   

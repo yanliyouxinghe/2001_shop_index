@@ -29,6 +29,7 @@ $(document).ready(function(){
   //radio
   $(".horizontal_attr label").click(function(){
 	  $(this).addClass("isTrue").siblings().removeClass("isTrue");
+    
 	  });
 });
 </script>
@@ -191,7 +192,8 @@ $(document).ready(function(){
 </aside>
 <section class="wrap product_detail">
  <!--img:left-->
- @foreach($goodsinfo as $v)
+
+
  <div class="gallery">
   <div>
     <div id="preview" class="spec-preview"> <span class="jqzoom"><img jqimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" /></span> </div>
@@ -220,8 +222,8 @@ $(document).ready(function(){
  <!--text:right-->
  <div class="rt_infor">
   <!--lt_infor-->
+  @foreach($goodsinfo as $v)
   <div class="goods_infor">
-  
    <h2>{{$v['goods_name']}}</h2>
    <ul>
     <li>
@@ -233,7 +235,7 @@ $(document).ready(function(){
     <li>
      <dl class="horizontal">
       <dt>品牌：</dt>
-      <dd><em>{{$v['brand_name']}}</time></em>
+      <dd><em><time>{{$v['brand_name']}}</time></em>
      </dl>
     </li>
     <li class="statistics">
@@ -251,32 +253,25 @@ $(document).ready(function(){
      </dl>
     </li>
     <li>
-    @foreach($attr as $vv)
+    @foreach($attr as $kk => $vv)
      <dl class="horizontal horizontal_attr">
-      <dt>{{$vv['attr_name']}}</dt>
+      <dt>{{$vv['attr_name']}}</dt>      
       <dd>
-       <label><input type="radio" name="guige"/>{{$vv['attr_values']}}</label>
+     @php $i=0; @endphp
+      @foreach($vv['attr_value'] as $kkk => $vvv)
+       <label  @if($i==0) class="isTrue" @endif  goods_attr_id="{{$kkk}}">{{$vvv}}</label>
+       @php $i++;@endphp
+      @endforeach
+     
       </dd>
      </dl>
      @endforeach
-    </li>
-    <li>
-     <dl class="horizontal horizontal_attr">
-      <dt>颜色：</dt>
-      <dd>
-       <label><input type="radio" name="yanse"/>黑色</label>
-       <label><input type="radio" name="yanse"/>蓝色</label>
-       <label><input type="radio" name="yanse"/>白色</label>
-      </dd>
-     </dl>
-    </li>
-    </li>
     <li>
      <dl class="horizontal horizontal_attr">
       <dt>数量：</dt>
       <dd>
        <input type="button" value="-" class="jj_btn"/>
-       <input type="text" value="1" readonly class="num"/>
+       <input type="text" value="1" readonly class="num buy_number"/>
        <input type="button" value="+" class="jj_btn"/>
        <span>库存：{{$v['goods_number']}}件</span>
       </dd>
@@ -285,11 +280,11 @@ $(document).ready(function(){
     <li class="last_li">
        <input type="button" value="立即询价" class="buy_btn" onClick="alert('询价请求已推送至商家，请耐心等待！');"/>
        <input type="button" value="立即购买" class="buy_btn" onClick="javascript:location.href='cart.html'"/>
-       <input type="button" value="加入购物车" class="add_btn"/>
+       <input type="button" value="加入购物车" class="add_btn  add"/>
     </li>
    </ul>
   </div>
- 
+
   <!--rt_infor-->
   <div class="shop_infor">
    <dl class="business_card">
@@ -309,6 +304,7 @@ $(document).ready(function(){
  </div>
 </section>
 <!--detail-->
+
 <section class="wrap product_detail_btm">
  <article>
   <ul class="item_tab">
@@ -317,8 +313,10 @@ $(document).ready(function(){
    <li><a>成交记录（1892）</a></li>
   </ul>
   <!--商品详情-->
+
+
   <div class="cont_wrap active">
-  {!!$v['goods_desc']!!}
+{!! $v['goods_desc'] !!}
   </div>
   @endforeach
   <!--商品评价-->
@@ -479,3 +477,44 @@ $(document).ready(function(){
 </footer>
 </body>
 </html>
+<script src="/static/js/jquery.js"></script>
+<script>
+$(function(){
+    //加入购物车
+    $('.add').click(function(){
+         //商品id
+         var goods_id = "{{$v['goods_id']}}";
+        // alert(goods_id);
+        //购买数量
+        var buy_number = $('.buy_number').val();
+        //  alert(buy_number);  
+        var goods_attr_id = new Array();
+    //属性id
+        $('.isTrue').each(function(i){
+         goods_attr_id.push($(this).attr('goods_attr_id'));
+                  // alert(goods_attr_id);
+                  // alert(goods_attr_id);  
+          })
+          $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id},function(res){
+              
+			//未登录
+            if(res.code=='1001'){
+                alert(res.msg);
+                location.href="/login?refer="+location.href;
+            }
+			//缺少参数  商品下架  货品不足
+            if(res.code=='1003' || res.code=='1004' || res.code=='1005'){
+                alert(res.msg);
+            }
+			
+			//加入购物车成功
+            if(res.code=='0'){
+              alert(res.msg);
+              location.href="/cart";
+            }
+        },'json')
+         
+      })
+})
+</script>
+

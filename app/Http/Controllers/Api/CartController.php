@@ -5,26 +5,66 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\CartModel;
+use App\Model\GoodsModel;
+<<<<<<< HEAD
+=======
+use App\Model\Goods_AttrModel;
+use App\Model\GoodsAttrModel;
+use Illuminate\Support\Facades\DB;
+>>>>>>> b43cd6c19b6aa88e2f4a5c1530bad1b8e0d7a1cc
 class CartController extends Controller
 {   
+    //加入购物车
+    public function addcart(){
+        $data=request()->getContent();
+        
+        $data=json_decode($data);
+        // echo $data;die;
+        dd($data);
+        // $goods_id=$data['goods_id'];
+        
+        // $goods = GoodsModel::select('goods_id','goods_name','goods_price','is_show','goods_num')->find($data['goods_id']);
+        // dd($goods);
+       
+       
+        // $goods_id=request()->getContent('goods_id');
+        //  dd($data);
+    //   dd($goods_id);
+    // return $data;
+    }
 
     //购物车列表数据
     public function cartdata(){
         $token = '2';
+        
         $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_thumb')
                     ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
                     ->where('user_id',$token)
                     ->get();
+
+        foreach ($cart_data as $key=>$val){
+            $attr_name =[];
+            $attr_data = explode("|",$val['goods_attr_id']);
+            foreach($attr_data as $k=>$v){
+                $attr_Data=Goods_AttrModel::select('sh_goods_attr.attr_value','sh_attribute.attr_name')
+                     ->leftjoin('sh_attribute','sh_goods_attr.attr_id','=','sh_attribute.attr_id')
+                     ->where(['goods_attr_id'=>$v])
+                     ->get();
+            $attr_name[]= $attr_Data[0]['attr_name'].":".$attr_Data[0]['attr_value'];               
+            }
+            $val['attr_nane']=$attr_name;
+        }
+        // dd($cart_data);
         if(!count($cart_data)){
             $respoer = [
                 'code'=>1,
-                'mag'=>'您的购物车中没有商品',
+                'msg'=>'您的购物车中没有商品',
                 'data'=>[],
             ];
         }else{
             $respoer = [
                 'code'=>0,
-                'mag'=>'OK',
+                'msg'=>'OK',
                 'data'=>$cart_data
             ];
         }
@@ -38,9 +78,122 @@ class CartController extends Controller
         $cart_count = CartModel::where('user_id',$token)->count();
         $respoer = [
             'code'=>0,
-            'mag'=>'OK',
+            'msg'=>'OK',
             'data'=>$cart_count,
         ];
     	return json_encode($respoer);
     }
+
+    public function cart_del(){
+        $token = '2';
+        $cart_id = request()->input('cart_id');
+        
+        $del = CartModel::where(['user_id'=>$token,'cart_id'=>$cart_id])->delete();
+        if($del){
+            $respoer = [
+                'code'=>'0',
+                'msg'=>'OK',
+                'data'=>$del,
+            ];
+        }else{
+            $respoer = [
+                'code'=>'1',
+                'msg'=>'失败',
+                'data'=>[],
+            ];
+        }
+       
+    	return json_encode($respoer);
+    }
+
+    //减号
+    public function buy_jian(){
+        $token = '2';
+        $cart_id = request()->input('cart_id');
+        $buy = CartModel::where(['user_id'=>$token,'cart_id'=>$cart_id])->value('buy_number');
+        if($buy > 1){
+            $buy2 = CartModel::where(['user_id'=>$token,'cart_id'=>$cart_id])->decrement('buy_number');  
+            $price = DB::select("SELECT (buy_number*shop_price) as price FROM `sh_cart` where cart_id=$cart_id");
+            $respoer = [
+                'code'=>'0',
+                'msg'=>'OK',
+                'data'=>$price 
+            ];   
+        }else{
+            $respoer = [
+                'code'=>'1',
+                'msg'=>'不能再少了'
+            ];
+        }
+    	return json_encode($respoer);
+    }
+
+    //加号
+    public function buy_jia(){
+        $token = '2';
+        $cart_id = request()->input('cart_id');
+
+        $buy = CartModel::select('sh_cart.buy_number','sh_goods.goods_number')
+                ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
+                ->where(['user_id'=>$token,'cart_id'=>$cart_id])
+                ->first();
+        if(!$buy['buy_number'] || !$buy['goods_number']){
+            $respoer = [
+                'code'=>'4',
+                'msg'=>'该商品不存在'
+            ];   
+            return json_encode($respoer);die;
+        }
+
+        if($buy['buy_number'] < $buy['goods_number']){
+            $buy3 = CartModel::where(['user_id'=>$token,'cart_id'=>$cart_id])->increment('buy_number');  
+            if($buy3){
+                $price = DB::select("SELECT (buy_number*shop_price) as price FROM `sh_cart` where cart_id=$cart_id");
+                $respoer = [
+                    'code'=>'0',
+                    'msg'=>'OK',
+                    'data'=>$price 
+                ];   
+                return json_encode($respoer);die;
+            }else{
+                $respoer = [
+                    'code'=>'3',
+                    'msg'=>'操作繁忙...'
+                ];
+                return json_encode($respoer);die;
+            }
+        }else{
+            $respoer = [
+                'code'=>'2',
+                'msg'=>'亲，存库不足了！'
+            ];
+            return json_encode($respoer);die;
+        }
+    }
+
+
+        //购物车总价格
+        public function cart_zprice(){
+            $token = '2';
+            $cart_ids = request()->all()?:request()->getContent();
+            $cart_ids = implode($cart_ids,',');
+             $total = DB::select("select sum(buy_number*shop_price) as total from sh_cart where cart_id in ($cart_ids)");
+            $respoer = [
+                'code'=>'0',
+                'msg'=>'OK',
+                'data'=>$total
+            ];   
+            return json_encode($respoer);
+
+
+        }
+
+        
+        public function is_not_json($str){
+            return is_null(json_decode($str));
+        }
+
+
+
+   
 }
