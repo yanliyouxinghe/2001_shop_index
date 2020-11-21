@@ -8,27 +8,19 @@ use Illuminate\Http\Request;
 class GoodsController extends Controller
 {
     function goodsinfo($id){
-  
+      
+        // $id['id'] =  request()->input('id');
         $url = 'http://2001.shop.api.com/goods/'.$id;
-         $url = 'http://2001.shop.api.com/goods';
-        // dd($url);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url );
-        //参数为1表示传输数据，为0表示直接输出显示。
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        //参数为0表示不带头文件，为1表示带头文件
-        curl_setopt($ch, CURLOPT_HEADER,0);
-        $data = curl_exec($ch);
-        // dd($goodsinfo);
-        $data=json_decode($data,true);
-
-        // $goodsinfo=json_decode($data['goodsinfo']);
-        // dd($data['goodsinfo']);
+        //dd($url);
+        $data = geturl($url);
         // dd($data);
-        curl_close($ch);
-        // exit()
-        //规格属性
-        
-        return view('/goods/goodsinfo',['goodsinfo'=>$data['goodsinfo'],'attr'=>$data['attr']]);
+        // $object = (object)$arrayName;
+        $goodsinfo=$data['goodsinfo'];
+        // $goodsinfo=(object)$goodsinfo;
+        // dd($goodsinfo);
+        $attr=$data['attr'];
+        // dd($attr);
+        // $attr=(object)$attr;
+        return view('/goods/goodsinfo',['goodsinfo'=>$goodsinfo,'attr'=>$attr]);
     }
 }

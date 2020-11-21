@@ -81,22 +81,14 @@ $(document).ready(function(){
        
         var user_pwd = $('input[name="user_pwd"]').val();
 
-        // $.getJSON("http://2001.shop.api.com/logindo?user_plone="+user_plone+"&user_pwd="+user_pwd+"&jsoncallback=?", function(data){
-        //   alert(data);
-        // });
-        //  console.log(user_pwd);
         $.post('/logdo',{user_plone:user_plone,user_pwd:user_pwd},function (res) {
             // console.log(res);
-            if(res.code=='00000'){
-                alert(res.msg);
+            if(res.code== '00000'){
                  location.href = "/"
+            }else{
+              alert(res.msg);
             }
-            // if(res.code=='00002'){
-            //     alert(res.msg);
-            // }
-            // if(res.code=='00000'){
-            //     location.href = "/"
-            // }
+
         },'json');
     });
 

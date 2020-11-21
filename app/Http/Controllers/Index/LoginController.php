@@ -21,9 +21,15 @@ class LoginController extends Controller
 //  dd($data);
        $url = "http://2001.shop.api.com/logindo";
        $res=$this->posturl($url,$data);
+<<<<<<< HEAD
         dd($res);
         if($res['code']=='00000'){
             Redis::hset('token'.$data['user_plone'],3600,$res['token']);
+=======
+        // dd($res);
+        if($res['code']==00000){
+            Redis::setex('token'.$data['user_plone'],3600,$res['token']);
+>>>>>>> a0d40c5974ad4af0275e8ef7cc2bf899606b0add
             return json_encode($res);
         }else{
             return json_encode($res);

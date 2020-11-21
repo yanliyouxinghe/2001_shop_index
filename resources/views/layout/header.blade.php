@@ -26,7 +26,7 @@
   <div class="wrap logoSearch">
    <!--logo-->
    <div class="logo">
-    <h1><img src="static/images/logo.png"/></h1>
+    <h1><img src="/static/images/logo.png"/></h1>
    </div>
    <!--search-->
    <div class="search">

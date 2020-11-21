@@ -17,7 +17,6 @@ function geturl($url){
 
 
 //post请求方式
-
 function posturl($url,$data){
     $data  = json_encode($data);    
     $headerArray =["Content-type:application/json;charset='utf-8'","Accept:application/json"];
@@ -30,8 +29,14 @@ function posturl($url,$data){
     curl_setopt($curl,CURLOPT_HTTPHEADER,$headerArray);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
     $output = curl_exec($curl);
+    // print_r($output);die;
+    //print_r(curl_errno($curl));die;
     curl_close($curl);
-    return json_decode($output,true);
+    return is_not_json($output)?$output:json_decode($output,true);
+}
+
+function is_not_json($str){
+    return is_null(json_decode($str));
 }
 
 ?>
