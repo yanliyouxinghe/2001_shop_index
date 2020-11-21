@@ -1,22 +1,28 @@
 <?php
-
 namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use App\Model\CartModel;
 use App\Model\GoodsModel;
 use App\Model\ProductModel;
+=======
+use PhpParser\Node\Stmt\Foreach_;
+
+>>>>>>> b43cd6c19b6aa88e2f4a5c1530bad1b8e0d7a1cc
 class CartController extends Controller
 {
     public function cart(){
 
         $cart = $this->getdata();
-        // dd($cart);
+        // print_r($cart);die;
        return view('cart.cart',compact('cart'));
     }
 
 
+
+    //购物车数据
     public function getdata(){
     $url = "http://2001.shop.api.com/cart";
     $data_json = geturl($url);
@@ -51,6 +57,7 @@ class CartController extends Controller
             $goods_attr_id = implode('|',$goods_attr_id); //imploade 将数组用|分割成字符串
             // dump($goods_attr_id);
 
+<<<<<<< HEAD
             $product = ProductModel::select('product_id','product_number','product_sn')->where(['goods_id'=>$goods_id,'goods_attr'=>$goods_attr_id])->first();
             // dd($product);
             if($product->product_number<$buy_number){
@@ -101,3 +108,70 @@ class CartController extends Controller
            
     }
 }
+=======
+    //购物车删除
+    public function cart_del(){
+        $data['cart_id'] = request()->cart_id;
+
+        $url = "http://2001.shop.api.com/cart_del";
+        $del_cart = posturl($url,$data);
+       // dd($del_cart);
+        // dd($del_cart['code']);
+        if($del_cart['code'] == 0){
+             return json_encode(['code'=>0,'msg'=>'OK']);
+        }else{
+            return json_encode(['code'=>1,'msg'=>'操作繁忙。。。']);
+        }
+    }
+
+
+    //减号
+    public function buy_jian(){
+        $data['cart_id'] = request()->cart_id; 
+        
+        $url = "http://2001.shop.api.com/buy_jian";
+        
+        $buy_jian = posturl($url,$data);
+        if($buy_jian['code'] == 0){
+            return json_encode(['code'=>0,'msg'=>'OK','price'=>$buy_jian['data'][0]]);
+        }else{
+            return json_encode(['code'=>1,'msg'=>'不能再少了']);
+        }
+    }
+    
+    //加号
+    public function buy_jia(){
+        $data['cart_id'] = request()->cart_id;
+        
+        $url = "http://2001.shop.api.com/buy_jia";
+        
+        $buy_jia = posturl($url,$data);
+        if($buy_jia['code'] == 0){
+            return json_encode(['code'=>0,'msg'=>'OK','price'=>$buy_jia['data'][0]]);
+        }else{
+            return json_encode(['code'=>1,'msg'=>$buy_jia['msg']]);
+        }
+    }
+   
+    //购物车总价格
+    public function cart_zprice(){
+        $cart_ids = request()->cart_ids;
+        $url = "http://2001.shop.api.com/cart_zprice";
+        $zprice = posturl($url,$cart_ids);
+        $zprices = $zprice['data'][0]['total'];
+        if($zprices){
+            return json_encode(['code'=>0,'msg'=>'OK','zprice'=>$zprices]);
+        }else{
+            return json_encode(['code'=>1,'msg'=>'Error']);
+        }
+    }
+
+}
+
+
+
+
+
+
+       
+>>>>>>> b43cd6c19b6aa88e2f4a5c1530bad1b8e0d7a1cc

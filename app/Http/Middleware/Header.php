@@ -24,6 +24,8 @@ class Header
         $count_cart = geturl($url);
         // dd($count_cart);
         $request->merge(['cartgoryInfo' => $cartgoryInfo,'count_cart' => $count_cart]);
+        // view()->share('cartgoryInfo',$cartgoryInfo);
+        // view()->share('count_cart',$count_cart);
         return $next($request);
     }
 }
