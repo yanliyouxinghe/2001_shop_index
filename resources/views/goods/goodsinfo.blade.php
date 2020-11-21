@@ -509,7 +509,6 @@ $(function(){
 			
 			//加入购物车成功
             if(res.code=='0'){
-              alert(res.msg);
               location.href="/cart";
             }
         },'json')
