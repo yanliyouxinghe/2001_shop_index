@@ -139,42 +139,7 @@ class LoginController extends Controller
           $token =  jwt::instance()->setuid($user->user_id)->encode()->gettoken();
         //   dd($token);
         return json_encode(['code'=>'00000','msg'=>'登录成功','token'=>$token]);
-        //   $data=json_encode($data,true);
-           
-        //   $user_plone=request()->$data['user_plone'];
-        //   dd($user_plone);
-        // $user_plone = $request->post('user_plone');
-        
-        // $user_pwd = $request->post('user_pwd');
-        // dump($user_pwd);
-        // $u = UserModel::where(['user_plone'=>$user_plone])->first();
-        // if(!$u){
-        //     $jyl=[
-        //             'code'=>00002,
-        //             'message'=>'没有此账号或账号错误',
-        //             'result'=>''
-        //         ];
-        // }else{
-        //     $res = password_verify($user_pwd,$u->user_pwd);
-        //     if(!$res){
-        //         $jyl=[
-        //             'code'=>00001,
-        //             'message'=>'密码错误',
-        //             'result'=>''
-        //         ];
-        //     }else{
-        //         session(['user_plone' => $u['user_plone']]);
-        //         session(['user_id' => $u['user_id']]);
-        //         session(['user_name' => $u['user_name']]);
-        //         $request->session()->save();
-        //         $jyl=[
-        //             'code'=>00000,
-        //             'message'=>'登录成功',
-        //             'result'=>''
-        //         ];
-        //     }
-        //    return json_encode($jyl,JSON_UNESCAPED_UNICODE);
-        // }
+
     }
     public function getuserinfo(){
         $token = request()->header('token');

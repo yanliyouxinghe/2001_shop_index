@@ -25,9 +25,6 @@ class ListController extends Controller
         $brandInfo=$getlist['data']['brandInfo'];
         $priceInfo=$getlist['data']['priceInfo'];
         $goodsInfo=$getlist['data']['goodsInfo'];
-  
-        // dd($brandInfo);
-       // dd($priceInfo);
 
         return view('list.list',['brandInfo'=>$brandInfo,'priceInfo'=>$priceInfo,'goodsInfo'=>$goodsInfo,'urls'=>$urls]);
     }
