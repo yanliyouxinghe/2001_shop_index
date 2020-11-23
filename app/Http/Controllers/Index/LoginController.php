@@ -15,12 +15,12 @@ class LoginController extends Controller
     }
 
     public function logindo(Request $request){
-      
        $data['user_plone'] = $request->user_plone;
        $data['user_pwd'] = $request->user_pwd;
 //  dd($data);
        $url = "http://2001.shop.api.com/logindo";
        $res=$this->posturl($url,$data);
+        print_r($res);
         if($res['code']=='00000'){
             Redis::hset('token'.$data['user_plone'],3600,$res['token']);
 
