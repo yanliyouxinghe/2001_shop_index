@@ -19,18 +19,26 @@ class CartController extends Controller
                     ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
                     ->where('user_id',$token)
                     ->get();
-
+     
         foreach ($cart_data as $key=>$val){
             $attr_name =[];
-            $attr_data = explode("|",$val['goods_attr_id']);
-            foreach($attr_data as $k=>$v){
-                $attr_Data=Goods_AttrModel::select('sh_goods_attr.attr_value','sh_attribute.attr_name')
-                     ->leftjoin('sh_attribute','sh_goods_attr.attr_id','=','sh_attribute.attr_id')
-                     ->where(['goods_attr_id'=>$v])
-                     ->get();
-            $attr_name[]= $attr_Data[0]['attr_name'].":".$attr_Data[0]['attr_value'];               
+            $val->goods_attr_id = trim($val->goods_attr_id,'');
+            //dump($val->goods_attr_id);
+
+            if($val->goods_attr_id && $val->goods_attr_id!==''){
+                $goods_attr_id = explode("|",$val->goods_attr_id);
+                if(count($goods_attr_id)){
+                   
+                    foreach($goods_attr_id as $k=>$v){
+                        $attr_Data=Goods_AttrModel::select('sh_goods_attr.attr_value','sh_attribute.attr_name')
+                            ->leftjoin('sh_attribute','sh_goods_attr.attr_id','=','sh_attribute.attr_id')
+                            ->where(['goods_attr_id'=>$v])
+                            ->get();
+                        $attr_name[]= $attr_Data[0]['attr_name'].":".$attr_Data[0]['attr_value'];               
+                    }
+                    $val['attr_nane']=$attr_name;
+                }
             }
-            $val['attr_nane']=$attr_name;
         }
         if(!count($cart_data)){
             $respoer = [

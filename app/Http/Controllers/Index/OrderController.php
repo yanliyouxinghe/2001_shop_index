@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-<<<<<<< HEAD
+
     public function order(){
         return view('order.order_list');
     }
-=======
+
     /**提交订单视图 */
     public function index(){
         //展示收货人信息
@@ -24,5 +24,4 @@ class OrderController extends Controller
         return view('order.order');
     }
     
->>>>>>> a0d40c5974ad4af0275e8ef7cc2bf899606b0add
 }
