@@ -89,9 +89,7 @@ $(document).ready(function(){
  </table>
  <div class="order_btm_btn">
   <a href="/" class="link_btn_01 buy_btn"/>继续购买</a>
-  <a href="order_confirm.html" class="link_btn_02 add_btn"/>共计金额
-    <strong class="rmb_icon zprice">0.00</strong>立即结算
-  </a>
+  <a href="javascript:void(0)" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon zprice">0.00</strong>立即结算</ a>
  </div>
 </section>
 @else
@@ -244,20 +242,21 @@ $(document).ready(function(){
 
     });
 
-    //跳转结算
-    $(document).on('click','.zprice',function(){
-      var cart_id = new Array();
-      $('.cart_ids:checked').each(function(){
-        cart_id.push($(this).val());
-      })
-      if (!cart_id.length) {
-			alert('最少选择一件商品哦！');
-			return;
-		}
-		
-		location.href='/confirm?cart_id='+cart_id;
+            //跳转结算
+    $(document).on('click','.add_btn',function(){
+      var cart_id = new Array();
+      $('.check2:checked').each(function(){
+        cart_id.push($(this).attr('cart_id'));
+      });
+      if (cart_id.length <= 0) {
+      alert('最少选择一件商品哦！');
+      return;
+     }
+     $.post('/addorder',{'cart_id':cart_id},function(ret){
+        console.log(ret);
+     });
+    
 
-    })
-
+    })
 
 </script>

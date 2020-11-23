@@ -90,6 +90,7 @@ $(document).ready(function(){
    <strong>订单商品</strong>
    <a href="cart.html">返回购物车修改</a>
   </caption>
+
   <tr>
    <td class="center"><a href="product.html"><img src="/jyl/upload/goods.jpg" style="width:50px;height:50px;"/></a></td>
    <td><a href="product.html">这里是产品名称</a></td>
@@ -109,28 +110,24 @@ $(document).ready(function(){
   <li>
    <dl>
     <dt>支付方式</dt>
-    <dd>
-     <label class="radio istrue"><input type="radio" name="pay"/>支付宝</label>
-     <label class="radio"><input type="radio" name="pay"/>微信支付</label>
-     <label class="radio"><input type="radio" name="pay"/>网银在线</label>
-     <label class="radio"><input type="radio" name="pay"/>余额支付</label>
+   <!-- istrue -->
+    <dd class="payType">
+      <label class="radio istrue" pay_type="1"><input type="radio" name="pay"/>支付宝</label>
+      <label class="radio" pay_type="2" ><input type="radio" name="pay"/>微信支付</label>
+      <label class="radio" pay_type="3"><input type="radio" name="pay"/>货到付款</label>
+      <label class="radio" pay_type="4"><input type="radio" name="pay"/>余额支付</label>
     </dd>
-    <dd>
-     <label>
-      <input type="checkbox"/>
-      使用余额￥<input type="text" value="59.00" class="textbox"/>
-      <mark>当前账户余额<strong class="rmb_icon">59.00</strong></mark>
-     </label>
-    </dd>
+
    </dl>
   </li>
   <li>
    <dl>
     <dt>配送方式</dt>
     <dd>
+     <label class="radio istrue"><input type="radio" name="peisong"/>快递</label>
+     <label class="radio"><input type="radio" name="peisong"/>自配送</label>
      <label class="radio"><input type="radio" name="peisong"/>物流</label>
-     <label class="radio istrue"><input type="radio" name="peisong"/>自配送</label>
-     <label class="radio"><input type="radio" name="peisong"/>快递</label>
+
     </dd>
    </dl>
   </li>
@@ -152,7 +149,7 @@ $(document).ready(function(){
 </body>
 <script scr="/static/jyl/js/jquery.js"></script>
 <script>
-/**删除 */
+  //ajax删除
   $(document).on('click','.del',function(){
     var _this = $(this);
     // var address_id = [];
@@ -175,5 +172,24 @@ $(document).ready(function(){
 
 
   })
+
+  //支付方式默认选中和配送方式默认选中 和 特效
+  $(document).on('click','.radio',function(){
+    var _this = $(this);
+    _this.siblings().removeClass('istrue');
+    _this.addClass('istrue');
+  })
+
+
+
+
+
+
+
+  		
+
+  
+  
+
 </script>
 </html>
