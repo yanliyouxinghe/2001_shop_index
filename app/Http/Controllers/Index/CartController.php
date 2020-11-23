@@ -76,7 +76,7 @@ class CartController extends Controller
             $product = ProductModel::select('product_id','product_number','product_sn')->where(['goods_id'=>$goods_id,'goods_attr'=>$goods_attr_id])->first();
             // print_r($product);
             
-            if($product['product_number']<$buy_number){
+            if($product['product_number']>$buy_number){
                 return json_encode(['code'=>'1005','msg'=>'商品库存不足']);
             }
         }
@@ -86,17 +86,7 @@ class CartController extends Controller
         // dd($cart);
         if($cart){
             //更新购买数量
-            $buy_number = $cart->buy_number+$buy_number;
-            if($goods_attr_id){
-                //规格查询
-                if($product->product_number<$buy_number){
-                    $buy_number = $product->product_number;
-                }
-            }else{
-                if($goods->goods_number<$buy_number){
-                    $buy_number = $goods->goods_number;
-                }
-            }
+            $buy_number = $cart['buy_number']+$buy_number;
             $res = CartModel::where('cart_id',$cart->cart_id)->update(['buy_number'=>$buy_number]);
             if($res){
                 return json_encode(['code'=>'0','msg'=>'添加成功']);
