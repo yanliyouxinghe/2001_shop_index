@@ -7,6 +7,8 @@ use App\Model\CartModel;
 use App\Model\GoodsModel;
 use App\Model\ProductModel;
 use PhpParser\Node\Stmt\Foreach_;
+use App\Model\GoodsAttrModel;
+use App\Model\Goods_AttrModel;
 class CartController extends Controller
 {
     public function cart(){
@@ -23,6 +25,24 @@ class CartController extends Controller
     $url = "http://2001.shop.api.com/cart";
     $data_json = geturl($url);
     return $data_json;
+    }
+
+    public function getattrprice(){
+        $goods_attr_id = request()->goods_attr_id;
+        $goods_id = request()->goods_id;
+        // print_r($goods_id);
+       $attr_price = Goods_AttrModel::whereIn('goods_attr_id',$goods_attr_id)
+                    ->sum('attr_price');
+                   //  dd($attr_price);
+        // $goods_price=GoodsModel::where('goods_id',$goods_id)->value('shop_price');
+        $shop_price=GoodsModel::where('goods_id',$goods_id)->value('shop_price')+$attr_price;
+        // $shop_price=$goods_price+$goods_price;
+        // print_r($goods_price);
+      
+       $shop_price = number_format($shop_price,2,".","");
+    //   print_r($end_price);
+       return json_encode(['code'=>0,'msg'=>'OK','data'=>$shop_price]);
+    //    dd($end_price);
     }
     
     //加入购物车
@@ -52,9 +72,11 @@ class CartController extends Controller
         if($goods_attr_id){
             $goods_attr_id = implode('|',$goods_attr_id); //imploade 将数组用|分割成字符串
             // dump($goods_attr_id);
+            // echo 123;
             $product = ProductModel::select('product_id','product_number','product_sn')->where(['goods_id'=>$goods_id,'goods_attr'=>$goods_attr_id])->first();
-            // dd($product);
-            if($product->product_number<$buy_number){
+            // print_r($product);
+            
+            if($product['product_number']<$buy_number){
                 return json_encode(['code'=>'1005','msg'=>'商品库存不足']);
             }
         }
@@ -101,7 +123,6 @@ class CartController extends Controller
         }
            
     }
-
 
 
 

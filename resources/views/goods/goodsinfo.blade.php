@@ -479,13 +479,48 @@ $(document).ready(function(){
 </html>
 <script src="/static/js/jquery.js"></script>
 <script>
-$(function(){
+
+    $('label').click(function(){
+          var goods_attr_id = getattrid();
+          getattrprice(goods_attr_id);
+   })
+
+  $(function(){
+    var goods_attr_id = getattrid();
+          getattrprice(goods_attr_id);
+  });
+
+    function getattrid(){
+      var goods_attr_id = new Array();
+              $('label.isTrue').each(function(i){
+                goods_attr_id.push($(this).attr('goods_attr_id'));
+              });
+              return goods_attr_id;
+    }
+    function getattrprice(goods_attr_id){
+      if(goods_attr_id.length > 0){
+                var goods_id = $('.goods_id').val();
+                $.get('/getattrprice',{'goods_attr_id':goods_attr_id,'goods_id':goods_id},function(res){
+                  $('.rmb_icon').text(res.data);
+                },'json');
+              }else{
+                return false;
+          }
+    }
+    $(function(){
   //+号
           $('.plus').click(function(){
             var num=$(this).prev().val();
             var num=parseInt(num)+1;
+            var goods_number="{{$v['goods_number']}}";
+            if(num>goods_number){
+              alert('不能再多啦');
+              return ;
+            }else{
+               $(this).prev().val(num);
+            }
             // alert(num);
-            $(this).prev().val(num);
+           
             
         })
         //-号
@@ -522,11 +557,12 @@ $(function(){
         //  alert(buy_number);  
         var goods_attr_id = new Array();
     //属性id
-        $('.isTrue').each(function(i){
-         goods_attr_id.push($(this).attr('goods_attr_id'));
-                  // alert(goods_attr_id);
-                  // alert(goods_attr_id);  
-          })
+
+              var goods_attr_id = new Array();
+              $('.isTrue').each(function(i){
+                goods_attr_id.push($(this).attr('goods_attr_id'));
+              });
+            
           $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id},function(res){
               
 			//未登录
@@ -543,6 +579,6 @@ $(function(){
         },'json')
          
       })
-})
+    });
 </script>
 

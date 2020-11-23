@@ -20,6 +20,7 @@ Route::get('/list/{id}','Index\ListController@list');  //列表页
 Route::get('/confirm','Index\OrderController@index');  //提交订单视图页面
 
 Route::get('/goods/{goods_id}','Index\GoodsController@goodsinfo');//详情
+Route::get('/getattrprice','Index\CartController@getattrprice');
 Route::post('/addcart','Index\CartController@addcart');//加入购物车
 Route::get('/login','Index\LoginController@login');//登录
 
