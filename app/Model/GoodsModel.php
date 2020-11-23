@@ -13,7 +13,6 @@ class GoodsModel extends Model
       public $timestamps = false;
       //首页轮播图
       public static function getslicedata(){
-            $where['is_show'] = 1;
-            return self::select('goods_id','goods_img')->where($where)->take(3)->orderBy('goods_id','desc')->get();
+            return self::select('goods_id','goods_img')->where(['is_new'=>1,'is_hot'=>1,'is_best'=>1])->take(3)->orderBy('shop_price','desc')->get();
       }
 }

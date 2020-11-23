@@ -26,7 +26,7 @@
   <div class="wrap logoSearch">
    <!--logo-->
    <div class="logo">
-    <h1><img src="/static/images/logo.png"/></h1>
+    <h1><img src="https://image.16pic.com/00/53/13/16pic_5313999_s.jpg?imageView2/0/format/png"/></h1>
    </div>
    <!--search-->
    <div class="search">

@@ -16,8 +16,6 @@ class CartController extends Controller
        return view('cart.cart',compact('cart'));
     }
 
-
-
     //购物车数据
     public function getdata(){
     $token = "2";
