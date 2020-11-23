@@ -17,7 +17,7 @@ Route::middleware(['header'])->group(function () {
 
 Route::get('/','Index\IndexController@index');  //前台首页
 Route::get('/list/{id}','Index\ListController@list');  //列表页
-Route::get('/confirm','Index\OrderController@index');  //提交订单视图页面
+Route::post('/confirm','Index\OrderController@index');  //提交订单视图页面
 Route::post('/address_del','Index\OrderController@address_del');  //收货地址ajax删除
 Route::get('/orderdo','Index\OrderController@orderdo');  //执行提交订单
 

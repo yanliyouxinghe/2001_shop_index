@@ -15,13 +15,17 @@ class OrderController extends Controller
 {
     /**提交订单视图 */
     public function index(){
-         $token="1";
-         $data['token']=$token;
+        $token="1";
+        $data['token']=$token;
         //展示收货人信息
         $url = 'http://2001.shop.api.com/addressinfo';
         $addressinfo = posturl($url,$data);
+        //展示购物车商品数据
+        $urls = 'http://2001.shop.api.com/cartgoodsinfo';
+        $cartgoodsinfo = posturl($urls,$data);
+        print_r($cartgoodsinfo);die;
          
-        return view('order.order',['addressinfo'=>$addressinfo['data']]);
+        return view('order.order',['addressinfo'=>$addressinfo['data'],'cartgoodsinfo'=>$cartgoodsinfo['data']]);
     }
 
     /**收货地址ajax删除 */

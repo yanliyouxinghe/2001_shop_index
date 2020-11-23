@@ -242,7 +242,7 @@ $(document).ready(function(){
 
     });
 
-            //跳转结算
+  //跳转结算
     $(document).on('click','.add_btn',function(){
       var cart_id = new Array();
       $('.check2:checked').each(function(){

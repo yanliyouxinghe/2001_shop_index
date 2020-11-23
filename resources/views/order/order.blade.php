@@ -90,19 +90,24 @@ $(document).ready(function(){
    <strong>订单商品</strong>
    <a href="cart.html">返回购物车修改</a>
   </caption>
-
+ @if($cartgoodsinfo)
+   @foreach($cartgoodsinfo as $v)
   <tr>
-   <td class="center"><a href="product.html"><img src="/jyl/upload/goods.jpg" style="width:50px;height:50px;"/></a></td>
-   <td><a href="product.html">这里是产品名称</a></td>
+   <td class="center">
+    <a href="product.html"><img src="{{$v['goods_img']}}" style="width:50px;height:50px;"/></a>
+   </td>
+   <td><a href="product.html">{{$v['goods_name']}}</a></td>
    <td>
     <p>颜色：黑色</p>
     
     <p>规格：M码</p>
    </td>
-   <td class="center"><span class="rmb_icon">15.88</span></td>
+   <td class="center"><span class="rmb_icon">{{$v['shop_price']}}</span></td>
    <td class="center"><span>1</span></td>
    <td class="center"><strong class="rmb_icon">15.88</strong></td>
   </tr>
+  @endforeach
+  @endif
  
  </table>
  <!--支付与配送-->
