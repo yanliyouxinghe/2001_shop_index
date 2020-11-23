@@ -270,9 +270,9 @@ $(document).ready(function(){
      <dl class="horizontal horizontal_attr">
       <dt>数量：</dt>
       <dd>
-       <input type="button" value="-" class="jj_btn"/>
+       <input type="button" value="-" class="jj_btn mins"/>
        <input type="text" value="1" readonly class="num buy_number"/>
-       <input type="button" value="+" class="jj_btn"/>
+       <input type="button" value="+" class="jj_btn plus"/>
        <span>库存：{{$v['goods_number']}}件</span>
       </dd>
      </dl>
@@ -480,6 +480,38 @@ $(document).ready(function(){
 <script src="/static/js/jquery.js"></script>
 <script>
 $(function(){
+  //+号
+          $('.plus').click(function(){
+            var num=$(this).prev().val();
+            var num=parseInt(num)+1;
+            // alert(num);
+            $(this).prev().val(num);
+            
+        })
+        //-号
+        $('.mins').click(function(){
+            num=$(this).next().val();
+            num=parseInt(num-1);
+            if(num<1){
+                alert('最小购买数量不能小于1');
+            }else{
+                $(this).next().val(num);
+            }
+        })
+        $('.itxt').blur(function(){
+            // alert(111);
+            var num = $(this).val();
+            // alert(num);
+            if(num<1){
+                alert('最小购买数量不能小于一');
+                 num  = $(this).val('1');
+            }
+             var buy_number=$('.itxt').val();
+            // alert(buy_number);
+            if((buy_number<10)){
+                alert('库存紧张');
+            }
+        })
     //加入购物车
     $('.add').click(function(){
          //商品id
@@ -502,14 +534,11 @@ $(function(){
                 alert(res.msg);
                 location.href="/login?refer="+location.href;
             }
-			//缺少参数  商品下架  货品不足
-            if(res.code=='1003' || res.code=='1004' || res.code=='1005'){
-                alert(res.msg);
-            }
-			
 			//加入购物车成功
             if(res.code=='0'){
               location.href="/cart";
+            }else{
+              alert(res.msg);
             }
         },'json')
          

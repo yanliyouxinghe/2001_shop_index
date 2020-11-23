@@ -12,7 +12,7 @@ class CartController extends Controller
     public function cart(){
 
         $cart = $this->getdata();
-        // print_r($cart);die;
+        // print_r($cart);die; 
        return view('cart.cart',compact('cart'));
     }
 
