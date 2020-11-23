@@ -76,14 +76,22 @@ $(document).ready(function(){
     <input type="text" value="{{$v['buy_number']}}" class="number" readonly/>
     <input type="button" value="+" class="jj_btn jia"/>
    </td>
-   <td class="center"><strong class="rmb_icon"><span class="price">{{$v['shop_price']*$v['buy_number']}}</span></strong></td>
-   <td class="center"><a href="javascript:void(0)" class="del" cart_id = "{{$v['cart_id']}}">删除</a></td>
+   <td class="center">
+      <strong class="rmb_icon">
+          <span class="price">{{$v['shop_price']*$v['buy_number']}}</span>
+      </strong>
+      </td>
+      <td class="center">
+      <a href="javascript:void(0)" class="del" cart_id = "{{$v['cart_id']}}">删除</a>
+      </td>
   </tr>
    @endforeach
  </table>
  <div class="order_btm_btn">
   <a href="/" class="link_btn_01 buy_btn"/>继续购买</a>
-  <a href="order_confirm.html" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon zprice">0.00</strong>立即结算</a>
+  <a href="order_confirm.html" class="link_btn_02 add_btn"/>共计金额
+    <strong class="rmb_icon zprice">0.00</strong>立即结算
+  </a>
  </div>
 </section>
 @else
@@ -163,7 +171,8 @@ $(document).ready(function(){
     
 
     }
-//删除
+
+   //删除
     $(document).on('click','.del',function(){
         var _this = $(this);
         var cart_id = _this.attr('cart_id');
@@ -182,7 +191,8 @@ $(document).ready(function(){
         return false;
     });
 
-//购买数量减号
+
+    //购买数量减号
     $(document).on('click','.jian',function(){
       
       var _this = $(this);
@@ -233,5 +243,21 @@ $(document).ready(function(){
 
 
     });
+
+    //跳转结算
+    $(document).on('click','.zprice',function(){
+      var cart_id = new Array();
+      $('.cart_ids:checked').each(function(){
+        cart_id.push($(this).val());
+      })
+      if (!cart_id.length) {
+			alert('最少选择一件商品哦！');
+			return;
+		}
+		
+		location.href='/confirms?cart_id='+cart_id;
+
+    })
+
 
 </script>
