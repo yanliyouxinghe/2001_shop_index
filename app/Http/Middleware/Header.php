@@ -15,13 +15,14 @@ class Header
      */
     public function handle($request, Closure $next)
     {   
-
+        $token = "2";
+        $datas['token'] = $token;
         //首页菜单栏
         $data = CartgoryModel::get();
         $cartgoryInfo = infinite($data);
         //购物车商品数量
         $url = "http://2001.shop.api.com/cart_count";
-        $count_cart = geturl($url);
+        $count_cart = posturl($url,$datas);
         $request->merge(['cartgoryInfo' => $cartgoryInfo,'count_cart' => $count_cart]);
         // view()->share('cartgoryInfo',$cartgoryInfo);
         // view()->share('count_cart',$count_cart);

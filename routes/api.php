@@ -25,7 +25,7 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::get('/','Api\IndexController@index');   //前台首页
 
     // Route::any('goods','Api\GoodsController@goods');//详情
-    Route::any('getuserinfo','Api\LoginController@getuserinfo');//
+    Route::any('getuserinfo','Api\LoginController@getuserinfo');//k
     Route::any('/','Api\IndexController@index');   //前台首页
 
     Route::get('goods/{goods_id}','Api\GoodsController@goods');//详情
@@ -38,12 +38,11 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::get('cartgoodsinfo','Api\OrderController@cartgoodsinfo');    //提交订单页面商品数据
 
     Route::post('logindo','Api\LoginController@logindo');//执行登录
-    Route::get('cart_count','Api\CartController@cart_count'); //购物车数据条数
     Route::get('getsondata','Api\UserController@getsondata'); //三级联动
     Route::get('store','Api\UserController@store'); //添加地址   地址列表
 
-
-    Route::get('cart','Api\CartController@cartdata'); //购物车列表数据
+    Route::post('cart_count','Api\CartController@cart_count'); //购物车数据条数
+    Route::post('cart','Api\CartController@cartdata'); //购物车列表数据
     Route::post('cart_del','Api\CartController@cart_del'); //购物车删除
     Route::post('buy_jian','Api\CartController@buy_jian'); //减少购买数量
     Route::post('buy_jia','Api\CartController@buy_jia'); //加购买数量

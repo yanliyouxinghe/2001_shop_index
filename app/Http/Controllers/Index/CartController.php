@@ -10,9 +10,9 @@ use PhpParser\Node\Stmt\Foreach_;
 class CartController extends Controller
 {
     public function cart(){
-
+        
         $cart = $this->getdata();
-        // print_r($cart);die;
+    //    print_r($cart);die;
        return view('cart.cart',compact('cart'));
     }
 
@@ -20,8 +20,12 @@ class CartController extends Controller
 
     //购物车数据
     public function getdata(){
+    $token = "2";
+    $data['token'] = $token;
     $url = "http://2001.shop.api.com/cart";
-    $data_json = geturl($url);
+    $data_json = posturl($url,$data);
+    //   print_r($data_json);die;
+
     return $data_json;
     }
     
@@ -38,6 +42,7 @@ class CartController extends Controller
         // $data=json_encode($data);
         
         // dd($data);
+
         // 判断商品id 购买数量 是否缺少参数
         if(!$goods_id || !$buy_number){
             return  json_encode(['code'=>'1003','msg'=>'缺少参数']);
@@ -107,6 +112,8 @@ class CartController extends Controller
 
     //购物车删除
     public function cart_del(){
+        $token = "2";
+        $data['token'] = $token;
         $data['cart_id'] = request()->cart_id;
 
         $url = "http://2001.shop.api.com/cart_del";
@@ -123,6 +130,8 @@ class CartController extends Controller
 
     //减号
     public function buy_jian(){
+        $token = "2";
+        $data['token'] = $token;
         $data['cart_id'] = request()->cart_id; 
         
         $url = "http://2001.shop.api.com/buy_jian";
@@ -137,6 +146,8 @@ class CartController extends Controller
     
     //加号
     public function buy_jia(){
+        $token = "2";
+        $data['token'] = $token;
         $data['cart_id'] = request()->cart_id;
         
         $url = "http://2001.shop.api.com/buy_jia";
@@ -151,6 +162,8 @@ class CartController extends Controller
    
     //购物车总价格
     public function cart_zprice(){
+        $token = "2";
+        $data['token'] = $token;
         $cart_ids = request()->cart_ids;
         $url = "http://2001.shop.api.com/cart_zprice";
         $zprice = posturl($url,$cart_ids);

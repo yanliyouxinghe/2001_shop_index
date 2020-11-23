@@ -11,11 +11,10 @@ use App\Model\GoodsAttrModel;
 use Illuminate\Support\Facades\DB;
 class CartController extends Controller
 {   
-
     //购物车列表数据
     public function cartdata(){
-        $token = '2';
-        
+        $token = request()->input('token');
+
         $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_thumb')
                     ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
                     ->where('user_id',$token)
@@ -33,7 +32,6 @@ class CartController extends Controller
             }
             $val['attr_nane']=$attr_name;
         }
-        // dd($cart_data);
         if(!count($cart_data)){
             $respoer = [
                 'code'=>1,
@@ -44,16 +42,15 @@ class CartController extends Controller
             $respoer = [
                 'code'=>0,
                 'msg'=>'OK',
-                'data'=>$cart_data
+                'data'=>$cart_data 
             ];
         }
-       
     	return json_encode($respoer);
     }
 
     //购物车商品数量
     public function cart_count(){
-        $token = '2';
+        $token = request()->input('token');
         $cart_count = CartModel::where('user_id',$token)->count();
         $respoer = [
             'code'=>0,
@@ -64,7 +61,7 @@ class CartController extends Controller
     }
 
     public function cart_del(){
-        $token = '2';
+        $token = request()->input('token');
         $cart_id = request()->input('cart_id');
         
         $del = CartModel::where(['user_id'=>$token,'cart_id'=>$cart_id])->delete();
@@ -87,7 +84,8 @@ class CartController extends Controller
 
     //减号
     public function buy_jian(){
-        $token = '2';
+        $token = request()->input('token');
+
         $cart_id = request()->input('cart_id');
         $buy = CartModel::where(['user_id'=>$token,'cart_id'=>$cart_id])->value('buy_number');
         if($buy > 1){
@@ -109,7 +107,8 @@ class CartController extends Controller
 
     //加号
     public function buy_jia(){
-        $token = '2';
+        $token = request()->input('token');
+
         $cart_id = request()->input('cart_id');
 
         $buy = CartModel::select('sh_cart.buy_number','sh_goods.goods_number')
@@ -153,7 +152,8 @@ class CartController extends Controller
 
         //购物车总价格
         public function cart_zprice(){
-            $token = '2';
+            $token = request()->input('token');
+
             $cart_ids = request()->all()?:request()->getContent();
             $cart_ids = implode($cart_ids,',');
              $total = DB::select("select sum(buy_number*shop_price) as total from sh_cart where cart_id in ($cart_ids)");
