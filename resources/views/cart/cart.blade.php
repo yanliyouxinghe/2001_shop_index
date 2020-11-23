@@ -255,7 +255,7 @@ $(document).ready(function(){
 			return;
 		}
 		
-		location.href='/confirms?cart_id='+cart_id;
+		location.href='/confirm?cart_id='+cart_id;
 
     })
 
