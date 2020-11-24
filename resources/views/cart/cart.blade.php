@@ -62,7 +62,7 @@ $(document).ready(function(){
    @foreach($cart['data'] as $v)
   <tr>
    <td class="center"><input type="checkbox" cart_id="{{$v['cart_id']}}" class="check2"/></td>
-   <td class="center"><a href="/goods/{{$v['goods_id']}}"><img src="{{$v['goods_thumb']}}" style="width:50px;height:50px;"/></a></td>
+   <td class="center"><a href="/goods/{{$v['goods_id']}}"><img src="{{$v['goods_img']}}" style="width:50px;height:50px;"/></a></td>
    <td><a href="/goods/{{$v['goods_id']}}">{{$v['goods_name']}}</a></td>
    <td>
     @if(isset($v['attr_nane']))

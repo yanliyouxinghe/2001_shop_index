@@ -15,7 +15,7 @@ class CartController extends Controller
     public function cartdata(){
         $token = request()->input('token');
 
-        $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_thumb')
+        $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_img')
                     ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
                     ->where('user_id',$token)
                     ->get();
