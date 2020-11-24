@@ -42,7 +42,7 @@ class OrderController extends Controller
 
     /**api收货地址ajax删除 */
     public function address_del(){
-        $token = request()->input('token');
+        $token=request()->input('token');
         $address_id = request()->address_id;
         $address_del = UseraddressModel::where(['user_id'=>$token,'address_id'=>$address_id])->update(['is_del'=>2]);
         if($address_del){

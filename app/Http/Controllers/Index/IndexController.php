@@ -11,7 +11,6 @@ class IndexController extends Controller
 {
     /** 前台首页 */
     public function index(){
- 
         //轮播图展示
         $url = "http://2001.shop.api.com/slideshow";
         $slideshow = geturl($url);
