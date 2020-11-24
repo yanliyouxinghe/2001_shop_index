@@ -52,5 +52,20 @@ class OrderController extends Controller
         $account = posturl($url,$data);
         print_r($account);die;
     }
+
+    /**支付 */
+    public function pay($order_id){
+
+    }
+
+    /**支付宝同步跳转 */
+    public function return_url(){
+
+    }
+
+    /**支付宝异步通知 */
+    public function notify_url(){
+
+    }
     
 }
