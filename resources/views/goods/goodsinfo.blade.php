@@ -193,26 +193,15 @@ $(document).ready(function(){
 <section class="wrap product_detail">
  <!--img:left-->
 
-
+ @foreach($goodsinfo as $v)
  <div class="gallery">
   <div>
-    <div id="preview" class="spec-preview"> <span class="jqzoom"><img jqimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" /></span> </div>
+    <div id="preview" class="spec-preview"> <span class="jqzoom"><img  jqimg="{{$v['goods_img']}}" src="{{$v['goods_img']}}" width="440px";height="5500px"; /></span> </div>
     <!--缩图开始-->
     <div class="spec-scroll"> <a class="prev">&lt;</a> <a class="next">&gt;</a>
       <div class="items">
         <ul>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods004.jpg" src="/jyl/upload/goods004small.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
+          <li><img bimg="/{{$v['goods_img']}}" src="{{$v['goods_img']}}" onmousemove="preview(this);"></li>
         </ul>
       </div>
     </div>
@@ -222,7 +211,7 @@ $(document).ready(function(){
  <!--text:right-->
  <div class="rt_infor">
   <!--lt_infor-->
-  @foreach($goodsinfo as $v)
+ 
   <div class="goods_infor">
    <h2>{{$v['goods_name']}}</h2>
    <ul>
@@ -286,21 +275,6 @@ $(document).ready(function(){
   </div>
 
   <!--rt_infor-->
-  <div class="shop_infor">
-   <dl class="business_card">
-    <dt>xx有限公司</dt>
-    <dd>资质：生产商</dd>
-    <dd>联系人：*先生（先生）</dd>
-    <dd>邮件：******@Foxmail.com</dd>
-    <dd>电话：4008-******</dd>
-    <dd>所在地：陕西省西安市</dd>
-    <dd>地址：陕西省西安市**区**街232号</dd>
-    <dd class="center">
-     <a href="shop.html" class="link_btn">进入店铺</a>
-     <a class="link_btn">收藏店铺</a>
-    </dd>
-   </dl>
-  </div>
  </div>
 </section>
 <!--detail-->
@@ -499,7 +473,7 @@ $(document).ready(function(){
     }
     function getattrprice(goods_attr_id){
       if(goods_attr_id.length > 0){
-                var goods_id = $('.goods_id').val();
+                var goods_id ="{{$v['goods_id']}}";
                 $.get('/getattrprice',{'goods_attr_id':goods_attr_id,'goods_id':goods_id},function(res){
                   $('.rmb_icon').text(res.data);
                 },'json');

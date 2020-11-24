@@ -30,16 +30,15 @@ class CartController extends Controller
     public function getattrprice(){
         $goods_attr_id = request()->goods_attr_id;
         $goods_id = request()->goods_id;
-        // print_r($goods_id);
+        // print_r($goods_id);die;
        $attr_price = Goods_AttrModel::whereIn('goods_attr_id',$goods_attr_id)
                     ->sum('attr_price');
                    //  dd($attr_price);
-        // $goods_price=GoodsModel::where('goods_id',$goods_id)->value('shop_price');
-        $shop_price=GoodsModel::where('goods_id',$goods_id)->value('shop_price')+$attr_price;
-        // $shop_price=$goods_price+$goods_price;
-        // print_r($goods_price);
-      
+                //    print_r($attr_price);die;
+        $shop_price=GoodsModel::where(['goods_id'=>$goods_id])->value('shop_price')+$attr_price;
+        // print_r($shop_price);die;
        $shop_price = number_format($shop_price,2,".","");
+       
     //   print_r($end_price);
        return json_encode(['code'=>0,'msg'=>'OK','data'=>$shop_price]);
     //    dd($end_price);
