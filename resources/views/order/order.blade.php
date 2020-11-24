@@ -85,44 +85,25 @@ $(document).ready(function(){
 <table class="order_table">
   <caption>
    <strong>订单商品</strong>
-   <a href="cart.html">返回购物车修改</a>
+   <a href="/cart">返回购物车修改</a>
   </caption>
-  <tbody><tr>
-   <td class="center"><a href="product.html"><img src="upload/goods.jpg" style="width:50px;height:50px;"></a></td>
-   <td><a href="product.html">这里是产品名称</a></td>
-   <td>
-    <p>颜色：黑色</p>
-    
-    <p>规格：M码</p>
-   </td>
-   <td class="center"><span class="rmb_icon">15.88</span></td>
-   <td class="center"><span>1</span></td>
-   <td class="center"><strong class="rmb_icon">15.88</strong></td>
-  </tr>
+  <tbody>
+@foreach($account as $kk=>$vv)
   <tr>
-   <td class="center"><a href="product.html"><img src="upload/goods007.jpg" style="width:50px;height:50px;"></a></td>
-   <td style="width:200px;"><a href="product.html">这里是产品名称</a></td>
+   <td class="center"><a href="/goods/{{$vv['goods_id']}}"><img src="{{$vv['goods_img']}}" style="width:50px;height:50px;"></a></td>
+   <td><a href="product.html">{{$vv['goods_name']}}</a></td>
    <td>
-    <p>颜色：黑色</p>
-    
-    <p>规格：M码</p>
+   @if(isset($vv['attr']))
+   @foreach($vv['attr'] as $vvv)
+    <p>{{$vvv}}</p>
+  @endforeach
+    @endif
    </td>
-   <td class="center"><span class="rmb_icon">15.88</span></td>
-   <td class="center"><span>1</span></td>
-   <td class="center"><strong class="rmb_icon">15.88</strong></td>
+   <td class="center"><span class="rmb_icon">{{$vv['shop_price']}}</span></td>
+   <td class="center"><span>{{$vv['buy_number']}}</span></td>
+   <td class="center"><strong class="rmb_icon">{{$vv['buy_number']*$vv['shop_price']}}</strong></td>
   </tr>
-  <tr>
-   <td class="center"><a href="product.html"><img src="upload/goods008.jpg" style="width:50px;height:50px;"></a></td>
-   <td style="width:200px;"><a href="product.html">这里是产品名称</a></td>
-   <td>
-    <p>颜色：黑色</p>
-    
-    <p>规格：M码</p>
-   </td>
-   <td class="center"><span class="rmb_icon">15.88</span></td>
-   <td class="center"><span>1</span></td>
-   <td class="center"><strong class="rmb_icon">15.88</strong></td>
-  </tr>
+@endforeach
  </tbody></table>
 
 

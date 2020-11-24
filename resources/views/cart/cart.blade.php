@@ -254,9 +254,7 @@ $(document).ready(function(){
       return;
      }
     if(cart_id){
-        $.post('/addorder',{'cart_id':cart_id},function(ret){
-        console.log(ret);
-        });
+        location.href="/addorder?cart_id="+cart_id;
     }else{
       return false;
     }

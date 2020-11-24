@@ -26,9 +26,17 @@ class OrderController extends Controller
         $url = 'http://2001.shop.api.com/addressinfo';
         $addressinfo = posturl($url,$data);
         //展示购物车商品数据
-        // print_r($addressinfo);die;
-         
-        return view('order.order',['addressinfo'=>$addressinfo['data']]);
+        
+        //结算购物车
+        $data['cart_id'] = request()->cart_id;
+        if(!$data['cart_id']){
+            return redirect('/cart');
+        }
+        $url = "http://2001.shop.api.com/account";
+        $account = posturl($url,$data);
+        // print_r($account['data']);die;
+
+        return view('order.order',['addressinfo'=>$addressinfo['data'],'account'=>$account['data']]);
     }
 
     /**收货地址ajax删除 */
@@ -45,12 +53,10 @@ class OrderController extends Controller
         }
     }
 
-    public function addorder(){
-        $data['cart_id'] = request()->input('cart_id');
+    // public function addorder(){
+      
+    //     return view('order.order',['account'=>$account['data']]);
         
-        $url = "http://2001.shop.api.com/account";
-        $account = posturl($url,$data);
-        print_r($account);die;
-    }
+    // }
     
 }
