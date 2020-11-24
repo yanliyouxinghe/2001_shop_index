@@ -36,133 +36,7 @@ $(document).ready(function(){
 </head>
 <body>
 <!--header-->
-<header>
-  <!--topNavBg-->
-  <div class="topNavBg">
-   <div class="wrap">
-   <!--topLeftNav-->
-    <ul class="topLtNav">
-     <li><a href="login.html" class="obviousText">亲，请登录</a></li>
-     <li><a href="register.html">注册</a></li>
-     <li><a href="#">移动端</a></li>
-    </ul>
-   <!--topRightNav-->
-    <ul class="topRtNav">
-     <li><a href="user.html">个人中心</a></li>
-     <li><a href="cart.html" class="cartIcon">购物车<i>0</i></a></li>
-     <li><a href="favorite.html" class="favorIcon">收藏夹</a></li>
-     <li><a href="user.html">商家中心</a></li>
-     <li><a href="article_read.html" class="srvIcon">客户服务</a></li>
-     <li><a href="union_login.html">联盟管理</a></li>
-    </ul>
-   </div>
-  </div>
-  <!--logoArea-->
-  <div class="wrap logoSearch">
-   <!--logo-->
-   <div class="logo">
-    <h1><img src="/jyl/images/logo.png"/></h1>
-   </div>
-   <!--search-->
-   <div class="search">
-    <ul class="switchNav">
-     <li class="active" id="chanpin">产品</li>
-     <li id="shangjia">商家</li>
-     <li id="zixun">搭配</li>
-     <li id="wenku">文库</li>
-    </ul>
-    <div class="searchBox">
-     <form>
-      <div class="inputWrap">
-      <input type="text" placeholder="输入产品关键词或货号"/>
-      </div>
-      <div class="btnWrap">
-      <input type="submit" value="搜索"/>
-      </div>
-     </form>
-     <a href="#" class="advancedSearch">高级搜索</a>
-    </div>
-   </div>
-  </div>
-  <!--nav-->
-  <nav>
-<ul class="wrap navList">
-<li class="category">
-<a>全部产品分类</a>
-<dl class="asideNav indexAsideNav">
-<dt><a href="channel.html">女装</a></dt>
-<dd>
-<a href="#">夏装新</a>
-<a href="#">连衣裙</a>
-<a href="#">T恤</a>
-<a href="#">衬衫</a>
-<a href="#">裤子</a>
-<a href="#">牛仔裤</a>
-<a href="#">背带裤</a>
-<a href="#">短外套</a>
-<a href="#">时尚外套</a>
-<a href="#">风衣</a>
-<a href="#">毛衣</a>
-<a href="#">背心</a>
-<a href="#">吊带</a>
-<a href="#">民族服装</a>
-</dd>
-<dt><a href="channel.html">男装</a></dt>
-<dd>
-<a href="#">衬衫</a>
-<a href="#">背心</a>
-<a href="#">西装</a>
-<a href="#">POLO衫</a>
-<a href="#">马夹</a>
-<a href="#">皮衣</a>
-<a href="#">毛衣</a>
-<a href="#">针织衫</a>
-<a href="#">牛仔裤</a>
-<a href="#">外套</a>
-<a href="#">夹克</a>
-<a href="#">卫衣</a>
-<a href="#">风衣</a>
-<a href="#">民族风</a>
-<a href="#">原创设计</a>
-<a href="#">大码</a>
-<a href="#">情侣装</a>
-<a href="#">开衫</a>
-<a href="#">运动裤</a>
-<a href="#">工装裤</a>
-</dd>
-</dl>
-</li>
-<li>
-<a href="index.html" class="active">首页</a>
-</li>
-<li>
-<a href="#">时尚搭配</a>
-</li>
-<li>
-<a href="channel.html">原创设计</a>
-</li>
-<li>
-<a href="channel.html">时尚代购</a>
-</li>
-<li>
-<a href="channel.html">民族风</a>
-</li>
-<li>
-<a href="information.html">时尚搭配</a>
-</li>
-<li>
-<a href="library.html">搭配知识</a>
-</li>
-<li>
-<a href="#">促销专区</a>
-</li>
-<li>
-<a href="#">其他</a>
-</li>
-</ul>
-</nav>
-
- </header>
+@include('layout.header')
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑
@@ -494,24 +368,27 @@ $(function(){
          goods_attr_id.push($(this).attr('goods_attr_id'));
                   // alert(goods_attr_id);
                   // alert(goods_attr_id);  
-          })
+          });
+          // alert(goods_attr_id);
+          if(goods_attr_id==''){
+             goods_attr_id = [];
+          }
           $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id},function(res){
-              
+              console.log();
 			//未登录
             if(res.code=='1001'){
                 alert(res.msg);
                 location.href="/login?refer="+location.href;
             }
-			//缺少参数  商品下架  货品不足
-            if(res.code=='1003' || res.code=='1004' || res.code=='1005'){
-                alert(res.msg);
-            }
-			
+
 			//加入购物车成功
             if(res.code=='0'){
               location.href="/cart";
+            }else{
+               alert(res.msg);
             }
-        },'json')
+
+        },'json');
          
       })
 })

@@ -10,18 +10,19 @@ use PhpParser\Node\Stmt\Foreach_;
 class CartController extends Controller
 {
     public function cart(){
-
+        
         $cart = $this->getdata();
-        // print_r($cart);die;
+    //    print_r($cart);die;
        return view('cart.cart',compact('cart'));
     }
 
-
-
     //购物车数据
     public function getdata(){
+    $token = "2";
+    $data['token'] = $token;
     $url = "http://2001.shop.api.com/cart";
-    $data_json = geturl($url);
+    $data_json = posturl($url,$data);
+    //   print_r($data_json);die;
     return $data_json;
     }
     
@@ -38,6 +39,7 @@ class CartController extends Controller
         // $data=json_encode($data);
         
         // dd($data);
+
         // 判断商品id 购买数量 是否缺少参数
         if(!$goods_id || !$buy_number){
             return  json_encode(['code'=>'1003','msg'=>'缺少参数']);
@@ -49,35 +51,36 @@ class CartController extends Controller
             return  json_encode(['code'=>'1004','msg'=>'商品已下架']);
         }
          //查询product的库存 购买数量大于库存  提示库存不足
-        if($goods_attr_id){
+        if(isset($goods_attr_id)){
             $goods_attr_id = implode('|',$goods_attr_id); //imploade 将数组用|分割成字符串
             // dump($goods_attr_id);
             $product = ProductModel::select('product_id','product_number','product_sn')->where(['goods_id'=>$goods_id,'goods_attr'=>$goods_attr_id])->first();
+            // print_r($product);die;
             // dd($product);
             if($product->product_number<$buy_number){
+                return json_encode(['code'=>'1005','msg'=>'商品库存不足']);
+            }
+        }else{
+             $goods_number = GoodsModel::select('goods_id','goods_number','goods_sn')->where(['goods_id'=>$goods_id])->first();
+            //  dump($goods_number);
+             if($goods_number->goods_number<$buy_number){
                 return json_encode(['code'=>'1005','msg'=>'商品库存不足']);
             }
         }
             //根据当前用户id ，商品id和规格判断购物车是否有次商品  没有添加入库  有更新购买数量
         //购买数量大于库存提示 把购物车数量改为最大库存 更新
-        $cart = CartModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id,'goods_attr_id'=>$goods_attr_id])->first();
+        $cart = CartModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->first();
+        // print_r($cart);die;
         // dd($cart);
         if($cart){
             //更新购买数量
             $buy_number = $cart->buy_number+$buy_number;
-            if($goods_attr_id){
-                //规格查询
-                if($product->product_number<$buy_number){
-                    $buy_number = $product->product_number;
-                }
-            }else{
-                if($goods->goods_number<$buy_number){
-                    $buy_number = $goods->goods_number;
-                }
-            }
-            $res = CartModel::where('cart_id',$cart->cart_id)->update(['buy_number'=>$buy_number]);
+            
+              $res = CartModel::where('cart_id',$cart->cart_id)->update(['buy_number'=>$buy_number]);
             if($res){
                 return json_encode(['code'=>'0','msg'=>'添加成功']);
+            }else{
+                  return json_encode(['code'=>'3','msg'=>'添加失败']);
             }
         }else{
               //添加购物车
@@ -97,6 +100,8 @@ class CartController extends Controller
             // dd($res);
             if($res){
                 return json_encode(['code'=>'0','msg'=>'添加成功']);
+            }else{
+                return json_encode(['code'=>'1','msg'=>'添加失败']);
             }
         }
            
@@ -107,6 +112,8 @@ class CartController extends Controller
 
     //购物车删除
     public function cart_del(){
+        $token = "2";
+        $data['token'] = $token;
         $data['cart_id'] = request()->cart_id;
 
         $url = "http://2001.shop.api.com/cart_del";
@@ -123,6 +130,8 @@ class CartController extends Controller
 
     //减号
     public function buy_jian(){
+        $token = "2";
+        $data['token'] = $token;
         $data['cart_id'] = request()->cart_id; 
         
         $url = "http://2001.shop.api.com/buy_jian";
@@ -137,6 +146,8 @@ class CartController extends Controller
     
     //加号
     public function buy_jia(){
+        $token = "2";
+        $data['token'] = $token;
         $data['cart_id'] = request()->cart_id;
         
         $url = "http://2001.shop.api.com/buy_jia";
@@ -151,6 +162,8 @@ class CartController extends Controller
    
     //购物车总价格
     public function cart_zprice(){
+        $token = "2";
+        $data['token'] = $token;
         $cart_ids = request()->cart_ids;
         $url = "http://2001.shop.api.com/cart_zprice";
         $zprice = posturl($url,$cart_ids);

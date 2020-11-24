@@ -45,4 +45,6 @@ Route::post('/buy_jian','Index\CartController@buy_jian');//购物车减号
 Route::post('/buy_jia','Index\CartController@buy_jia');//购物车加号
 Route::post('/cart_zprice','Index\CartController@cart_zprice');//购物车总价格
 
+
+
 });

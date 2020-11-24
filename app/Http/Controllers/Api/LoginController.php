@@ -153,7 +153,7 @@ class LoginController extends Controller
       //  dd($jwt->checksign());
         if($jwt->validate() && $jwt->checksign()){
             //根据token获取UID
-            $uid = $jwt->getuid();
+            $user_id = $jwt->getuid();
             // dd($uid);
         }
     }

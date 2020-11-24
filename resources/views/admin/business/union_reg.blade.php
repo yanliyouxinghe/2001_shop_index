@@ -54,3 +54,36 @@
 @include('layout.foot')
 </body>
 </html>
+<script src="static/js/jquery.js"></script>
+<script>
+  $('.loginBtn').on('click',function(){
+    var user_plone = $('input[name="user_plone"]').val();
+      var user_pwd = $('input[name="user_pwd"]').val();
+      var user_pwds = $('input[name="user_pwds"]').val();
+      var code = $('input[name="code"]').val();
+           $.post('http://2001.shop.api.com/regdo',{user_plone:user_plone,user_pwd:user_pwd,user_pwds:user_pwds,code:code},function (result) {
+            if(result.code=='00001'){
+                alert(result.msg);
+            }
+            if(result.code=='00002'){
+                alert(result.msg);
+            }
+            if(result.code=='00003'){
+                alert(result.msg);
+            }
+            if(result.code=='00004'){
+                alert(result.msg);
+            }
+            if(result.code=='00000'){
+                location.href = "/login"
+            }else{
+                alert(result.msg);
+            }
+        },'json')
+     
+  })
+
+
+
+
+</script>

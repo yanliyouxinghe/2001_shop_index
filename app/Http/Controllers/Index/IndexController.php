@@ -15,11 +15,13 @@ class IndexController extends Controller
         //轮播图展示
         $url = "http://2001.shop.api.com/slideshow";
         $slideshow = geturl($url);
-        // dd($slideshow['data']);
+    //    print_r($slideshow['data']);die;
+
 
          /**首页商品数据 */
          $url = "http://2001.shop.api.com/goodsInfo";
          $goodsInfo= geturl($url);
+        //  print_r($goodsInfo);die;
         return view('index.index',['slideshow'=>$slideshow['data'],'goodsInfo'=>$goodsInfo['data']]);
        
     }

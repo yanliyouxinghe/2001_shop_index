@@ -15,7 +15,6 @@ class LoginController extends Controller
     }
 
     public function logindo(Request $request){
-      
        $data['user_plone'] = $request->user_plone;
        $data['user_pwd'] = $request->user_pwd;
 //  dd($data);
@@ -45,8 +44,8 @@ class LoginController extends Controller
             curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
             $output = curl_exec($curl);
            
-       
-            // curl_error($curl);
+            // print_r($output);die;
+            // print_r(curl_errno($curl));die;
             // echo $output;exit;
             curl_close($curl);
             return json_decode($output,true);

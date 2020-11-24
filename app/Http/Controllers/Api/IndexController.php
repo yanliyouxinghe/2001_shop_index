@@ -30,9 +30,9 @@ class IndexController extends Controller
 
     /**首页商品数据数据 */
     public function goodsInfo(){
-        $goodslove = GoodsModel::select('goods_name','goods_img')->where('is_new','=',1)->limit(8)->get();
-        $goodshot = GoodsModel::select('goods_name','goods_img')->where('is_hot','=',1)->limit(10)->get();
-        $goodsbest=GoodsModel::select('goods_name','goods_img')->where('is_best','=',1)->limit(5)->get();
+        $goodslove = GoodsModel::select('goods_name','goods_img','goods_id')->where('is_new','=',1)->limit(8)->get();
+        $goodshot = GoodsModel::select('goods_name','goods_img','goods_id')->where('is_hot','=',1)->orderBy('goods_id','desc')->limit(10)->get();
+        $goodsbest=GoodsModel::select('goods_name','goods_img','goods_id')->where('is_best','=',1)->orderBy('shop_price','ASC')->limit(5)->get();
         
         $reposer = [
             'code'=>0,

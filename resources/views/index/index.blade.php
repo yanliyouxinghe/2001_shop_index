@@ -61,7 +61,7 @@ $(document).ready(function(){
       <div class="swiper-wrapper">
         @foreach($slideshow as $k=>$v)
         <div class="swiper-slide">
-         <a href="{{url('goods/'.$v['goods_id'])}}">
+         <a href="{{url('goods/'.$v['goods_id'])}}" width="575" height="198">
           <img src="{{$v['goods_img']}}"/>
          </a>
         </div>
@@ -90,8 +90,8 @@ $(document).ready(function(){
     @foreach($goodsInfo['goodslove'] as $v)
 
      <dd>
-      <a href="shop.html">
-      <img src="{{$v['goods_img']}}"/>
+      <a href="{{url('goods/'.$v['goods_id'])}}">
+      <img src="{{$v['goods_img']}}" width="169" height="90"/>
        <h2>{{$v['goods_name']}}</h2>
       </a>
      </dd>
@@ -256,7 +256,7 @@ $(document).ready(function(){
   <ul>
    @foreach($goodsInfo['goodshot'] as $v)
    <li>
-    <a href="product.html">
+    <a href="{{url('goods/'.$v['goods_id'])}}">
      <img src="{{$v['goods_img']}}"/>
      <h3>{{$v['goods_name']}}</h3>
     </a>
@@ -281,7 +281,7 @@ $(document).ready(function(){
   <ul>
     @foreach($goodsInfo['goodsbest'] as $v)
     <li>
-      <a href="#">
+      <a href="{{url('goods/'.$v['goods_id'])}}">
         <img src="{{$v['goods_img']}}"/>
         <h3>{{$v['goods_name']}}</h3>
       </a>

@@ -58,16 +58,18 @@ $(document).ready(function(){
    <th>小计</th>
    <th>操作</th>
   </tr>
-
+   @if(isset($cart['data']))
    @foreach($cart['data'] as $v)
   <tr>
    <td class="center"><input type="checkbox" cart_id="{{$v['cart_id']}}" class="check2"/></td>
    <td class="center"><a href="/goods/{{$v['goods_id']}}"><img src="{{$v['goods_thumb']}}" style="width:50px;height:50px;"/></a></td>
    <td><a href="/goods/{{$v['goods_id']}}">{{$v['goods_name']}}</a></td>
    <td>
+    @if(isset($v['attr_nane']))
      @foreach($v['attr_nane'] as $vv)
       <p>{{$vv}}</p></br>
      @endforeach
+     @endif
    </td>
    <td class="center"><span class="rmb_icon">{{$v['shop_price']}}</span></td>
    <td class="center">
@@ -86,6 +88,7 @@ $(document).ready(function(){
       </td>
   </tr>
    @endforeach
+   @endif
  </table>
  <div class="order_btm_btn">
   <a href="/" class="link_btn_01 buy_btn"/>继续购买</a>
@@ -238,8 +241,6 @@ $(document).ready(function(){
             alert(ret.msg);
           }
         },'json');
-
-
     });
 
   //跳转结算

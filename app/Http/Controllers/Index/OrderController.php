@@ -13,6 +13,11 @@ use App\Model\Order_GoodsModel;
 use App\Model\Order_InfoModel;
 class OrderController extends Controller
 {
+
+    public function order(){
+        return view('order.order_list');
+    }
+
     /**提交订单视图 */
     public function index(){
         $token="1";
@@ -39,5 +44,4 @@ class OrderController extends Controller
         }
     }
     
-
 }
