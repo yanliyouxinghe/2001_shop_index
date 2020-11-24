@@ -49,6 +49,9 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('buy_jia','Api\CartController@buy_jia'); //加购买数量
     Route::post('cart_zprice','Api\CartController@cart_zprice'); //总价格
 
+    Route::post('account','Api\OrderController@account'); //总价格
+
+
     
 });
 

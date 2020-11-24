@@ -64,10 +64,21 @@ class OrderController extends Controller
     }
 
 
-    /**提交订单页面商品信息数据 */
-    public function cartgoodsinfo(){
-        
-    }
+        /**提交订单页面商品信息数据 */
+        public function account(){
+           $cart_ids = request()->input('cart_id');
+           if($cart_ids){
+              
+             
+            
+           }else{
+            $response = [
+                'code'=>5,
+                'msg'=>'Error',
+            ]; 
+           }
+           
+        }
 
     /**执行提交订单 */
     public function orderdo(){

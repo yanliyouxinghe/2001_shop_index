@@ -74,8 +74,6 @@ $(document).ready(function(){
         <input type="radio" name="moren" checked/>设为默认地址
         @endif
      </label>
-     <input type="button" value="编辑" class="btn"/>
-     <!-- <input type="button" value="删除" class="del" address_id="{{$v['address_id']}}"/> -->
      <a href="javascript:void(0)" class="del"  address_id="{{$v['address_id']}}">删除</a>
     </td>
    </tr>

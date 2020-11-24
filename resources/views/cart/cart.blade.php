@@ -253,10 +253,14 @@ $(document).ready(function(){
       alert('最少选择一件商品哦！');
       return;
      }
-     $.post('/addorder',{'cart_id':cart_id},function(ret){
+    if(cart_id){
+        $.post('/addorder',{'cart_id':cart_id},function(ret){
         console.log(ret);
-     });
-    
+        });
+    }else{
+      return false;
+    }
+   
 
     })
 

@@ -44,5 +44,13 @@ class OrderController extends Controller
             return json_encode(['code'=>1,'msg'=>'操作繁忙']);
         }
     }
+
+    public function addorder(){
+        $data['cart_id'] = request()->input('cart_id');
+        
+        $url = "http://2001.shop.api.com/account";
+        $account = posturl($url,$data);
+        print_r($account);die;
+    }
     
 }
