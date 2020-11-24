@@ -39,19 +39,8 @@ $(document).ready(function(){
 </head>
 <body>
 <!--header-->
-<<<<<<< HEAD
-
-
-
- 
    <!--topLeftNav-->
    @include('layout.header')
-   <!--topRightNav-->
- 
-
-=======
-@include('layout.header')
->>>>>>> a0d40c5974ad4af0275e8ef7cc2bf899606b0add
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑
