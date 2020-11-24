@@ -63,45 +63,17 @@ class OrderController extends Controller
 
     }
 
+
+    /**提交订单页面商品信息数据 */
+    public function cartgoodsinfo(){
+        
+    }
+
     /**执行提交订单 */
     public function orderdo(){
         
     }
 
 
-    /**提交订单页面商品信息数据 */
-    public function cartgoodsinfo(){
-        // $cart_id = request()->cart_id;
-        $cart_id=request()->cart_id?explode(',',request()->cart_id):[];
-        // print_r($cart_id);
-        //要购买的商品信息 //获取当前用户的所有商品信息
-        $cartgoodsInfo = CartModel::select('sh_cart.*','sh_goods.goods_img')->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')->whereIn('cart_id',$cart_id)->get();
-        // print_r($cartgoodsInfo);
-        //计算规格
-        $total = 0;
-        //循环每一条商品数据
-       foreach($cartgoodsInfo as $k=>$v){
-            //dump($v);
-            $total += $v->shop_price*$v->buy_number;
-            //判断商品是否拥有属性
-            if($v->goods_attr_id){
-                $goods_attr_id =explode('|',$v->goods_attr_id);
-               //如果有属性 根据属性查询商品属性的名称与值
-               $goods_attr = Goods_AttrModel::select('attr_name','attr_values')->leftjoin('sh_attribute','sh_goods_attr.attr_id','=','sh_attribute.attr_id')->whereIn('goods_attr_id',$goods_attr_id)->get();
-                // print_r($goods_attr);
-                $cart[$k]['goods_attr'] = $goods_attr?$goods_attr->toArray():[];
-            }
-        }
-        // dd($cartgoodsInfo);
-        $total = number_format($total,2,'.','');
-        //从token中出去user_id;
-        $response = [
-            'code'=>0,
-            'msg'=>'OK',
-            'data'=>$cartgoodsInfo,
-        ]; 
-        return $response;
 
-       
-    }
 }

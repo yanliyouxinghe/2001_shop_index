@@ -21,11 +21,8 @@ class OrderController extends Controller
         $url = 'http://2001.shop.api.com/addressinfo';
         $addressinfo = posturl($url,$data);
         //展示购物车商品数据
-        $urls = 'http://2001.shop.api.com/cartgoodsinfo';
-        $cartgoodsinfo = posturl($urls,$data);
-        print_r($cartgoodsinfo);die;
          
-        return view('order.order',['addressinfo'=>$addressinfo['data'],'cartgoodsinfo'=>$cartgoodsinfo['data']]);
+        return view('order.order',['addressinfo'=>$addressinfo['data']]);
     }
 
     /**收货地址ajax删除 */
