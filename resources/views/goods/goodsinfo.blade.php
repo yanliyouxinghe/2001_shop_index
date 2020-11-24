@@ -67,26 +67,15 @@ $(document).ready(function(){
 <section class="wrap product_detail">
  <!--img:left-->
 
-
+ @foreach($goodsinfo as $v)
  <div class="gallery">
   <div>
-    <div id="preview" class="spec-preview"> <span class="jqzoom"><img jqimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" /></span> </div>
+    <div id="preview" class="spec-preview"> <span class="jqzoom"><img  jqimg="{{$v['goods_img']}}" src="{{$v['goods_img']}}" width="440px";height="5500px"; /></span> </div>
     <!--缩图开始-->
     <div class="spec-scroll"> <a class="prev">&lt;</a> <a class="next">&gt;</a>
       <div class="items">
         <ul>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods004.jpg" src="/jyl/upload/goods004small.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
-          <li><img bimg="/jyl/upload/goods.jpg" src="/jyl/upload/goodssmall.jpg" onmousemove="preview(this);"></li>
+          <li><img bimg="/{{$v['goods_img']}}" src="{{$v['goods_img']}}" onmousemove="preview(this);"></li>
         </ul>
       </div>
     </div>
@@ -96,7 +85,7 @@ $(document).ready(function(){
  <!--text:right-->
  <div class="rt_infor">
   <!--lt_infor-->
-  @foreach($goodsinfo as $v)
+ 
   <div class="goods_infor">
    <h2>{{$v['goods_name']}}</h2>
    <ul>
@@ -144,9 +133,9 @@ $(document).ready(function(){
      <dl class="horizontal horizontal_attr">
       <dt>数量：</dt>
       <dd>
-       <input type="button" value="-" class="jj_btn"/>
+       <input type="button" value="-" class="jj_btn mins"/>
        <input type="text" value="1" readonly class="num buy_number"/>
-       <input type="button" value="+" class="jj_btn"/>
+       <input type="button" value="+" class="jj_btn plus"/>
        <span>库存：{{$v['goods_number']}}件</span>
       </dd>
      </dl>
@@ -160,21 +149,6 @@ $(document).ready(function(){
   </div>
 
   <!--rt_infor-->
-  <div class="shop_infor">
-   <dl class="business_card">
-    <dt>xx有限公司</dt>
-    <dd>资质：生产商</dd>
-    <dd>联系人：*先生（先生）</dd>
-    <dd>邮件：******@Foxmail.com</dd>
-    <dd>电话：4008-******</dd>
-    <dd>所在地：陕西省西安市</dd>
-    <dd>地址：陕西省西安市**区**街232号</dd>
-    <dd class="center">
-     <a href="shop.html" class="link_btn">进入店铺</a>
-     <a class="link_btn">收藏店铺</a>
-    </dd>
-   </dl>
-  </div>
  </div>
 </section>
 <!--detail-->
@@ -353,7 +327,79 @@ $(document).ready(function(){
 </html>
 <script src="/static/js/jquery.js"></script>
 <script>
-$(function(){
+
+    $('label').click(function(){
+          var goods_attr_id = getattrid();
+          getattrprice(goods_attr_id);
+   })
+
+  $(function(){
+    var goods_attr_id = getattrid();
+          getattrprice(goods_attr_id);
+  });
+
+    function getattrid(){
+      var goods_attr_id = new Array();
+              $('label.isTrue').each(function(i){
+                goods_attr_id.push($(this).attr('goods_attr_id'));
+              });
+              return goods_attr_id;
+    }
+    function getattrprice(goods_attr_id){
+      if(goods_attr_id.length > 0){
+                var goods_id ="{{$v['goods_id']}}";
+                $.get('/getattrprice',{'goods_attr_id':goods_attr_id,'goods_id':goods_id},function(res){
+                  $('.rmb_icon').text(res.data);
+                },'json');
+              }else{
+                return false;
+          }
+    }
+    $(function(){
+  //+号
+          $('.plus').click(function(){
+            var num=$(this).prev().val();
+            var num=parseInt(num)+1;
+            var goods_number="{{$v['goods_number']}}";
+            if(num>goods_number){
+              alert('不能再多啦');
+              return ;
+            }else{
+               $(this).prev().val(num);
+            }
+            // alert(num);
+           
+            
+        })
+        //-号
+        $('.mins').click(function(){
+            num=$(this).next().val();
+            num=parseInt(num-1);
+            if(num<1){
+                alert('最小购买数量不能小于1');
+            }else{
+                $(this).next().val(num);
+            }
+        })
+        $('.itxt').blur(function(){
+            // alert(111);
+            var num = $(this).val();
+            // alert(num);
+            if(num<1){
+                alert('最小购买数量不能小于一');
+                 num  = $(this).val('1');
+            }
+             var buy_number=$('.itxt').val();
+            // alert(buy_number);
+            if((buy_number<10)){
+                alert('库存紧张');
+            }
+        })
+
+
+
+
+
     //加入购物车
     $('.add').click(function(){
          //商品id
@@ -366,21 +412,16 @@ $(function(){
     //属性id
         $('.isTrue').each(function(i){
          goods_attr_id.push($(this).attr('goods_attr_id'));
-                  // alert(goods_attr_id);
-                  // alert(goods_attr_id);  
           });
-          // alert(goods_attr_id);
           if(goods_attr_id==''){
              goods_attr_id = [];
-          }
+          }            
           $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id},function(res){
-              console.log();
 			//未登录
             if(res.code=='1001'){
                 alert(res.msg);
                 location.href="/login?refer="+location.href;
             }
-
 			//加入购物车成功
             if(res.code=='0'){
               location.href="/cart";
@@ -391,6 +432,6 @@ $(function(){
         },'json');
          
       })
-})
+    });
 </script>
 

@@ -7,12 +7,13 @@ use App\Model\CartModel;
 use App\Model\GoodsModel;
 use App\Model\ProductModel;
 use PhpParser\Node\Stmt\Foreach_;
+use App\Model\GoodsAttrModel;
+use App\Model\Goods_AttrModel;
 class CartController extends Controller
 {
     public function cart(){
         
         $cart = $this->getdata();
-    //    print_r($cart);die;
        return view('cart.cart',compact('cart'));
     }
 
@@ -24,6 +25,23 @@ class CartController extends Controller
     $data_json = posturl($url,$data);
     //   print_r($data_json);die;
     return $data_json;
+    }
+
+    public function getattrprice(){
+        $goods_attr_id = request()->goods_attr_id;
+        $goods_id = request()->goods_id;
+        // print_r($goods_id);die;
+       $attr_price = Goods_AttrModel::whereIn('goods_attr_id',$goods_attr_id)
+                    ->sum('attr_price');
+                   //  dd($attr_price);
+                //    print_r($attr_price);die;
+        $shop_price=GoodsModel::where(['goods_id'=>$goods_id])->value('shop_price')+$attr_price;
+        // print_r($shop_price);die;
+       $shop_price = number_format($shop_price,2,".","");
+       
+    //   print_r($end_price);
+       return json_encode(['code'=>0,'msg'=>'OK','data'=>$shop_price]);
+    //    dd($end_price);
     }
     
     //加入购物车
@@ -54,10 +72,10 @@ class CartController extends Controller
         if(isset($goods_attr_id)){
             $goods_attr_id = implode('|',$goods_attr_id); //imploade 将数组用|分割成字符串
             // dump($goods_attr_id);
+            // echo 123;
             $product = ProductModel::select('product_id','product_number','product_sn')->where(['goods_id'=>$goods_id,'goods_attr'=>$goods_attr_id])->first();
-            // print_r($product);die;
-            // dd($product);
-            if($product->product_number<$buy_number){
+
+            if($product['product_number']>$buy_number){
                 return json_encode(['code'=>'1005','msg'=>'商品库存不足']);
             }
         }else{
@@ -74,9 +92,9 @@ class CartController extends Controller
         // dd($cart);
         if($cart){
             //更新购买数量
-            $buy_number = $cart->buy_number+$buy_number;
-            
-              $res = CartModel::where('cart_id',$cart->cart_id)->update(['buy_number'=>$buy_number]);
+
+            $buy_number = $cart['buy_number']+$buy_number;
+            $res = CartModel::where('cart_id',$cart->cart_id)->update(['buy_number'=>$buy_number]);
             if($res){
                 return json_encode(['code'=>'0','msg'=>'添加成功']);
             }else{
@@ -106,7 +124,6 @@ class CartController extends Controller
         }
            
     }
-
 
 
 
