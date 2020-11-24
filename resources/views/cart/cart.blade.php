@@ -92,7 +92,7 @@ $(document).ready(function(){
  </table>
  <div class="order_btm_btn">
   <a href="/" class="link_btn_01 buy_btn"/>继续购买</a>
-  <a href="javascript:void(0)" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon zprice">0.00</strong>立即结算</ a>
+  <a href="javascript:void(0)" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon zprice">0.00</strong>立即结算</a>
  </div>
 </section>
 @else

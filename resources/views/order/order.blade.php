@@ -23,11 +23,7 @@ $(document).ready(function(){
 </head>
 <body>
 <!--header-->
-<<<<<<< HEAD
    @include('layout.header')
-=======
-@include('layout.header')
->>>>>>> 7d7128b23180699c2ab08f2ddace502fa10d6100
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑

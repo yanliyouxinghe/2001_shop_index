@@ -18,7 +18,7 @@ class OrderController extends Controller
     /**提交订单页面收件人信息数据 */
     public function addressinfo(){
       $token=request()->input('token');
-      $addressinfo = UseraddressModel::where('user_id',$token)->get();
+      $addressinfo = UseraddressModel::where(['user_id'=>$token,'is_del'=>1])->get();
       //展示收货人信息成中文的
         if($addressinfo){
             foreach($addressinfo as $k=>$v){
