@@ -22,8 +22,13 @@ class UserController extends Controller
         $post['user_id'] = $user_id;
        // print_r($post);exit;
          $res = UseraddressModel::insert($post);
+<<<<<<< HEAD
          // var_dump($res);die;
          $address = array();
+=======
+        
+        return redirect('/');die;
+>>>>>>> 0fe8ee232b2f67b6030b2649095e9e7c0c5e7a68
         if($res){
             $address =  UseraddressModel::where(['user_id'=>$user_id])->get();
             // print_r($address);

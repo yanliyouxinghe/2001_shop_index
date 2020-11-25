@@ -35,6 +35,7 @@ Route::post('/logdo','Index\LoginController@logindo');//执行登录
 Route::get('/order','Index\OrderController@order');//订单
 Route::get('/profile','Index\ProfileController@profile');//个人资料
 Route::get('/changepass','Index\ProfileController@changepass');//修改密码
+Route::post('/mor','Index\OrderController@mor');//修改默认收货地址
 
 
 Route::get('/reg','Admin\BusinessController@reg');//商家后太注册
@@ -50,6 +51,8 @@ Route::post('/buy_jian','Index\CartController@buy_jian');//购物车减号
 Route::post('/buy_jia','Index\CartController@buy_jia');//购物车加号
 Route::post('/cart_zprice','Index\CartController@cart_zprice');//购物车总价格
 Route::get('/addorder','Index\OrderController@index');//购物车点击结算
+
+
 
 
 

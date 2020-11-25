@@ -50,6 +50,8 @@ $(document).ready(function(){
 
 <section class="wrap" style="margin-top:20px;overflow:hidden;">
 <!-- 收货人信息 -->
+
+@if(count($addressinfo['addressinfo']))
  <table class="order_table address_tbl">
    <tr>
     <th width="200">收件人</th>
@@ -65,14 +67,18 @@ $(document).ready(function(){
     <td>{{$v['tel']}}</td>
     <td>
      <address>
-      {{$v['country_name']}}{{$v['province_name']}}{{$v['city_name']}}{{$v['district_name']}}
+      {{$v['country_name']}},{{$v['province_name']}},{{$v['city_name']}},{{$v['district_name']}},{{$v['address']}}
      </address>
     </td>
     <td>
      <label>
-        @if($v['is_default'])
-        <input type="radio" name="moren" checked/>设为默认地址
+       
+        @if($v['is_default'] == 1)
+        <input type="radio" name="moren" calss="mor" value="{{$v['address_id']}}" checked/>设为默认地址
+        @else
+        <input type="radio" name="moren" class="mor" value="{{$v['address_id']}}"/>设为默认地址
         @endif
+
      </label>
      <a href="javascript:void(0)" class="del"  address_id="{{$v['address_id']}}">删除</a>
     </td>
@@ -81,17 +87,29 @@ $(document).ready(function(){
    @endforeach
    @endif
 </table>
-
+@else
+<center><table>
+      <tr>
+        <td><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1875533656,2481290632&fm=26&gp=0.jpg" alt="" width="80px" height="100px"></td>
+        <td> <div class="order_btm_btn">
+              <h1 style="color:red">暂无收货地址，请前往添加哦~</h1>
+              <a href="javascript:void(0)" class="link_btn_01 add_ress"/>去添加</a>
+            </div>
+       </td>
+      </tr>
+    </table>
+</center>
+@endif
 <table class="order_table">
   <caption>
    <strong>订单商品</strong>
    <a href="/cart">返回购物车修改</a>
   </caption>
   <tbody>
-@foreach($account as $kk=>$vv)
+@foreach($account['cart_data'] as $kk=>$vv)
   <tr>
    <td class="center"><a href="/goods/{{$vv['goods_id']}}"><img src="{{$vv['goods_img']}}" style="width:50px;height:50px;"></a></td>
-   <td><a href="product.html">{{$vv['goods_name']}}</a></td>
+   <td><a href="/goods/{{$vv['goods_id']}}">{{$vv['goods_name']}}</a></td>
    <td>
    @if(isset($vv['attr']))
    @foreach($vv['attr'] as $vvv)
@@ -143,7 +161,7 @@ $(document).ready(function(){
   </li>
  </ul>
  <div class="order_btm_btn">
-  <a href="system_prompts.html" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon">0.00</strong>提交订单</a>
+  <a href="system_prompts.html" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon">{{$account['end_price'][0]['total']}}</strong>提交订单</a>
  </div>
 </section>
 <!--footer-->
@@ -151,6 +169,29 @@ $(document).ready(function(){
 </body>
 <script scr="/static/jyl/js/jquery.js"></script>
 <script>
+  //默认地址
+   $(document).on('click','.mor',function(){
+        var address_id = $(this).val();
+        alert(address_id);
+        if(address_id){
+          $.post('/mor',{address_id:address_id},function(rets){
+              if(rets.code==0){
+                location.reload();
+              }else{
+                alert(ret.msg);
+              }
+          },'json');
+        }else{
+          return false;
+        }
+   });
+
+  //添加收货地址
+  $('.add_ress').click(function(){
+    location.href="/address?refer="+location.href;
+  });
+
+
   //ajax删除
   $(document).on('click','.del',function(){
     var _this = $(this);
@@ -165,7 +206,12 @@ $(document).ready(function(){
         if(res.code==0){
           _this.parent().parent().remove();
         }else{
-          alert(res.msg);
+          if(res.code==2){
+            location.reload();
+          }else{
+            alert(res.msg);
+
+          }
         }
       },'json')
 
