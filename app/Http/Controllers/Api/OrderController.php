@@ -66,18 +66,35 @@ class OrderController extends Controller
 
         /**提交订单页面商品信息数据 */
         public function account(){
-           $cart_ids = request()->input('cart_id');
-           if($cart_ids){
-              
-             
+        $cart_ids = request()->input('cart_id');
+        $cart_ids = explode(',',$cart_ids);
+
+        $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_img')
+            ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
+            ->whereIn('cart_id',$cart_ids)
+            ->get();
+            foreach($cart_data as $k=>$v){
+                // print_r($v);die;
+                $attr = [];
+                if(isset($v->goods_attr_id) && $v->goods_attr_id!=''){
+                    $goods_attr_id = explode('|',$v->goods_attr_id);
+                    foreach($goods_attr_id as $kk=>$vv){
+                        $attr_data = Goods_AttrModel::select('sh_goods_attr.attr_value','sh_attribute.attr_name')
+                                ->leftjoin('sh_attribute','sh_goods_attr.attr_id','=','sh_attribute.attr_id')
+                                ->where('goods_attr_id',$vv)
+                                ->get();
+                        $attr[] = $attr_data[0]['attr_name'].":".$attr_data[0]['attr_value'];
+                    }
+                    $v['attr'] = $attr;
+                }
+            } 
+                $respoer = [
+                    'code'=>0,
+                    'msg'=>'OK',
+                    'data'=>$cart_data
+                ];
             
-           }else{
-            $response = [
-                'code'=>5,
-                'msg'=>'Error',
-            ]; 
-           }
-           
+        return json_encode($respoer);
         }
 
     /**执行提交订单 */
