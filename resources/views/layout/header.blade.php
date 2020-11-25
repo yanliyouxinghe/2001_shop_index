@@ -4,9 +4,9 @@
    <div class="wrap">
    <!--topLeftNav-->
     <ul class="topLtNav">
-                        @php use Illuminate\Support\Facades\Redis; @endphp
-                        @php $user_id=Redis::hmget('reg','user_id','user_plone'); @endphp
-                           @if(empty($user_id))
+                        @php  use Illuminate\Support\Facades\Redis; @endphp
+                        @php  $user_id=Redis::hmget('reg','user_id','user_plone'); @endphp
+                           @if($user_id[0]==false||$user_id[1]==false||empty($user_id))
                              <li><a href="{{url('/login')}}" class="obviousText">没有账号？登录注册？？？</a></li>
                              @else 
                              <li><span>欢迎@php echo $user_id[1]@endphp登录</span></li>
