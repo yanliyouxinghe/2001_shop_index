@@ -9,6 +9,7 @@ use App\Model\ProductModel;
 use PhpParser\Node\Stmt\Foreach_;
 use App\Model\GoodsAttrModel;
 use App\Model\Goods_AttrModel;
+use Illuminate\Support\Facades\Redis;
 class CartController extends Controller
 {
     public function cart(){
@@ -19,7 +20,7 @@ class CartController extends Controller
 
     //购物车数据
     public function getdata(){
-    $user_id = "2";
+    $user_id = Redis::hget('reg','user_id');
     $data['user_id'] = $user_id;
     $url = "http://2001.shop.api.com/cart";
     $data_json = posturl($url,$data);
@@ -54,8 +55,21 @@ class CartController extends Controller
             $goods_id=$request->goods_id;
             $buy_number= $request->buy_number;
             $goods_attr_id= $request->goods_attr_id;
-            $shop_price= $request->shop_price;
-            // print_r($shop_price);die;
+            if(isset($goods_attr_id)){
+                $attr_price = Goods_AttrModel::whereIn('goods_attr_id',$goods_attr_id)
+                ->sum('attr_price');
+                $shop_price=GoodsModel::where(['goods_id'=>$goods_id])->value('shop_price');
+                $shop_price = $attr_price + $shop_price;
+
+
+
+                //echo $shop_price;exit;
+               $shop_price = number_format($shop_price,2,".","");
+            }else{
+                $shop_price=GoodsModel::where(['goods_id'=>$goods_id])->value('shop_price');
+                $shop_price = number_format($shop_price,2,".","");
+            }
+            //print_r($shop_price);die;
         // $data=json_encode($data);
         
         // dd($data);
@@ -89,7 +103,7 @@ class CartController extends Controller
         }
             //根据当前用户id ，商品id和规格判断购物车是否有次商品  没有添加入库  有更新购买数量
         //购买数量大于库存提示 把购物车数量改为最大库存 更新
-        $cart = CartModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->first();
+        $cart = CartModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id,'goods_attr_id'=>$goods_attr_id])->first();
         // print_r($cart);die;
         // dd($cart);
         if($cart){
@@ -103,6 +117,7 @@ class CartController extends Controller
                   return json_encode(['code'=>'3','msg'=>'添加失败']);
             }
         }else{
+            //echo $shop_price;exit;
               //添加购物车
             $data = [
                 'user_id'=>$user_id,
@@ -113,6 +128,7 @@ class CartController extends Controller
                 'shop_price'=>$shop_price
             ];
             $goods = $goods?$goods->toArray():[];
+            unset($goods['shop_price']);
             $data = array_merge($data,$goods);
             unset($data['is_show']);
             unset($data['goods_number']);

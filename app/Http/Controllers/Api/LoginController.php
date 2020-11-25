@@ -138,7 +138,7 @@ class LoginController extends Controller
         //   dd($user->user_id);
           $token =  jwt::instance()->setuid($user->user_id)->encode()->gettoken();
         //   dd($token);
-        return json_encode(['code'=>'00000','msg'=>'登录成功','token'=>$token]);
+        return json_encode(['code'=>'00000','msg'=>'登录成功','token'=>$token,'user'=>$user]);
 
     }
     public function getuserinfo(){
