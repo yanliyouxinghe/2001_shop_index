@@ -54,6 +54,8 @@ class CartController extends Controller
             $goods_id=$request->goods_id;
             $buy_number= $request->buy_number;
             $goods_attr_id= $request->goods_attr_id;
+            $shop_price= $request->shop_price;
+            // print_r($shop_price);die;
         // $data=json_encode($data);
         
         // dd($data);
@@ -107,13 +109,13 @@ class CartController extends Controller
                 'product_id'=>$product->product_id??0,
                 'buy_number'=>$buy_number,
                 'goods_attr_id'=>$goods_attr_id??'',
-                'goods_sn'=>$product->product_sn??$goods->goods_sn
+                'goods_sn'=>$product->product_sn??$goods->goods_sn,
+                'shop_price'=>$shop_price
             ];
             $goods = $goods?$goods->toArray():[];
             $data = array_merge($data,$goods);
             unset($data['is_show']);
             unset($data['goods_number']);
-
             $res = CartModel::create($data);
             // dd($res);
             if($res){

@@ -233,29 +233,15 @@ $(document).ready(function(){
      <p><strong class="rmb_icon">980.00</strong></p>
     </div>
    </dd>
+   @foreach($recommended as $vv)
    <dd>
-    <a href="#" class="goods_img"><img src="/jyl/upload/goods002.jpg"/></a>
+    <a href="{{$vv['goods_id']}}" class="goods_img"><img src="{{$vv['goods_img']}}"/></a>
     <div class="rt_infor">
-     <h3><a href="#">时尚女装 2019春季针织衫</a></h3>
-     <p><del class="rmb_icon">1298.00</del></p>
-     <p><strong class="rmb_icon">980.00</strong></p>
+     <h3><a href="{{$vv['goods_id']}}">{{$vv['goods_name']}}</a></h3>
+     <p><del class="rmb_icon">{{$vv['shop_price']}}+300/del></p>
+     <p><strong class="rmb_icon">{{$vv['shop_price']}}</strong></p>
     </div>
-   </dd>
-   <dd>
-    <a href="#" class="goods_img"><img src="/jyl/upload/goods002.jpg"/></a>
-    <div class="rt_infor">
-     <h3><a href="#">时尚女装 2019春季针织衫</a></h3>
-     <p><del class="rmb_icon">1298.00</del></p>
-     <p><strong class="rmb_icon">980.00</strong></p>
-    </div>
-   </dd>
-    <dd>
-    <a href="#" class="goods_img"><img src="/jyl/upload/goods002.jpg"/></a>
-    <div class="rt_infor">
-     <h3><a href="#">时尚女装 2019春季针织衫</a></h3>
-     <p><del class="rmb_icon">1298.00</del></p>
-     <p><strong class="rmb_icon">980.00</strong></p>
-    </div>
+    @endforeach
    </dd>
   </dl>
  </aside>
@@ -415,8 +401,11 @@ $(document).ready(function(){
           });
           if(goods_attr_id==''){
              goods_attr_id = [];
-          }            
-          $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id},function(res){
+          }
+      //价格
+      var shop_price= $('.rmb_icon').text();
+      // alert(shop_price);    
+          $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id,shop_price:shop_price},function(res){
 			//未登录
             if(res.code=='1001'){
                 alert(res.msg);

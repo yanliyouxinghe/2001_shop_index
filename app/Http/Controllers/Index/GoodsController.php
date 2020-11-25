@@ -11,16 +11,12 @@ class GoodsController extends Controller
       
         // $id['id'] =  request()->input('id');
         $url = 'http://2001.shop.api.com/goods/'.$id;
-        //dd($url);
         $data = geturl($url);
-        // dd($data);
-        // $object = (object)$arrayName;
         $goodsinfo=$data['goodsinfo'];
-        // $goodsinfo=(object)$goodsinfo;
-        // dd($goodsinfo);
         $attr=$data['attr'];
-        // dd($attr);
-        // $attr=(object)$attr;
-        return view('/goods/goodsinfo',['goodsinfo'=>$goodsinfo,'attr'=>$attr]);
+        $recommended=$data['recommended'];
+        return view('/goods/goodsinfo',['goodsinfo'=>$goodsinfo,'attr'=>$attr,'recommended'=>$recommended]);
     }
+
+   
 }
