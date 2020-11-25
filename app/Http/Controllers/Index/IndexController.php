@@ -21,7 +21,8 @@ class IndexController extends Controller
          $url = "http://2001.shop.api.com/goodsInfo";
          $goodsInfo= geturl($url);
         //  print_r($goodsInfo);die;
-        return view('index.index',['slideshow'=>$slideshow['data'],'goodsInfo'=>$goodsInfo['data']]);
+         $user_id=Redis::hmget('reg','user_id','user_plone');
+        return view('index.index',['slideshow'=>$slideshow['data'],'goodsInfo'=>$goodsInfo['data'],'user_id'=>$user_id]);
        
     }
 

@@ -115,7 +115,7 @@ $(document).ready(function(){
       
         var _this = $(this);
         var region_id = _this.val();
-        // alert(region_id);
+      
         if(region_id<1){
           _this.nextAll().find('option:gt(0)').remove();
         }
@@ -157,7 +157,7 @@ $(document).ready(function(){
                         '  </tr>';
                 });
                // alert(hotgoods);
-                 $('.add').after(hotgoods);
+                 $('.add').html(hotgoods);
 
                });
         });

@@ -39,6 +39,11 @@ Route::get('/changepass','Index\ProfileController@changepass');//修改密码
 
 Route::get('/reg','Admin\BusinessController@reg');//商家后太注册
 Route::get('/business','Admin\BusinessController@business');//商家后台登录
+Route::post('/selog','Admin\BusinessController@selogin');//商家执行登录
+Route::get('/index','Admin\SellController@index');//商家后台首页
+Route::get('/goods','Admin\GoodsController@goods');//商家后台商品添加
+Route::get('/goodslist','Admin\GoodsController@goodslist');//商家后台商品列表
+Route::get('/getattr','Admin\GoodsController@getattr')->name('gooods.getattr');//商品属性
 
 Route::post('/cart_del','Index\CartController@cart_del');//购物车删除
 Route::post('/buy_jian','Index\CartController@buy_jian');//购物车减号
