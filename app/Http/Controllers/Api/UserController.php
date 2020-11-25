@@ -19,6 +19,8 @@ class UserController extends Controller
         $callback=$request->callback;
         // dd($post);
          $res = UseraddressModel::insert($post);
+        
+        return redirect('/');die;
         if($res){
             $address =  UseraddressModel::all();
             $reg = new RegionModel;
