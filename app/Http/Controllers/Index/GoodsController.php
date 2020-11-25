@@ -18,5 +18,12 @@ class GoodsController extends Controller
         return view('/goods/goodsinfo',['goodsinfo'=>$goodsinfo,'attr'=>$attr,'recommended'=>$recommended]);
     }
 
-   
+   /**个人收藏 展示*/
+   public function listcollect(){
+        $user_id="1";
+        $data['user_id']=$user_id;
+        $url = 'http://2001.shop.api.com/listcollect';
+        $collectinfo = posturl($url,$data);
+       return view('/goods/favorite',['collectinfo'=>$collectinfo]);
+   }
 }

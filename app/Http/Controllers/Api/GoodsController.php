@@ -43,5 +43,39 @@ class GoodsController extends Controller
         }
         
     }
+
+    /**API个人收藏  添加*/
+    public function createcollect(){
+        
+        $goods_id = request()->goods_id;
+        $user_id="1";
+        if(!$user_id){
+            return json_encode(['code'=>'1001','msg'=>'请先登录']);
+        }
+        $count = CollectModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->first();
+        // print_r($count);
+        //判断此用户是否收藏过此此商品
+        // if($count==1){
+        //     return json_encode(['code'=>'1002','msg'=>'您已收藏过']);
+        // }else{
+        //     $collect = CollectModel::insert($count);
+        //     if($collect){
+        //         return json_encode(['code'=>'1003','msg'=>'收藏成功']);
+        //     }
+        // }
+    }
+
+    /**API个人收藏 展示 */
+    public function listcollect(){
+        $collectInfo = CollectModel::leftjoin('sh_goods','sh_collect.goods_id','=','sh_goods.goods_id')->get();
+        $response = [
+            'code'=>0,
+            'msg'=>'OK',
+            'data'=>[
+                'collectInfo'=>$collectInfo
+            ],
+        ];
+        return json_encode($response);
+    }
    
 }

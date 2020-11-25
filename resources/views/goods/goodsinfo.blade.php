@@ -85,15 +85,12 @@ $(document).ready(function(){
   </div>
  </div>
 
-  <!-- <div>
-     <li><a href="favo" class="favorIcon">收藏宝贝</a></li>
-  </div> -->
-
- <!--text:right-->
+ 
  <div class="rt_infor">
   <!--lt_infor-->
+  <!--个人收藏  -->
         <ul>
-           <li><a href="favo" class="favorIcon">收藏宝贝</a></li>
+           <li><a href="javascript:void(0)" class="favorIcon" goods_id="{{$v['goods_id']}}">收藏宝贝</a></li>
         </ul>
   <div class="goods_infor">
    <h2>{{$v['goods_name']}}</h2>
@@ -317,6 +314,26 @@ $(document).ready(function(){
 <script src="/static/js/jquery.js"></script>
 <script>
 
+//个人收藏
+$('.favorIcon').click(function(){
+      var goods_id ="{{$goodsinfo[0]['goods_id']}}";
+      
+      $.ajax({
+          type:'get',
+          url: "http://2001.shop.api.com/createcollect",
+          dataType:'json',
+          data: {goods_id:goods_id},
+          success: function(res){
+             console.log(res);
+            
+          }
+        });
+
+    })
+
+
+
+
     $('label').click(function(){
           var goods_attr_id = getattrid();
           getattrprice(goods_attr_id);
@@ -425,5 +442,8 @@ $(document).ready(function(){
          
       })
     });
+
+
+
 </script>
 

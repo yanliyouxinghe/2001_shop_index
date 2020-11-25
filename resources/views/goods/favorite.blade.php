@@ -98,6 +98,7 @@ $(document).ready(function(){
   <div class="favoriteWrap" style="display:block;">
   <!--收藏列表-->
   <ul class="favorite_list">
+   @foreach($collectInfo as $v)
    <li>
     <a>
      <img src="upload/goods005.jpg"/>
@@ -106,62 +107,9 @@ $(document).ready(function(){
      <p class="remove"><span>&#126;</span></p>
     </a>
    </li>
-   <li>
-    <a>
-     <img src="upload/goods010.jpg"/>
-     <h2>2019时尚新款</h2>
-     <p class="price"><span class="rmb_icon">298.00</span></p>
-     <p class="remove"><span>&#126;</span></p>
-    </a>
-   </li>
-   <li>
-    <a>
-     <img src="upload/goods009.jpg"/>
-     <h2>2019时尚新款</h2>
-     <p class="price"><span class="rmb_icon">298.00</span></p>
-     <p class="remove"><span>&#126;</span></p>
-    </a>
-   </li>
-   <li>
-    <a>
-     <img src="upload/goods008.jpg"/>
-     <h2>2019时尚新款</h2>
-     <p class="price"><span class="rmb_icon">298.00</span></p>
-     <p class="remove"><span>&#126;</span></p>
-    </a>
-   </li>
-   <li>
-    <a>
-     <img src="upload/goods006.jpg"/>
-     <h2>2019时尚新款</h2>
-     <p class="price"><span class="rmb_icon">298.00</span></p>
-     <p class="remove"><span>&#126;</span></p>
-    </a>
-   </li>
-   <li>
-    <a>
-     <img src="upload/goods004.jpg"/>
-     <h2>2019时尚新款</h2>
-     <p class="price"><span class="rmb_icon">298.00</span></p>
-     <p class="remove"><span>&#126;</span></p>
-    </a>
-   </li>
-   <li>
-    <a>
-     <img src="upload/goods003.jpg"/>
-     <h2>2019时尚新款</h2>
-     <p class="price"><span class="rmb_icon">298.00</span></p>
-     <p class="remove"><span>&#126;</span></p>
-    </a>
-   </li>
-   <li>
-    <a>
-     <img src="upload/goods002.jpg"/>
-     <h2>2019时尚新款</h2>
-     <p class="price"><span class="rmb_icon">298.00</span></p>
-     <p class="remove"><span>&#126;</span></p>
-    </a>
-   </li>
+   @endforeach
+
+  
   </ul>
    <!--分页-->
    <div class="paging">
