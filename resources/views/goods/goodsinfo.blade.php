@@ -30,8 +30,44 @@ $(document).ready(function(){
   $(".horizontal_attr label").click(function(){
 	  $(this).addClass("isTrue").siblings().removeClass("isTrue");
     
-	  });
+    });
+    
+
+
+
+
+     $('label').click(function(){
+          var goods_attr_id = getattrid();
+          getattrprice(goods_attr_id);
+   })
+
+  $(function(){
+    var goods_attr_id = getattrid();
+          getattrprice(goods_attr_id);
+  });
+
+    function getattrid(){
+      var goods_attr_id = new Array();
+              $('label.isTrue').each(function(i){
+                goods_attr_id.push($(this).attr('goods_attr_id'));
+              });
+              return goods_attr_id;
+    }
+    function getattrprice(goods_attr_id){
+      if(goods_attr_id.length > 0){
+                var goods_id ="{{$goodsinfo[0]['goods_id']}}";
+                $.get('/getattrprice',{'goods_attr_id':goods_attr_id,'goods_id':goods_id},function(res){
+                  $('.rmb_icon').text(res.data);
+                },'json');
+              }else{
+                return false;
+          }
+    }
 });
+
+
+
+
 </script>
 </head>
 <body>
@@ -66,7 +102,6 @@ $(document).ready(function(){
 </aside>
 <section class="wrap product_detail">
  <!--img:left-->
-
  @foreach($goodsinfo as $v)
  <div class="gallery">
   <div>
@@ -317,33 +352,6 @@ $(document).ready(function(){
 <script src="/static/js/jquery.js"></script>
 <script>
 
-    $('label').click(function(){
-          var goods_attr_id = getattrid();
-          getattrprice(goods_attr_id);
-   })
-
-  $(function(){
-    var goods_attr_id = getattrid();
-          getattrprice(goods_attr_id);
-  });
-
-    function getattrid(){
-      var goods_attr_id = new Array();
-              $('label.isTrue').each(function(i){
-                goods_attr_id.push($(this).attr('goods_attr_id'));
-              });
-              return goods_attr_id;
-    }
-    function getattrprice(goods_attr_id){
-      if(goods_attr_id.length > 0){
-                var goods_id ="{{$v['goods_id']}}";
-                $.get('/getattrprice',{'goods_attr_id':goods_attr_id,'goods_id':goods_id},function(res){
-                  $('.rmb_icon').text(res.data);
-                },'json');
-              }else{
-                return false;
-          }
-    }
     $(function(){
   //+号
           $('.plus').click(function(){
@@ -406,9 +414,9 @@ $(document).ready(function(){
              goods_attr_id = [];
           }
       //价格
-      var shop_price= $('.rmb_icon').text();
+
       // alert(shop_price);    
-          $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id,shop_price:shop_price},function(res){
+          $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id},function(res){
 			//未登录
             if(res.code=='1001'){
                 alert(res.msg);
