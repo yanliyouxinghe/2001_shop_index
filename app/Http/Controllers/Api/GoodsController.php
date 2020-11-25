@@ -8,6 +8,7 @@ use App\Model\GoodsModel;
 use App\Model\GoodsAttrModel;
 use App\Model\Goods_AttrModel;
 use App\Model\Shop_HistoryModel;
+use App\Model\CollectModel;
 class GoodsController extends Controller
 {
     
