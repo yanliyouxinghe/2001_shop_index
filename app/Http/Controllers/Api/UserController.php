@@ -24,7 +24,7 @@ class UserController extends Controller
          $res = UseraddressModel::insert($post);
          $address = array();
         
-        return redirect('/');die;
+        // return redirect('/');die;
         if($res){
             $address =  UseraddressModel::where(['user_id'=>$user_id])->get();
             // print_r($address);

@@ -22,6 +22,7 @@ class IndexController extends Controller
          $goodsInfo= geturl($url);
         //  print_r($goodsInfo);die;
          $user_id=Redis::hmget('reg','user_id','user_plone');
+        //  dd($user_id);
         return view('index.index',['slideshow'=>$slideshow['data'],'goodsInfo'=>$goodsInfo['data'],'user_id'=>$user_id]);
        
     }
