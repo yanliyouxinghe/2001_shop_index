@@ -13,6 +13,7 @@ use App\Model\Order_GoodsModel;
 use App\Model\Order_InfoModel;
 use Log;
 use function AlibabaCloud\Client\redTable;
+use Illuminate\Support\Facades\Redis;
 class OrderController extends Controller
 {
 
@@ -22,7 +23,8 @@ class OrderController extends Controller
 
     /**提交订单视图 */
     public function index(){
-        $user_id="1";
+        $user_id=Redis::hget('reg','user_id');
+        print_r($user_id);die;
         $data['user_id']=$user_id;
         //展示收货人信息
         $url = 'http://2001.shop.api.com/addressinfo';

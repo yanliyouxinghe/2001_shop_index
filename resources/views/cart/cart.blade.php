@@ -45,10 +45,11 @@ $(document).ready(function(){
    });
    
  </script>
+ <div id="tab">
  @if(count($cart['data']) > 0)
 <section class="wrap" style="margin-top:20px;overflow:hidden;">
  <table class="order_table">
-  <tr>
+  <tr class="tr1">
    <th><input type="checkbox" class="check"/></th>
    <th>产品</th>
    <th>名称</th>
@@ -108,6 +109,8 @@ $(document).ready(function(){
     </table>
 </center>
 @endif
+   
+   </div>
 
 
 
@@ -153,6 +156,7 @@ $(document).ready(function(){
 
     //计算小计
     function getxiaoji(cart_ids){
+      
         if(!cart_ids){
           return;
         }
@@ -185,7 +189,15 @@ $(document).ready(function(){
                 if(resler.code==0){
                   _this.parent().parent().remove();
                   var cart_ids = getcart();
-                  getxiaoji(cart_ids);
+                  if(cart_ids==''){
+                    $('.zprice').text('0.00');
+                  }else{
+                    getxiaoji(cart_ids);
+                  }
+                  $("#head").load(location.href+" #head");
+                  if($('.cou').text() ==1){
+                    location.reload();
+                  }
                 }else{
                   alert(resler.msg);
                 }
