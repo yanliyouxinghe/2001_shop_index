@@ -15,8 +15,8 @@ class Header
      */
     public function handle($request, Closure $next)
     {   
-        $token = "2";
-        $datas['token'] = $token;
+        $user_id = "2";
+        $datas['user_id'] = $user_id;
         //首页菜单栏
         $data = CartgoryModel::get();
         $cartgoryInfo = infinite($data);

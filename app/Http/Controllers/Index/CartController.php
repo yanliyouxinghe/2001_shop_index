@@ -19,8 +19,8 @@ class CartController extends Controller
 
     //购物车数据
     public function getdata(){
-    $token = "2";
-    $data['token'] = $token;
+    $user_id = "2";
+    $data['user_id'] = $user_id;
     $url = "http://2001.shop.api.com/cart";
     $data_json = posturl($url,$data);
     //   print_r($data_json);die;
@@ -129,8 +129,8 @@ class CartController extends Controller
 
     //购物车删除
     public function cart_del(){
-        $token = "2";
-        $data['token'] = $token;
+        $user_id = "2";
+        $data['user_id'] = $user_id;
         $data['cart_id'] = request()->cart_id;
 
         $url = "http://2001.shop.api.com/cart_del";
@@ -147,8 +147,8 @@ class CartController extends Controller
 
     //减号
     public function buy_jian(){
-        $token = "2";
-        $data['token'] = $token;
+        $user_id = "2";
+        $data['user_id'] = $user_id;
         $data['cart_id'] = request()->cart_id; 
         
         $url = "http://2001.shop.api.com/buy_jian";
@@ -163,8 +163,8 @@ class CartController extends Controller
     
     //加号
     public function buy_jia(){
-        $token = "2";
-        $data['token'] = $token;
+        $user_id = "2";
+        $data['user_id'] = $user_id;
         $data['cart_id'] = request()->cart_id;
         
         $url = "http://2001.shop.api.com/buy_jia";
@@ -179,8 +179,8 @@ class CartController extends Controller
    
     //购物车总价格
     public function cart_zprice(){
-        $token = "2";
-        $data['token'] = $token;
+        $user_id = "2";
+        $data['user_id'] = $user_id;
         $cart_ids = request()->cart_ids;
         $url = "http://2001.shop.api.com/cart_zprice";
         $zprice = posturl($url,$cart_ids);

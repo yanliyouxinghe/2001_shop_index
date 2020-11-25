@@ -184,6 +184,8 @@ $(document).ready(function(){
             $.post('/cart_del',{cart_id:cart_id},function(resler){
                 if(resler.code==0){
                   _this.parent().parent().remove();
+                  var cart_ids = getcart();
+                  getxiaoji(cart_ids);
                 }else{
                   alert(resler.msg);
                 }
