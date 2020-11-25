@@ -163,7 +163,7 @@ class CartController extends Controller
             $user_id = request()->input('user_id');
 
             $cart_ids = request()->all()?:request()->getContent();
-            $cart_ids = implode($cart_ids,',');
+            $cart_ids = implode(',',$cart_ids);
              $total = DB::select("select sum(buy_number*shop_price) as total from sh_cart where cart_id in ($cart_ids)");
             $respoer = [
                 'code'=>'0',

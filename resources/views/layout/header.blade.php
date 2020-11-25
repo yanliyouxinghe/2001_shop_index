@@ -1,4 +1,4 @@
-<header>
+<header id="head">
   <!--topNavBg-->
   <div class="topNavBg">
    <div class="wrap">
@@ -15,7 +15,7 @@
    <!--topRightNav-->
     <ul class="topRtNav">
      <li><a href="{{url('/ser')}}">个人中心</a></li>
-     <li><a href="{{url('/cart')}}" class="cartIcon">购物车<i>{{request()->count_cart['data']}}</i></a></li>
+     <li><a href="{{url('/cart')}}" class="cartIcon">购物车<i class="cou">{{request()->count_cart['data']}}</i></a></li>
      <li><a href="{{'favo'}}" class="favorIcon">收藏夹</a></li>
      <li><a href="{{url('/business')}}">商家中心</a></li>
     </ul>
