@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\UseraddressModel;
 use App\Model\RegionModel;
+use Illuminate\Support\Facades\Redis;
 class UserController extends Controller
 {
      public function getsondata(Request $request){
@@ -14,23 +15,36 @@ class UserController extends Controller
     	return json_encode(['code'=>0,'msg'=>'OK','data'=>$region_son]);
     }
     public function store(Request $request){
-        
+         $callback=$request->callback;
         $post = $request->except(['_token','callback','_']);
-        $callback=$request->callback;
-        // dd($post);
+      
+        $user_id=Redis::hget('reg','user_id');
+        $post['user_id'] = $user_id;
+       // print_r($post);exit;
          $res = UseraddressModel::insert($post);
+         $address = array();
+        
+        return redirect('/');die;
         if($res){
-            $address =  UseraddressModel::all();
+            $address =  UseraddressModel::where(['user_id'=>$user_id])->get();
+            // print_r($address);
             $reg = new RegionModel;
              foreach($address as $k=>$v){
-            $address[$k]['country'] = $reg->where('region_id',$v->country)->value('region_name'); 
-            $address[$k]['province'] = $reg->where('region_id',$v->province)->value('region_name');
-            $address[$k]['city'] = $reg->where('region_id',$v->city)->value('region_name');
-            $address[$k]['district'] = $reg->where('region_id',$v->district)->value('region_name');
-            $address[$k]['tel'] = substr($v->tel,0,3)."****".substr($v->tel,7,4);
+                $address[$k]->country = $reg->where('region_id',$v->country)->value('region_name'); 
+                $address[$k]->province = $reg->where('region_id',$v->province)->value('region_name');
+                $address[$k]->city = $reg->where('region_id',$v->city)->value('region_name');
+                $address[$k]->district = $reg->where('region_id',$v->district)->value('region_name');
+                $address[$k]->tel = substr($v->tel,0,3)."****".substr($v->tel,7,4);
+            }
+        //    var_dump($address);
         }
-            $data = json_encode(['code'=>0,'msg'=>'OK','data'=>$address]);
-            echo  $callback.'('.$data.')';
-        }
+       // $address = $address->toArray();
+        $data = array(
+            'code'=>0,
+            'msg'=>'ok',
+            'data'=>$address
+        );
+      
+            echo  $callback.'('.json_encode($data).')';
     }
 }

@@ -70,7 +70,7 @@ $(document).ready(function(){
  @foreach($goodsinfo as $v)
  <div class="gallery">
   <div>
-    <div id="preview" class="spec-preview"> <span class="jqzoom"><img  jqimg="{{$v['goods_img']}}" src="{{$v['goods_img']}}" width="440px";height="5500px"; /></span> </div>
+    <div id="preview" class="spec-preview"> <span class="jqzoom"><img jqimg="{{$v['goods_img']}}" src="{{$v['goods_img']}}" width="440px";height="5500px"; /></span> </div>
     <!--缩图开始-->
     <div class="spec-scroll"> <a class="prev">&lt;</a> <a class="next">&gt;</a>
       <div class="items">
@@ -78,14 +78,23 @@ $(document).ready(function(){
           <li><img bimg="/{{$v['goods_img']}}" src="{{$v['goods_img']}}" onmousemove="preview(this);"></li>
         </ul>
       </div>
+
+
     </div>
     <!--缩图结束-->
   </div>
  </div>
+
+  <!-- <div>
+     <li><a href="favo" class="favorIcon">收藏宝贝</a></li>
+  </div> -->
+
  <!--text:right-->
  <div class="rt_infor">
   <!--lt_infor-->
- 
+        <ul>
+           <li><a href="favo" class="favorIcon">收藏宝贝</a></li>
+        </ul>
   <div class="goods_infor">
    <h2>{{$v['goods_name']}}</h2>
    <ul>
@@ -152,6 +161,8 @@ $(document).ready(function(){
  </div>
 </section>
 <!--detail-->
+
+
 
 <section class="wrap product_detail_btm">
  <article>
@@ -225,14 +236,6 @@ $(document).ready(function(){
     <strong>精品推荐</strong>
     <a>更多</a>
    </dt>
-   <dd>
-    <a href="#" class="goods_img"><img src="/jyl/upload/goods002.jpg"/></a>
-    <div class="rt_infor">
-     <h3><a href="#">时尚女装 2019春季针织衫</a></h3>
-     <p><del class="rmb_icon">1298.00</del></p>
-     <p><strong class="rmb_icon">980.00</strong></p>
-    </div>
-   </dd>
    @foreach($recommended as $vv)
    <dd>
     <a href="{{$vv['goods_id']}}" class="goods_img"><img src="{{$vv['goods_img']}}"/></a>

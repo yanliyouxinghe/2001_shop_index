@@ -35,6 +35,8 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('addressinfo','Api\OrderController@addressinfo');    //提交订单页面收件人信息数据
     Route::post('cartgoodsinfo','Api\OrderController@cartgoodsinfo');    //提交订单页面商品数据
     Route::post('address_del','Api\OrderController@address_del');    //提交订单页面收货地址ajax删除
+    Route::post('mor','Api\OrderController@mor');    //修改默认收货地址
+
 
     Route::post('logindo','Api\LoginController@logindo');//执行登录
     Route::get('getsondata','Api\UserController@getsondata'); //三级联动

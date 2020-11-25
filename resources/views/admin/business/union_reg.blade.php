@@ -51,7 +51,7 @@
  </div>
 </div>
 <!--footer-->
-@include('layout.foot')
+@include('layout.foot') 
 </body>
 </html>
 <script src="static/js/jquery.js"></script>
@@ -61,7 +61,7 @@
       var user_pwd = $('input[name="user_pwd"]').val();
       var user_pwds = $('input[name="user_pwds"]').val();
       var code = $('input[name="code"]').val();
-           $.post('http://2001.shop.api.com/regdo',{user_plone:user_plone,user_pwd:user_pwd,user_pwds:user_pwds,code:code},function (result) {
+           $.post('http://2001.shop.api.com/sereg',{user_plone:user_plone,user_pwd:user_pwd,user_pwds:user_pwds,code:code},function (result) {
             if(result.code=='00001'){
                 alert(result.msg);
             }
@@ -82,6 +82,29 @@
         },'json')
      
   })
+    $('button').click(function () {
+        var name = $('input[name="user_plone"]').val();
+        // alert(name);
+        var mobilereg = /^1[3|5|6|7|8|9]\d{9}$/;
+        if(mobilereg.test(name)){
+            //发送手机号验证码
+            $.get('http://2001.shop.api.com/sendSMS',{name:name},function (res) {
+                if(res.code=='00001'){
+                    alert(res.msg);
+                }
+                if(res.code=='00000'){
+                    alert(res.msg);
+                }
+                if(res.code=='00002'){
+                    alert(res.msg);
+                }
+            },'json');
+            return;
+        }
+        alert('请输入正确的手机号');
+        return;
+    })
+
 
 
 
