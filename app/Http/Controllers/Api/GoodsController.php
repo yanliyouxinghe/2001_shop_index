@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Model\GoodsModel;
 use App\Model\GoodsAttrModel;
 use App\Model\Goods_AttrModel;
+use App\Model\Shop_HistoryModel;
 class GoodsController extends Controller
 {
     
