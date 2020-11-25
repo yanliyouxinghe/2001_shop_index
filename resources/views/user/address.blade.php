@@ -96,10 +96,6 @@ $(document).ready(function(){
    </tr>
   </table>
 </form>
-
-
-
-
   <table class="order_table address_tbl add">
 
   </table>
@@ -115,7 +111,7 @@ $(document).ready(function(){
       
         var _this = $(this);
         var region_id = _this.val();
-        // alert(region_id);
+      
         if(region_id<1){
           _this.nextAll().find('option:gt(0)').remove();
         }
@@ -134,15 +130,7 @@ $(document).ready(function(){
       });
     $(function(){
       $('.addre').click(function(){
-        // var consignee = $('input[name="consignee"]').val();
-        // var tel = $('input[name="tel"]').val();
-        // var country = $('select[name="country"]').val();
-        // var province = $('select[name="province"]').val();
-        // var city = $('select[name="city"]').val();
-        // var district = $('select[name="district"]').val();
-        // var address = $('input[name="address"]').val();
         var data = $('form').serialize();
-        //alert(data);
         $.getJSON('http://2001.shop.api.com/store?callback=?',data,function (obj) {
             
                 var result=obj.data;
@@ -157,7 +145,7 @@ $(document).ready(function(){
                         '  </tr>';
                 });
                // alert(hotgoods);
-                 $('.add').after(hotgoods);
+                 $('.add').html(hotgoods);
 
                });
         });

@@ -22,17 +22,17 @@
    <dt>登录联盟平台</dt>
    <dd>
     <span>账号：</span>
-    <input type="text" placeholder="输入账号" class="txtbox"/>
+    <input type="text" name="user_plone" placeholder="输入账号" class="txtbox"/>
    </dd>
    <dd>
     <span>密码：</span>
-    <input type="text" placeholder="输入密码" class="txtbox"/>
+    <input type="password" name="user_pwd" placeholder="输入密码" class="txtbox"/>
    </dd>
    <dd>
-    <input type="button" value="立 即 登 陆" class="loginBtn"/>
+    <input type="button" id="login" value="立 即 登 陆" class="loginBtn"/>
    </dd>
    <dd>
-    <a href="{{url('reg')}}" class="fl">新用户注册</a>
+    <a href="{{url('/sereg')}}" class="fl">新用户注册</a>
     <a href="#" class="fr">忘记密码？</a>
    </dd>
   </dl>
@@ -42,3 +42,29 @@
 @include('layout.foot')
 </body>
 </html>
+<script src="/static/js/jquery.js"></script>
+<script>
+     $("#login").click(function () {
+        alert(111);
+        var user_plone = $('input[name="user_plone"]').val();
+      
+        var user_pwd = $('input[name="user_pwd"]').val();
+         $.post('/selog',{user_plone:user_plone,user_pwd:user_pwd},function (res) {
+            // console.log(res);
+            if(res.code== '00000'){
+                 location.href = "/index"
+            }else{
+              alert(res.msg);
+            }
+
+        },'json');
+       
+    });
+
+
+
+
+
+
+</script>
+
