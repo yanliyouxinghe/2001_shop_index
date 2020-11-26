@@ -124,9 +124,7 @@ $(document).ready(function(){
  <div class="rt_infor">
   <!--lt_infor-->
   <!--个人收藏  -->
-        <ul>
-           <li><a href="javascript:void(0)" class="favorIcon" goods_id="{{$v['goods_id']}}">收藏宝贝</a></li>
-        </ul>
+        
   <div class="goods_infor">
    <h2>{{$v['goods_name']}}</h2>
    <ul>
@@ -182,8 +180,7 @@ $(document).ready(function(){
      </dl>
     </li>
     <li class="last_li">
-       <input type="button" value="立即询价" class="buy_btn" onClick="alert('询价请求已推送至商家，请耐心等待！');"/>
-       <input type="button" value="立即购买" class="buy_btn" onClick="javascript:location.href='cart.html'"/>
+       <input type="button" value="收藏宝贝" class="buy_btn favorIcon" onClick="javascript:void(0)"/>
        <input type="button" value="加入购物车" class="add_btn  add"/>
     </li>
    </ul>
@@ -348,8 +345,6 @@ $(document).ready(function(){
 </html>
 <script src="/static/js/jquery.js"></script>
 <script>
-
-<<<<<<< HEAD
 //个人收藏
 $('.favorIcon').click(function(){
       var goods_id ="{{$goodsinfo[0]['goods_id']}}";
@@ -397,8 +392,6 @@ $('.favorIcon').click(function(){
                 return false;
           }
     }
-=======
->>>>>>> aade1ceb389c3c54cec4cf07de3c8dcaeeb14f40
     $(function(){
   //+号
           $('.plus').click(function(){

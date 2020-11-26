@@ -17,7 +17,7 @@ class CartController extends Controller
 
         $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_img')
                     ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
-                    ->where('user_id',$user_id)
+                    ->where(['user_id'=>$user_id,'is_del'=>1])
                     ->get();
 
         foreach ($cart_data as $key=>$val){
@@ -58,7 +58,7 @@ class CartController extends Controller
     //购物车商品数量
     public function cart_count(){
         $user_id = request()->input('user_id');
-        $cart_count = CartModel::where('user_id',$user_id)->count();
+        $cart_count = CartModel::where(['user_id'=>$user_id,'is_del'=>1])->count();
         $respoer = [
             'code'=>0,
             'msg'=>'OK',
@@ -72,7 +72,7 @@ class CartController extends Controller
         $user_id = request()->input('user_id');
         $cart_id = request()->input('cart_id');
         
-        $del = CartModel::where(['user_id'=>$user_id,'cart_id'=>$cart_id])->delete();
+        $del = CartModel::where(['user_id'=>$user_id,'cart_id'=>$cart_id])->update(['is_del'=>2]);
         if($del){
             $respoer = [
                 'code'=>'0',

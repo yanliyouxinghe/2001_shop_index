@@ -51,4 +51,9 @@ class LoginController extends Controller
             curl_close($curl);
             return json_decode($output,true);
         } 
+
+        public function logout(){
+           Redis::hdel('reg','user_id','user_plone');
+           return redirect('/login');
+        }
 }

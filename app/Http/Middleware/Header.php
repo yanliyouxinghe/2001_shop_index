@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 use App\Model\CartgoryModel;
+use Illuminate\Support\Facades\Redis;
 use Closure;
 
 class Header
@@ -15,7 +16,7 @@ class Header
      */
     public function handle($request, Closure $next)
     {   
-        $user_id = "2";
+        $user_id = Redis::hget('reg','user_id');
         $datas['user_id'] = $user_id;
         //首页菜单栏
         $data = CartgoryModel::get();

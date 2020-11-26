@@ -43,7 +43,7 @@ Route::get('/changepass','Index\ProfileController@changepass');//修改密码
 Route::post('/mor','Index\OrderController@mor');//修改默认收货地址
 
 
-Route::get('/reg','Admin\BusinessController@reg');//商家后太注册
+Route::get('/sereg','Admin\BusinessController@sereg');//商家后太注册
 Route::get('/business','Admin\BusinessController@business');//商家后台登录
 Route::post('/selog','Admin\BusinessController@selogin');//商家执行登录
 Route::get('/index','Admin\SellController@index');//商家后台首页
@@ -56,6 +56,14 @@ Route::post('/buy_jian','Index\CartController@buy_jian');//购物车减号
 Route::post('/buy_jia','Index\CartController@buy_jia');//购物车加号
 Route::post('/cart_zprice','Index\CartController@cart_zprice');//购物车总价格
 Route::get('/addorder','Index\OrderController@index');//购物车点击结算
+
+Route::get('/logout','Index\LoginController@logout');//购物车点击结算
+Route::post('/orderinfo','Index\OrderController@orderinfo');  //收货地址ajax删除
+Route::post('/orderinfo','Index\OrderController@orderinfo');  //生成订单
+
+
+
+
 
 
 
