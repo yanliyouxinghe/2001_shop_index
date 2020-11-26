@@ -349,7 +349,6 @@ $(document).ready(function(){
 <script src="/static/js/jquery.js"></script>
 <script>
 
-<<<<<<< HEAD
 //个人收藏
 $('.favorIcon').click(function(){
       var goods_id ="{{$goodsinfo[0]['goods_id']}}";
@@ -397,8 +396,6 @@ $('.favorIcon').click(function(){
                 return false;
           }
     }
-=======
->>>>>>> aade1ceb389c3c54cec4cf07de3c8dcaeeb14f40
     $(function(){
   //+号
           $('.plus').click(function(){

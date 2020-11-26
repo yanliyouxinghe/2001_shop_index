@@ -47,7 +47,7 @@ class CartController extends Controller
     
     //加入购物车
     public function addcart(Request $request){
-        $user_id = 3;
+        $user_id = Redis::hget('reg','user_id');
         // dd($user_id);
         if(!$user_id){
             return json_encode(['code'=>'1001','msg'=>'请先登录']);

@@ -51,8 +51,8 @@ Route::domain('2001.shop.api.com')->group(function () {
 
     Route::post('account','Api\OrderController@account'); //总价格
 
-
-    
+    Route::get('seckill','Api\SeckillController@seckill'); //总价格
+    Route::post('seckilldo','Api\SeckillController@seckilldo');//秒杀列表页
 });
 
   

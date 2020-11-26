@@ -57,8 +57,8 @@ Route::post('/buy_jia','Index\CartController@buy_jia');//购物车加号
 Route::post('/cart_zprice','Index\CartController@cart_zprice');//购物车总价格
 Route::get('/addorder','Index\OrderController@index');//购物车点击结算
 
-
-
+Route::get('seckill/index','Index\SeckillController@index');//秒杀列表页
+Route::post('seckill/seckilldo','Index\SeckillController@seckilldo');//秒杀列表页
 
 
 
