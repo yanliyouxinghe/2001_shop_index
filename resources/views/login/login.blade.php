@@ -54,10 +54,10 @@ $(document).ready(function(){
   <h2>会员登录</h2>
   <ul>
    <li class="user_icon">
-    <input type="text" name="user_plone" class="textbox" placeholder="账号"/>
+    <input type="text" name="user_plone" class="textbox" placeholder="账号"/><span></span>
    </li>
    <li class="user_pwd">
-    <input type="password" name="user_pwd" class="textbox" placeholder="密码"/>
+    <input type="password" name="user_pwd" class="textbox" placeholder="密码"/><span></span>
    </li>
    <li class="link_li">
     <a href="{{url('/reg')}}" title="注册新用户" class="fl">注册新用户</a>
@@ -77,12 +77,33 @@ $(document).ready(function(){
 <script>
      $("#login").click(function () {
         // alert(111);
+        var falg = false;
         var user_plone = $('input[name="user_plone"]').val();
-       
+            if (user_plone == '') {
+                $("input[name='user_plone']+span").html("<font color='red'>用户名不能为空</font>");
+                falg = false;
+            } else {
+                $("input[name='user_plone']+span").html("<font color='green'>√</font>");
+                falg = true;
+            }
+        var pfalg = false;
         var user_pwd = $('input[name="user_pwd"]').val();
-
+         if (user_pwd == '') {
+                $("input[name='user_pwd']+span").html("<font color='red'>密码不能为空</font>");
+                pfalg = false;
+            } else {
+                $("input[name='user_pwd']+span").html("<font color='green'>√</font>");
+                pfalg = true;
+            }
+          if (falg === false || pfalg === false) {
+                return false;
+          }
         $.post('/logdo',{user_plone:user_plone,user_pwd:user_pwd},function (res) {
-            // console.log(res);
+            console.log(res);
+            // alert(res);
+            if(res.code== '00002'){
+              alert(res.msg);
+            }
             if(res.code== '00000'){
                  location.href = "/"
             }else{

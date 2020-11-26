@@ -43,7 +43,7 @@ Route::get('/changepass','Index\ProfileController@changepass');//修改密码
 Route::post('/mor','Index\OrderController@mor');//修改默认收货地址
 
 
-Route::get('/reg','Admin\BusinessController@reg');//商家后太注册
+Route::get('/sereg','Admin\BusinessController@sereg');//商家后太注册
 Route::get('/business','Admin\BusinessController@business');//商家后台登录
 Route::post('/selog','Admin\BusinessController@selogin');//商家执行登录
 Route::get('/index','Admin\SellController@index');//商家后台首页

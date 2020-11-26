@@ -60,11 +60,11 @@ $(document).ready(function(){
   <table class="order_table">
    <tr>
     <td width="100" align="right">收件人：</td>
-    <td><input type="text" name="consignee" placeholder="输入收件人姓名" class="textbox"/></td>
+    <td><input type="text" name="consignee" placeholder="输入收件人姓名" class="textbox"/><span></span></td>
    </tr>
    <tr>
     <td width="100" align="right">联系电话：</td>
-    <td><input type="text" name="tel" placeholder="收件人手机号码" class="textbox"/></td>
+    <td><input type="text" name="tel" placeholder="收件人手机号码" class="textbox"/><span></span></td>
    </tr>
    <tr>
     <td width="100" align="right">收件地址：</td>
@@ -88,7 +88,7 @@ $(document).ready(function(){
    </tr>
    <tr>
     <td width="100" align="right">详细地址：</td>
-    <td><input type="text" name="address" placeholder="街道门牌号" class="textbox textbox_295"/></td>
+    <td><input type="text" name="address" placeholder="街道门牌号" class="textbox textbox_295"/><span></span></td>
    </tr>
    <tr>
     <td width="100" align="right"></td>
@@ -108,7 +108,6 @@ $(document).ready(function(){
 <script src="/static/js/jquery.js"></script>
 <script>
     $('select').change(function(){
-      
         var _this = $(this);
         var region_id = _this.val();
       
@@ -130,10 +129,55 @@ $(document).ready(function(){
       });
     $(function(){
       $('.addre').click(function(){
-        var data = $('form').serialize();
+        var flag = false;
+        var data=new Array();
+         data.consignee = $('input[name="consignee"]').val();
+        if (data.consignee  == '') {
+                $("input[name='consignee']+span").html("<font color='red'>收件人不能为空</font>");
+                flag = false;
+            } else {
+                $("input[name='consignee']+span").html("<font color='green'>√</font>");
+                flag = true;
+            }
+        var aflag = false;
+        data.tel = $('input[name="tel"]').val();
+        if (data.tel == '') {
+                $("input[name='tel']+span").html("<font color='red'>电话号不能为空</font>");
+                aflag = false;
+            } else {
+                $("input[name='tel']+span").html("<font color='green'>√</font>");
+                aflag = true;
+            }
+        
+         data.country = $('select[name="country"]').val();
+      
+        data. province = $('select[name="province"]').val();
+        data. city = $('select[name="city"]').val();
+        data. district = $('select[name="district"]').val();
+        var hflag = false;
+        data.address = $('input[name="address"]').val();
+        if (data.address == '') {
+                $("input[name='address']+span").html("<font color='red'>收货地址不能为空</font>");
+                hflag = false;
+            } else {
+                $("input[name='address']+span").html("<font color='green'>√</font>");
+                hflag = true;
+            }
+            if(hflag === false || aflag === false || flag === false){
+              return false;
+            }
+            // console.log(data);
+            // return false;
+        // var data = $('form').serialize();
+        //{consignee:consignee,tel:tel,country:country,province:province,city:city,district,address:address}
         $.getJSON('http://2001.shop.api.com/store?callback=?',data,function (obj) {
-            
-                var result=obj.data;
+                // console.log(obj.data);
+                // return false;
+                //var result=obj.consignee,tel,country,province,city,district,address;
+              
+              
+                
+                 var result=obj.data;
                 var hotgoods = '';
 
                 $.each(result, function(i,item){
@@ -144,7 +188,7 @@ $(document).ready(function(){
                         '    <td><label><input type="radio" name="moren"/>设为默认地址</label><input type="button" value="编辑" class="btn"/><input type="button" value="删除" class="btn"/></td>\n' +
                         '  </tr>';
                 });
-               // alert(hotgoods);
+               alert(hotgoods);
                  $('.add').html(hotgoods);
 
                });

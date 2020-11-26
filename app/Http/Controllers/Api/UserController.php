@@ -17,11 +17,14 @@ class UserController extends Controller
     public function store(Request $request){
          $callback=$request->callback;
         $post = $request->except(['_token','callback','_']);
-      
+        foreach($post as $k=>$v){
+            $data['consignee'] = $k;
+        }
+    //   print_r($post);
         $user_id=Redis::hget('reg','user_id');
-        $post['user_id'] = $user_id;
-       // print_r($post);exit;
-         $res = UseraddressModel::insert($post);
+        $data['user_id'] = $user_id;
+    //    print_r($data);exit;
+         $res = UseraddressModel::insert($data);
          $address = array();
         
         // return redirect('/');die;
