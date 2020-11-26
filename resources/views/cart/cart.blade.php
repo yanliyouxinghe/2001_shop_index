@@ -45,7 +45,21 @@ $(document).ready(function(){
    });
    
  </script>
- <div id="tab">
+ @php  use Illuminate\Support\Facades\Redis; @endphp
+ @php  $user_id=Redis::hmget('reg','user_id','user_plone'); @endphp
+  @if($user_id[0]==false||$user_id[1]==false||empty($user_id))
+  <center><table>
+      <tr>
+        <td><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1024102881,2497395939&fm=26&gp=0.jpg" alt="" width="300px" height="300px"></td>
+        <td> <div class="order_btm_btn">
+              <h1 style="color:red">您还没有登录哦~先去登录吧</h1>
+              <a href="/login" class="link_btn_01 buy_btn"/>去登录</a>
+            </div>
+       </td>
+      </tr>
+    </table>
+</center>
+  @else
  @if(count($cart['data']) > 0)
 <section class="wrap" style="margin-top:20px;overflow:hidden;">
  <table class="order_table">
@@ -62,7 +76,7 @@ $(document).ready(function(){
    @if(isset($cart['data']))
    @foreach($cart['data'] as $v)
   <tr>
-   <td class="center"><input type="checkbox" cart_id="{{$v['cart_id']}}" class="check2"/></td>
+   <td class="center"><input type="checkbox" cart_id="{{$v['cart_id']}}" goods_id="{{$v['goods_id']}}" class="check2"/></td>
    <td class="center"><a href="/goods/{{$v['goods_id']}}"><img src="{{$v['goods_img']}}" style="width:50px;height:50px;"/></a></td>
    <td><a href="/goods/{{$v['goods_id']}}">{{$v['goods_name']}}</a></td>
    <td>
@@ -109,10 +123,7 @@ $(document).ready(function(){
     </table>
 </center>
 @endif
-   
-   </div>
-
-
+@endif
 
 <!--footer-->
 @include('layout.foot');
@@ -260,15 +271,20 @@ $(document).ready(function(){
   //跳转结算
     $(document).on('click','.add_btn',function(){
       var cart_id = new Array();
+      var goods_id = new Array();
+
       $('.check2:checked').each(function(){
         cart_id.push($(this).attr('cart_id'));
+      });
+      $('.check2:checked').each(function(){
+        goods_id.push($(this).attr('goods_id'));
       });
       if (cart_id.length <= 0) {
       alert('最少选择一件商品哦！');
       return;
      }
     if(cart_id){
-        location.href="/addorder?cart_id="+cart_id;
+        location.href="/addorder?cart_id="+cart_id+"&"+"goods_id="+goods_id;
     }else{
       return false;
     }

@@ -28,6 +28,7 @@ class OrderController extends Controller
                 $addressinfo[$k]['province_name'] = RegionModel::where('region_id',$v['province'])->value('region_name');
                 $addressinfo[$k]['city_name'] = RegionModel::where('region_id',$v['city'])->value('region_name');
                 $addressinfo[$k]['district_name'] = RegionModel::where('region_id',$v['district'])->value('region_name');
+                $addressinfo[$k]->tel = substr($v->tel,0,3)."****".substr($v->tel,7,4);
             }  
         }
         $response = [
@@ -118,21 +119,13 @@ class OrderController extends Controller
         $user_id = request()->input('user_id');
         
         $default = UseraddressModel::where(['user_id'=>$user_id])->update(['is_default'=>0]);
-        if($default){
-           $is_default =  UseraddressModel::where(['address_id'=>$address_id])->update(['is_default'=>1]);
-            if($is_default){
-                $respoer = [
-                    'code'=>0,
-                    'msg'=>'OK',
-                    'data'=>$is_default
-                ];  
-            }
-        }else{
+        $is_default =  UseraddressModel::where(['address_id'=>$address_id])->update(['is_default'=>1]);
+        if($is_default){
             $respoer = [
-                'code'=>1,
-                'msg'=>'Error',
-                'data'=>[]
-            ]; 
+                'code'=>0,
+                'msg'=>'OK',
+                'data'=>$is_default
+            ];  
         }
         return json_encode($respoer);
 

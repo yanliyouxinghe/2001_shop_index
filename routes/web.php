@@ -19,7 +19,9 @@ Route::get('/list/{id}','Index\ListController@list');  //列表页
 Route::get('/confirm','Index\OrderController@index');  //提交订单视图页面
 Route::post('/address_del','Index\OrderController@address_del');  //收货地址ajax删除
 Route::post('/orderdo','Index\OrderController@orderdo');  //执行提交订单
-Route::post('createcollect','Index\GoodsController@createcollect');    //个人收藏
+Route::get('/createcollect','Index\GoodsController@createcollect');    //个人收藏添加
+Route::get('/favorite','Index\GoodsController@listcollect');    //个人收藏添加
+Route::post('/cancel','Index\GoodsController@cancel');    //取消个人收藏
 
 Route::get('/pay/{order_id}','Index\OrderController@pay');  //支付
 Route::get('/return_url','Index\OrderController@pay');    //支付宝同步跳转
@@ -43,7 +45,7 @@ Route::get('/changepass','Index\ProfileController@changepass');//修改密码
 Route::post('/mor','Index\OrderController@mor');//修改默认收货地址
 
 
-Route::get('/reg','Admin\BusinessController@reg');//商家后太注册
+Route::get('/sereg','Admin\BusinessController@sereg');//商家后太注册
 Route::get('/business','Admin\BusinessController@business');//商家后台登录
 Route::post('/selog','Admin\BusinessController@selogin');//商家执行登录
 Route::get('/index','Admin\SellController@index');//商家后台首页
@@ -59,6 +61,10 @@ Route::get('/addorder','Index\OrderController@index');//购物车点击结算
 
 Route::get('seckill/index','Index\SeckillController@index');//秒杀列表页
 Route::post('seckill/seckilldo','Index\SeckillController@seckilldo');//秒杀列表页
+Route::get('/logout','Index\LoginController@logout');//购物车点击结算
+Route::post('/orderinfo','Index\OrderController@orderinfo');  //收货地址ajax删除
+Route::post('/orderinfo','Index\OrderController@orderinfo');  //生成订单
+
 
 
 

@@ -146,7 +146,12 @@ $(document).ready(function(){
                 });
                // alert(hotgoods);
                  $('.add').html(hotgoods);
-
+                 if(window.location.href.indexOf('refer') > -1){
+                   window.history.go(-1); //返回上一页
+                   window.location.go(-1); //刷新上一页
+                 }
+                 
+                
                });
         });
         

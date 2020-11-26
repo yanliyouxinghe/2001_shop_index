@@ -11,6 +11,8 @@ use App\Model\UseraddressModel;
 use App\Model\RegionModel;
 use App\Model\Order_GoodsModel;
 use App\Model\Order_InfoModel;
+use App\Model\CartModel;
+use Illuminate\Support\Facades\DB;
 use Log;
 use function AlibabaCloud\Client\redTable;
 use Illuminate\Support\Facades\Redis;
@@ -18,13 +20,20 @@ class OrderController extends Controller
 {
 
     public function order(){
+
         return view('order.order_list');
     }
 
     /**提交订单视图 */
     public function index(){
+        $post = request()->all();
+        $cart_id = $post['cart_id'];
+        $goods_id = $post['goods_id'];
+
         $user_id=Redis::hget('reg','user_id');
-        print_r($user_id);die;
+        if(!$user_id){
+            return redirect('/login');
+        }
         $data['user_id']=$user_id;
         //展示收货人信息
         $url = 'http://2001.shop.api.com/addressinfo';
@@ -37,16 +46,17 @@ class OrderController extends Controller
         }
         $url = "http://2001.shop.api.com/account";
         $account = posturl($url,$data);
-        return view('order.order',['addressinfo'=>$addressinfo['data'],'account'=>$account['data']]);
+        return view('order.order',['addressinfo'=>$addressinfo['data'],'account'=>$account['data'],'goods_id'=>$goods_id,'cart_id'=>$cart_id]);
     }
 
     /**收货地址ajax删除 */
     public function address_del(){
         $data['address_id'] = request()->address_id;
-        $user_id="1";
+        $user_id=Redis::hget('reg','user_id');
         $data['user_id']=$user_id;
         $url = 'http://2001.shop.api.com/address_del';
         $address_del = posturl($url,$data);
+        // print_r($address_del);die;
         if($address_del['data']['count_address'] ==1){
             return json_encode(['code'=>2,'msg'=>'Error']);
         }
@@ -58,9 +68,13 @@ class OrderController extends Controller
     }
 
 
+
     //修改收货地址默认、
     public function mor(){
-        $user_id="1";
+        $user_id=Redis::hget('reg','user_id');
+        if(!$user_id){
+            return redirect('/login');
+        }
         $data['user_id']=$user_id;
         $data['address_id'] = request()->input('address_id');
         $url = 'http://2001.shop.api.com/mor';
@@ -252,5 +266,100 @@ class OrderController extends Controller
 
             }
     }
+
+
+        public function orderinfo(){
+            $user_id=Redis::hget('reg','user_id');
+            if(!$user_id){
+                return json_encode(['code'=>1,'msg'=>'Error,请登录']);
+            }
+            $datas = request()->all();
+            $cart_id = explode(',',$datas['cart_id']);
+            if(empty($datas['address_id']) || empty($datas['pay_type']) || empty($datas['cart_id']) || empty($datas['total_price'])){
+                return json_encode(['code'=>2,'msg'=>'Error,参数丢失']);
+            }
+
+            
+
+            if($datas['pay_type']==1){
+                $datas['pay_name'] = "支付宝";
+            }else if($datas['pay_type']==2){
+                $datas['pay_name'] = "微信支付";
+            }else if($datas['pay_type']==3){
+                $datas['pay_name'] = "货到付款";
+            }else if($datas['pay_type']==4){
+                $datas['pay_name'] = "余额支付";
+            }
+
+
+            DB::beginTransaction();
+           
+            try {
+                $order_sn = $this->order_sn($user_id);
+                $addressdatas = UseraddressModel::where(['user_id'=>$user_id,'address_id'=>$datas['address_id']])->get();
+                $addressdata = $addressdatas[0];
+                $data = [
+                    'order_sn' => $order_sn,
+                    'user_id' => $user_id,
+                    'email' => $addressdata->email,
+                    'consignee' => $addressdata->consignee,
+                    'country' => $addressdata->country,
+                    'province' => $addressdata->province,
+                    'city' => $addressdata->city,
+                    'district' => $addressdata->district,
+                    'address' => $addressdata->address,
+                    'zipcode' => $addressdata->zipcode,
+                    'tel' => $addressdata->tel,
+                    'pay_type' => $datas['pay_type'],
+                    'pay_name' => $datas['pay_name'],
+                    'total_price' => $datas['total_price'],
+                    // 'deal_price' => $datas['deal_price'],
+                    'addtime' => time(),
+                    'order_leave'=>$datas['order_leave']
+                ];
+    
+                $order_id = Order_InfoModel::insertGetId($data);
+                $goodsinfo = CartModel::select('sh_cart.goods_id','sh_cart.goods_sn','sh_cart.product_id','sh_cart.goods_name','sh_cart.shop_price','sh_cart.buy_number','sh_cart.goods_attr_id')
+                        ->whereIn('cart_id',$cart_id)
+                        ->where('is_del',1)
+                        ->get();
+                        $goods_data = [];
+                        foreach($goodsinfo as $k=>$v){
+                            $goods_data[$k]['order_id'] = $order_id;
+                            $goods_data[$k]['goods_id'] = $v->goods_id;
+                            $goods_data[$k]['goods_sn'] = $v->goods_sn;
+                            $goods_data[$k]['product_id'] = $v->product_id;
+                            $goods_data[$k]['goods_name'] = $v->goods_name;
+                            $goods_data[$k]['shop_price'] = $v->shop_price;
+                            $goods_data[$k]['buy_number'] = $v->buy_number;
+                            $goods_data[$k]['goods_attr_id'] = $v->goods_attr_id?$v->goods_attr_id:'';
+    
+                        }
+                        // print_r($goods_data);die;
+                $ret = Order_GoodsModel::insert($goods_data);
+                foreach($cart_id as $k=>$v){
+                    CartModel::where(['cart_id'=>$v])->update(['is_del'=>2]);
+                }
+                DB::commit();
+                return json_encode(['code'=>2,'msg'=>'订单生成成功','data'=>$order_id]);
+            } catch (\Throwable $th) {
+                DB::rollBack();
+                return json_encode(['code'=>3,'msg'=>'订单生成失败']);
+            }
+
+        }
+
+        //生成惟一的订单号
+        public function order_sn($user_id){
+            $order_sn = rand(100000,999999).$user_id.time();
+            $is_cf = Order_InfoModel::where(['order_sn'=>$order_sn])->first();
+            if($is_cf){
+                $this->order_sn($user_id);
+            }else{
+                return $order_sn;
+            }
+            
+
+        }
     
 }
