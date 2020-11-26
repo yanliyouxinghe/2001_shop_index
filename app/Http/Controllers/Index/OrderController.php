@@ -68,6 +68,7 @@ class OrderController extends Controller
     }
 
 
+
     //修改收货地址默认、
     public function mor(){
         $user_id=Redis::hget('reg','user_id');

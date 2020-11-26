@@ -161,7 +161,7 @@ class CartController extends Controller
         $del_cart = posturl($url,$data);
        // dd($del_cart);
         // dd($del_cart['code']);
-        if($del_cart['code'] == 0){
+        if($del_cart['code']==0){
              return json_encode(['code'=>0,'msg'=>'OK']);
         }else{
             return json_encode(['code'=>1,'msg'=>'操作繁忙。。。']);

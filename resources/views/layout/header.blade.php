@@ -24,7 +24,7 @@
      @else
      <li><a href="{{url('/cart')}}" class="cartIcon">购物车<i class="cou">{{request()->count_cart['data']}}</i></a></li>
      @endif
-     <li><a href="{{'favo'}}" class="favorIcon">收藏夹</a></li>
+     <li><a href="{{url('/favorite')}}" class="favorIcon">收藏夹</a></li>
      <li><a href="{{url('/business')}}">商家中心</a></li>
     </ul>
    </div>

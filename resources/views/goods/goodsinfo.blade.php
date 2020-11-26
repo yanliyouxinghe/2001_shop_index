@@ -123,8 +123,6 @@ $(document).ready(function(){
  
  <div class="rt_infor">
   <!--lt_infor-->
-  <!--个人收藏  -->
-        
   <div class="goods_infor">
    <h2>{{$v['goods_name']}}</h2>
    <ul>
@@ -180,7 +178,7 @@ $(document).ready(function(){
      </dl>
     </li>
     <li class="last_li">
-       <input type="button" value="收藏宝贝" class="buy_btn favorIcon" onClick="javascript:void(0)"/>
+       <input type="button" value="收藏宝贝" class="buy_btn fav" onClick="javascript:void(0)"/>
        <input type="button" value="加入购物车" class="add_btn  add"/>
     </li>
    </ul>
@@ -346,20 +344,28 @@ $(document).ready(function(){
 <script src="/static/js/jquery.js"></script>
 <script>
 //个人收藏
-$('.favorIcon').click(function(){
+$('.fav').click(function(){
       var goods_id ="{{$goodsinfo[0]['goods_id']}}";
-      
       $.ajax({
           type:'get',
           url: "http://2001.shop.api.com/createcollect",
           dataType:'json',
           data: {goods_id:goods_id},
           success: function(res){
-             console.log(res);
-            
+            // console.log();
+             if(res.code==1001){
+                alert(res.msg);
+                return;
+             }else if(res.code==1002){
+                alert(res.msg);
+                return;
+             }else if(res.code==1003){
+                alert(res.msg);
+                return;
+             }    
           }
         });
-
+      
     })
 
 
