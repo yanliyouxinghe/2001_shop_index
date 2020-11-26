@@ -24,16 +24,26 @@ $(document).ready(function(){
 	   $(this).addClass("curr_li").siblings().removeClass("curr_li");
        $(".favoriteWrap").eq(liindex).fadeIn(150).siblings(".favoriteWrap").hide();
 	  });
-  //冒泡
-  $(".favorite_list li a").click(function(){
-	alert("链接");
-	window.location.href='product.html';
+  // //冒泡
+  // $(".favorite_list li a").click(function(){
+	// alert("链接");
+	// window.location.href='product.html';
+	// });
+	$(".favorite_list li .collect").click(function(){
+    var _this = $(this);
+    var goods_id = $(this).attr('id');
+    if(confirm("您确定要取消收藏吗?")){
+      $.post('/cancel',{goods_id:goods_id},function(res){
+        if(res.code==1){
+          var d=$(this).parent("li").removeChild();
+          // event.stopPropagation();
+        }
+        location.reload();
+      },'json')
+    }
+     
 	});
-	$(".favorite_list li .remove").click(function(){
-	alert("移除");
-	$(this).parents("li").remove();
-	event.stopPropagation();
-	});
+
 });
 </script>
 </head>
@@ -98,19 +108,20 @@ $(document).ready(function(){
   <div class="favoriteWrap" style="display:block;">
   <!--收藏列表-->
   <ul class="favorite_list">
-   @foreach($collectInfo as $v)
+   @foreach($collectgoodsInfo as $v)
+   @foreach($v as $vv)
    <li>
     <a>
-     <img src="upload/goods005.jpg"/>
-     <h2>2019时尚新款</h2>
-     <p class="price"><span class="rmb_icon">298.00</span></p>
-     <p class="remove"><span>&#126;</span></p>
+     <img src="{{$vv['goods_img']}}"/>
+     <h2>{{$vv['goods_name']}}</h2>
+     <p class="price"><span class="rmb_icon">{{$vv['shop_price']}}</span></p>
+     <p class="remove collect" id="{{$vv['goods_id']}}"><span>&#126;</span></p>
     </a>
    </li>
    @endforeach
-
-  
+   @endforeach
   </ul>
+  
    <!--分页-->
    <div class="paging">
     <a>第一页</a>

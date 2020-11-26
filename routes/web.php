@@ -19,7 +19,9 @@ Route::get('/list/{id}','Index\ListController@list');  //列表页
 Route::get('/confirm','Index\OrderController@index');  //提交订单视图页面
 Route::post('/address_del','Index\OrderController@address_del');  //收货地址ajax删除
 Route::post('/orderdo','Index\OrderController@orderdo');  //执行提交订单
-Route::post('createcollect','Index\GoodsController@createcollect');    //个人收藏
+Route::get('/createcollect','Index\GoodsController@createcollect');    //个人收藏添加
+Route::get('/favorite','Index\GoodsController@listcollect');    //个人收藏添加
+Route::post('/cancel','Index\GoodsController@cancel');    //取消个人收藏
 
 Route::get('/pay/{order_id}','Index\OrderController@pay');  //支付
 Route::get('/return_url','Index\OrderController@pay');    //支付宝同步跳转
