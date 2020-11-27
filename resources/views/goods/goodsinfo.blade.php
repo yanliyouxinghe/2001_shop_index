@@ -343,6 +343,19 @@ $(document).ready(function(){
 </html>
 <script src="/static/js/jquery.js"></script>
 <script>
+//浏览历史记录页面加载事件
+// $(document).ready(function(){
+//   $.ajax({
+//           type:'post',
+//           url: "http://2001.shop.api.com/createcollect",
+//           dataType:'json',
+//           data: {goods_id:goods_id},
+//           success: function(res){
+//             console.log(res);
+//           }
+//         });
+// });
+
 //个人收藏
 $('.fav').click(function(){
       var goods_id ="{{$goodsinfo[0]['goods_id']}}";

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Model\BrandModel;
 use App\Model\GoodsModel;
 use App\Model\CartgoryModel;
+use App\Model\Shop_HistoryModel;
+use Illuminate\Support\Facades\Redis;
 class ListController extends Controller
 {
     /**获取Api列表页数据 */
@@ -89,6 +91,28 @@ class ListController extends Controller
          $totalprice[] = $max_price.'元以上';
          return $totalprice;
     }
+
+    // /**API登录后 展示历史浏览记录 */
+    public function listhistory(){
+        // $user_id = request()->input('user_id');
+        //获取用户id
+        $user_id=Redis::hget('reg','user_id');
+        $listhistory = Shop_HistoryModel::select('sh_shop_history.*','sh_goods.goods_id','sh_goods.goods_img','sh_goods.goods_name','sh_goods.shop_price')
+                            ->leftjoin('sh_goods','sh_shop_history.goods_id','=','sh_goods.goods_id')
+                            ->where('sh_shop_history.user_id',$user_id)
+                            ->orderBy('add_time','desc')
+                            ->limit(8)
+                            ->get(); 
+        // print_r($listhistory);                                          
+        $response = [       
+            'code'=>0,
+            'msg'=>'OK',
+            'listhistory'=>$listhistory,
+        ];
+        return json_encode($response);
+    }
+
+  
 
 
        

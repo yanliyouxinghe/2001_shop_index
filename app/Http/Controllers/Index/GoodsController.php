@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Model\Shop_HistoryModel;
+use Illuminate\Support\Facades\Redis;
 class GoodsController extends Controller
 {
     function goodsinfo($id){
@@ -15,6 +16,9 @@ class GoodsController extends Controller
         $goodsinfo=$data['goodsinfo'];
         $attr=$data['attr'];
         $recommended=$data['recommended'];
+
+        //历史浏览记录
+        $this->history($id);
         return view('/goods/goodsinfo',['goodsinfo'=>$goodsinfo,'attr'=>$attr,'recommended'=>$recommended]);
     }
 
@@ -42,5 +46,38 @@ class GoodsController extends Controller
             return json_encode(['code'=>1,'msg'=>'取消失败']);
         } 
    }
+
+   /**历史浏览记录 */
+   public function history($goods_id){
+      //   获取用户id
+      //   $user_id="1";
+      $user_id = Redis::hget('reg','user_id');
+     // $data['user_id']=$user_id;
+      if(!$user_id){
+          //不登录历史浏览记录
+          $this->cookiehistory($id);
+      }else{
+          //登录后 
+          $url = 'http://2001.shop.api.com/createhistory/'.$goods_id;
+          geturl($url);
+      }
+
+
+   }
+
+   /**cookie 添加历史浏览记录 */
+   public function cookiehistory(){
+
+   }
+
+//    public function lll($goods_id){
+//     $user_id=  "11";
+//     if($user_id){
+
+//     }else{
+            
+//     }
+
+//    }
    
 }
