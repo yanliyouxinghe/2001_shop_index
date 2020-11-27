@@ -139,7 +139,7 @@ class LoginController extends Controller
     }
     //执行登录
     public function logindo(Request $request){
-          $data=$request->all();
+        $data=$request->all();
         $user = UserModel::where(['user_plone'=>$data['user_plone']])->first();
         //   dd($user);
           if(!$user){
