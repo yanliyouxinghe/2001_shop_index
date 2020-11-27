@@ -50,6 +50,8 @@ Route::get('/business','Admin\BusinessController@business');//商家后台登录
 Route::post('/selog','Admin\BusinessController@selogin');//商家执行登录
 Route::get('/index','Admin\SellController@index');//商家后台首页
 Route::get('/goods','Admin\GoodsController@goods');//商家后台商品添加
+Route::any('/upload','Admin\GoodsController@upload');//图片上传接口
+Route::any('/uploads','Admin\GoodsController@uploads');//图片上传接口
 Route::get('/goodslist','Admin\GoodsController@goodslist');//商家后台商品列表
 Route::get('/getattr','Admin\GoodsController@getattr')->name('gooods.getattr');//商品属性
 

@@ -168,7 +168,7 @@ $(document).ready(function(){
             }
             // console.log(data);
             // return false;
-        // var data = $('form').serialize();
+        var data = $('form').serialize();
         //{consignee:consignee,tel:tel,country:country,province:province,city:city,district,address:address}
         $.getJSON('http://2001.shop.api.com/store?callback=?',data,function (obj) {
                 // console.log(obj.data);
@@ -188,7 +188,7 @@ $(document).ready(function(){
                         '    <td><label><input type="radio" name="moren"/>设为默认地址</label><input type="button" value="编辑" class="btn"/><input type="button" value="删除" class="btn"/></td>\n' +
                         '  </tr>';
                 });
-               alert(hotgoods);
+              //  alert(hotgoods);
                  $('.add').html(hotgoods);
                  if(window.location.href.indexOf('refer') > -1){
                    window.history.go(-1); //返回上一页

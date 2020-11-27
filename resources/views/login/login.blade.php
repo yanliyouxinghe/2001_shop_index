@@ -104,6 +104,9 @@ $(document).ready(function(){
             if(res.code== '00002'){
               alert(res.msg);
             }
+             if(res.code== '00003'){
+              alert(res.msg);
+            }
             if(res.code== '00000'){
                  location.href = "/"
             }else{
