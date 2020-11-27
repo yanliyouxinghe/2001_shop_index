@@ -21,6 +21,9 @@ class CartController extends Controller
     //购物车数据
     public function getdata(){
     $user_id = Redis::hget('reg','user_id');
+    if(!$user_id){
+        return redirect('/login');
+    }
     $data['user_id'] = $user_id;
     $url = "http://2001.shop.api.com/cart";
     $data_json = posturl($url,$data);
@@ -47,7 +50,7 @@ class CartController extends Controller
     
     //加入购物车
     public function addcart(Request $request){
-        $user_id = 3;
+        $user_id = Redis::hget('reg','user_id');
         // dd($user_id);
         if(!$user_id){
             return json_encode(['code'=>'1001','msg'=>'请先登录']);
@@ -147,7 +150,10 @@ class CartController extends Controller
 
     //购物车删除
     public function cart_del(){
-        $user_id = "2";
+        $user_id = Redis::hget('reg','user_id');
+        if(!$user_id){
+            return redirect('/login');
+        }
         $data['user_id'] = $user_id;
         $data['cart_id'] = request()->cart_id;
 
@@ -155,7 +161,7 @@ class CartController extends Controller
         $del_cart = posturl($url,$data);
        // dd($del_cart);
         // dd($del_cart['code']);
-        if($del_cart['code'] == 0){
+        if($del_cart['code']==0){
              return json_encode(['code'=>0,'msg'=>'OK']);
         }else{
             return json_encode(['code'=>1,'msg'=>'操作繁忙。。。']);
@@ -165,7 +171,7 @@ class CartController extends Controller
 
     //减号
     public function buy_jian(){
-        $user_id = "2";
+        $user_id = Redis::hget('reg','user_id');
         $data['user_id'] = $user_id;
         $data['cart_id'] = request()->cart_id; 
         
@@ -181,7 +187,7 @@ class CartController extends Controller
     
     //加号
     public function buy_jia(){
-        $user_id = "2";
+        $user_id = Redis::hget('reg','user_id');
         $data['user_id'] = $user_id;
         $data['cart_id'] = request()->cart_id;
         
@@ -197,7 +203,7 @@ class CartController extends Controller
    
     //购物车总价格
     public function cart_zprice(){
-        $user_id = "2";
+        $user_id = Redis::hget('reg','user_id');
         $data['user_id'] = $user_id;
         $cart_ids = request()->cart_ids;
         $url = "http://2001.shop.api.com/cart_zprice";

@@ -24,6 +24,8 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('regdo','Api\LoginController@regdo');//执行注册
     Route::get('/','Api\IndexController@index');   //前台首页
     Route::get('createcollect','Api\GoodsController@createcollect'); //Api个人收藏添加
+    Route::post('listcollect','Api\GoodsController@listcollect'); //Api个人收藏展示
+    Route::post('/cancel','Api\GoodsController@cancel');    //Api取消个人收藏
 
     Route::any('getuserinfo','Api\LoginController@getuserinfo');//k
     Route::get('goods/{goods_id}','Api\GoodsController@goods');//详情
@@ -51,8 +53,8 @@ Route::domain('2001.shop.api.com')->group(function () {
 
     Route::post('account','Api\OrderController@account'); //总价格
 
-
-    
+    Route::get('seckill','Api\SeckillController@seckill'); //总价格
+    Route::post('seckilldo','Api\SeckillController@seckilldo');//秒杀列表页
 });
 
   

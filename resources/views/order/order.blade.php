@@ -45,24 +45,30 @@ $(document).ready(function(){
    });
    
  </script>
-
-
-
 <section class="wrap" style="margin-top:20px;overflow:hidden;">
 <!-- 收货人信息 -->
-
+<a href="javascript:void(0)" class="addres">添加收货地址</a>
 @if(count($addressinfo['addressinfo']))
  <table class="order_table address_tbl">
    <tr>
+   <th width="200">选择收货地址</th>
     <th width="200">收件人</th>
     <th width="200">联系电话</th>
     <th width="200">收件地址</th>
-    <th width="200">操作</th>
+    <th width="100">操作</th>
    </tr>
    @if($addressinfo)
    @foreach($addressinfo as $vv)
    @foreach($vv as $v)
    <tr @if($v['is_default']) selected @endif address_id="{{$v['address_id']}}">
+    <td>
+    @if($v['is_default'] == 1)
+    <input type="radio" class="addre" name="address_a" value="{{$v['address_id']}}" checked>
+    @else
+    <input type="radio" class="addre" name="address_a" value="{{$v['address_id']}}">
+    @endif
+      
+    </td>
     <td>{{$v['consignee']}}</td>
     <td>{{$v['tel']}}</td>
     <td>
@@ -74,7 +80,7 @@ $(document).ready(function(){
      <label>
        
         @if($v['is_default'] == 1)
-        <input type="radio" name="moren" calss="mor" value="{{$v['address_id']}}" checked/>设为默认地址
+        <input type="radio" name="moren" calss="mor" value="{{$v['address_id']}}" checked/>默认地址
         @else
         <input type="radio" name="moren" class="mor" value="{{$v['address_id']}}"/>设为默认地址
         @endif
@@ -100,6 +106,7 @@ $(document).ready(function(){
     </table>
 </center>
 @endif
+
 <table class="order_table">
   <caption>
    <strong>订单商品</strong>
@@ -123,7 +130,8 @@ $(document).ready(function(){
   </tr>
 @endforeach
  </tbody></table>
-
+ <input type="hidden" name="goods_id" value="{{$goods_id}}" id="goods_id">
+ <input type="hidden" name="cart_id" value="{{$cart_id}}" id="cart_id">
 
  <!--支付与配送-->
  <ul class="order_choice">
@@ -132,36 +140,25 @@ $(document).ready(function(){
     <dt>支付方式</dt>
    <!-- istrue -->
     <dd class="payType">
-      <label class="radio istrue" pay_type="1"><input type="radio" name="pay"/>支付宝</label>
-      <label class="radio" pay_type="2" ><input type="radio" name="pay"/>微信支付</label>
-      <label class="radio" pay_type="3"><input type="radio" name="pay"/>货到付款</label>
-      <label class="radio" pay_type="4"><input type="radio" name="pay"/>余额支付</label>
+      <label class="radio istrue" pay_type="1"><input type="radio" name="pay_name"/>支付宝</label>
+      <label class="radio" pay_type="2" ><input type="radio" name="pay_name"/>微信支付</label>
+      <label class="radio" pay_type="3"><input type="radio" name="pay_name"/>货到付款</label>
+      <label class="radio" pay_type="4"><input type="radio" name="pay_name"/>余额支付</label>
     </dd>
 
-   </dl>
-  </li>
-  <li>
-   <dl>
-    <dt>配送方式</dt>
-    <dd>
-     <label class="radio istrue"><input type="radio" name="peisong"/>快递</label>
-     <label class="radio"><input type="radio" name="peisong"/>自配送</label>
-     <label class="radio"><input type="radio" name="peisong"/>物流</label>
-
-    </dd>
    </dl>
   </li>
   <li>
    <dl>
     <dt>订单留言</dt>
     <dd>
-     <textarea></textarea>
-    </dd>
+     <textarea class="order_leave" name="order_leave"></textarea>
+    </dd> 
    </dl>
   </li>
  </ul>
  <div class="order_btm_btn">
-  <a href="system_prompts.html" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon">{{$account['end_price'][0]['total']}}</strong>提交订单</a>
+  <a href="javascript:void(0)" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon total">{{$account['end_price'][0]['total']}}</strong>提交订单</a>
  </div>
 </section>
 <!--footer-->
@@ -169,6 +166,10 @@ $(document).ready(function(){
 </body>
 <script scr="/static/jyl/js/jquery.js"></script>
 <script>
+ $(document).on('click','.addres',function(){
+  alert('添加完成后请刷新本页面');
+  location.href="/address?refer="+location.href;
+ })
   //默认地址
    $(document).on('click','.mor',function(){
         var address_id = $(this).val();
@@ -188,6 +189,7 @@ $(document).ready(function(){
 
   //添加收货地址
   $('.add_ress').click(function(){
+    alert('添加完成后请刷新本页面');
     location.href="/address?refer="+location.href;
   });
 
@@ -229,7 +231,38 @@ $(document).ready(function(){
   })
 
 
-
+    //结算
+    $('.rmb_icon').click(function(){
+      //收货地址
+        var address_id = $(".addre:checked").val();
+        if(!address_id){
+            alert('请选择收货地址');
+            return false;     
+        }
+      //支付方式
+       var pay_type = $('.istrue').attr('pay_type');
+       if(!pay_type){
+            alert('请选择支付方式');
+            return false;
+        }
+       //订单留言
+       var order_leave = $('.order_leave').val();
+       //商品
+       var cart_id = $("#cart_id").val();
+       if(!cart_id){
+        alert('参数丢失');
+            return false;
+       }
+       var total_price = $('.total').text();
+       if(!total_price){
+        alert('参数丢失');
+            return false;
+       }
+       $.post('/orderinfo',{address_id:address_id,pay_type:pay_type,order_leave:order_leave,cart_id:cart_id,total_price:total_price},function(ret){
+         console.log(ret.code);
+       },'json');
+      //  
+    });
 
 
 

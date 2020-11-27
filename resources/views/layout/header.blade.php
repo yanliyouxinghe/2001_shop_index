@@ -7,16 +7,24 @@
                         @php  use Illuminate\Support\Facades\Redis; @endphp
                         @php  $user_id=Redis::hmget('reg','user_id','user_plone'); @endphp
                            @if($user_id[0]==false||$user_id[1]==false||empty($user_id))
-                             <li><a href="{{url('/login')}}" class="obviousText">没有账号？登录注册？？？</a></li>
+                             <li  class="obviousText"><a href="{{url('/login')}}">亲，请登录</a></li>
+                             <li class="obviousText"><a href="{{url('/reg')}}" >没有账号？注册</a></li>
+
                              @else 
                              <li><span>欢迎@php echo $user_id[1]@endphp登录</span></li>
+                             <li><span><a href="/logout">切换账号</a></span></li>
+
                           @endif
     </ul>
    <!--topRightNav-->
     <ul class="topRtNav">
      <li><a href="{{url('/ser')}}">个人中心</a></li>
+     @if($user_id[0]==false||$user_id[1]==false||empty($user_id))
+     <li><a href="{{url('/cart')}}" class="cartIcon">购物车<i class="cou">请登录</i></a></li>
+     @else
      <li><a href="{{url('/cart')}}" class="cartIcon">购物车<i class="cou">{{request()->count_cart['data']}}</i></a></li>
-     <li><a href="{{'favo'}}" class="favorIcon">收藏夹</a></li>
+     @endif
+     <li><a href="{{url('/favorite')}}" class="favorIcon">收藏夹</a></li>
      <li><a href="{{url('/business')}}">商家中心</a></li>
     </ul>
    </div>

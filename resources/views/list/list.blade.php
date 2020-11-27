@@ -99,13 +99,17 @@ $(document).ready(function(){
      <h2>商品列表</h2>
       <ul class="favorite_list">
          @foreach($goodsInfo as $v)
+
          <li>
          <a href="{{url('goods/'.$v['goods_id'])}}">
             <img src="{{$v['goods_img']}}"/>
             <h3>{{$v['goods_name']}}</h3>
             <p class="shop_collect_goods" title="收藏该产品"><span>&#115;</span></p>
          </a>
+      
          </li>
+
+     
          @endforeach
 
       </ul>

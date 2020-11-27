@@ -22,9 +22,12 @@ class UserController extends Controller
         }
     //   print_r($post);
         $user_id=Redis::hget('reg','user_id');
-        $data['user_id'] = $user_id;
-    //    print_r($data);exit;
-         $res = UseraddressModel::insert($data);
+        $post['user_id'] = $user_id;
+       // print_r($post);exit;
+         $res = UseraddressModel::insert($post);
+         if(request()->refer){
+            return redirect($request['refer']);die;
+        }
          $address = array();
         
         // return redirect('/');die;

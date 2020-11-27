@@ -9,6 +9,7 @@ use App\Model\GoodsAttrModel;
 use App\Model\Goods_AttrModel;
 use App\Model\Shop_HistoryModel;
 use App\Model\CollectModel;
+use Illuminate\Support\Facades\Redis;
 class GoodsController extends Controller
 {
     
@@ -46,36 +47,66 @@ class GoodsController extends Controller
 
     /**API个人收藏  添加*/
     public function createcollect(){
-        
-        $goods_id = request()->goods_id;
-        $user_id="1";
+        $data= request()->all();
+        // print_r($goods_id);
+        $user_id=Redis::hget('reg','user_id');
+        $data['user_id'] = $user_id;
+
         if(!$user_id){
             return json_encode(['code'=>'1001','msg'=>'请先登录']);
         }
-        $count = CollectModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->first();
+        $count = CollectModel::where(['user_id'=>$user_id,'goods_id'=>$data['goods_id']])->count();
         // print_r($count);
         //判断此用户是否收藏过此此商品
-        // if($count==1){
-        //     return json_encode(['code'=>'1002','msg'=>'您已收藏过']);
-        // }else{
-        //     $collect = CollectModel::insert($count);
-        //     if($collect){
-        //         return json_encode(['code'=>'1003','msg'=>'收藏成功']);
-        //     }
-        // }
+        if($count==1){
+            return json_encode(['code'=>'1002','msg'=>'您已收藏过,可到收藏夹中查看']);
+        }else{
+            $collect = CollectModel::insert($data);
+            if($collect){
+                return json_encode(['code'=>'1003','msg'=>'收藏成功,可到收藏夹中查看']);
+                
+            }
+        }
     }
 
     /**API个人收藏 展示 */
     public function listcollect(){
-        $collectInfo = CollectModel::leftjoin('sh_goods','sh_collect.goods_id','=','sh_goods.goods_id')->get();
-        $response = [
+        //判断用户是否登录,未登录时去登录
+        $user_id = request()->input('user_id');
+        $collectgoodsInfo = CollectModel::select('sh_collect.*','sh_goods.goods_id','sh_goods.goods_img','sh_goods.goods_name','sh_goods.shop_price')
+                            ->leftjoin('sh_goods','sh_collect.goods_id','=','sh_goods.goods_id')
+                            ->where('sh_collect.user_id',$user_id)
+                            ->get();                    
+        $response = [       
             'code'=>0,
             'msg'=>'OK',
             'data'=>[
-                'collectInfo'=>$collectInfo
+                'collectgoodsInfo'=>$collectgoodsInfo
             ],
         ];
         return json_encode($response);
+    }
+
+    /**API取消个人收藏 */
+    public function cancel(){
+        $user_id = request()->input('user_id');
+        $goods_id = request()->input('goods_id');
+        $res = CollectModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->delete();
+        if($res){
+            $respoer = [
+                'code'=>'0',
+                'msg'=>'OK',
+                'data'=>$res,
+            ];
+        }else{
+            $respoer = [
+                'code'=>'1',
+                'msg'=>'失败',
+                'data'=>[],
+            ];
+        }
+        return json_encode($respoer);
+
     }
    
 }
