@@ -41,7 +41,7 @@ class LoginController extends Controller
                     'result'=>''
                 ];
         }
-<<<<<<< HEAD
+
         if($len<6){
              return [
                     'code'=>'00003',
@@ -50,21 +50,9 @@ class LoginController extends Controller
                 ];
         }
         $user_pwd = bcrypt($user_pwd);
-=======
-        // if($len < 6){
-        //      return [
-        //             'code'=>'00003',
-        //             'message'=>'密码长度不能小于六位',
-        //             'result'=>''
-        //         ];
-        // }
+
         $user_pwd = password_hash($user_pwd,PASSWORD_BCRYPT);
-
->>>>>>> 4b5cb9fe3b89e8f9bcb043622df379a523ecaaf4
-       
-        // $codes = 1111;
-
-        // if($code==$codes){
+    
              $data = [
             'user_plone' => $user_plone,
             'user_pwd'=>$user_pwd,
@@ -140,16 +128,9 @@ class LoginController extends Controller
     //执行登录
     public function logindo(Request $request){
         $data=$request->all();
-<<<<<<< HEAD
-       // echo 123;die;
-        // print_r($data);die;
-        //echo bcrypt(123);die;
-        $user = UserModel::where(['user_plone'=>$data['user_plone']])->first(); 
-        //    print_r($user);die;
-=======
+
         $user = UserModel::where(['user_plone'=>$data['user_plone']])->first();
-        //   print_r($user);
->>>>>>> 4b5cb9fe3b89e8f9bcb043622df379a523ecaaf4
+
           if(!$user){
               return json_encode(['code'=>'00003','msg'=>'没有此账号']);
           }else{
