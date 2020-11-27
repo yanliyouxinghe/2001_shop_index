@@ -130,6 +130,7 @@ $(document).ready(function(){
      <dl class="horizontal">
       <dt>价格：</dt>
       <dd><strong class="rmb_icon univalent">{{$v['shop_price']}}</strong></dd>
+      
      </dl>
     </li>
     <li>
@@ -153,6 +154,13 @@ $(document).ready(function(){
      </dl>
     </li>
     <li>
+     <dl class="horizontal">
+      <dt>优惠券：</dt>
+      <dd><strong class="univalent"><a href="coupons/">点击领取优惠券</a></strong></dd>
+    <li>
+     </dl>
+    </li>
+   
     @foreach($attr as $kk => $vv)
      <dl class="horizontal horizontal_attr">
       <dt>{{$vv['attr_name']}}</dt>      
@@ -162,7 +170,6 @@ $(document).ready(function(){
        <label  @if($i==0) class="isTrue" @endif  goods_attr_id="{{$kkk}}">{{$vvv}}</label>
        @php $i++;@endphp
       @endforeach
-     
       </dd>
      </dl>
      @endforeach
@@ -198,6 +205,7 @@ $(document).ready(function(){
    <li><a>商品评价（2893）</a></li>
    <li><a>成交记录（1892）</a></li>
   </ul>
+  
   <!--商品详情-->
 
 
@@ -462,7 +470,7 @@ $('.fav').click(function(){
       //价格
 
       // alert(shop_price);    
-          $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id},function(res){
+          $.post('http://2001.shop.api.com/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id},function(res){
 			//未登录
             if(res.code=='1001'){
                 alert(res.msg);

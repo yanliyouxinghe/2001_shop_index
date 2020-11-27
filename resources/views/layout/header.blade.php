@@ -96,7 +96,7 @@
           <a href="library.html">搭配知识</a>
           </li>
           <li>
-          <a href="#">促销专区</a>
+          <a href="/seckill/index">促销专区</a>
           </li>
           <li>
           <a href="#">其他</a>
