@@ -23,7 +23,6 @@ class LoginController extends Controller
 
         $user_pwds = $request->post('user_pwds');
         $code = $request->post('code');
-        // $len = strlen($user_pwd);
         $codes=Redis::get('forgetcode');
    
          if($code!=$codes){  
@@ -42,7 +41,11 @@ class LoginController extends Controller
                 ];
         }
 
-        // if($code==$codes){
+        
+        $user_pwd = bcrypt($user_pwd);
+
+       
+    
              $data = [
             'user_plone' => $user_plone,
             'user_pwd'=>$user_pwd,
@@ -118,8 +121,8 @@ class LoginController extends Controller
     //执行登录
     public function logindo(Request $request){
         $data=$request->all();
-
         $user = UserModel::where(['user_plone'=>$data['user_plone']])->first(); 
+
           if(!$user){
               return json_encode(['code'=>'00003','msg'=>'没有此账号']);
           }else{
