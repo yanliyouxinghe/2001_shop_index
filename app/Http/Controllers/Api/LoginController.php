@@ -9,94 +9,94 @@ use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
 use App\Model\UserModel;
 use App\Common\jwt;
+use App\Model\CodeModel;
+use Illuminate\Support\Facades\Redis;
 class LoginController extends Controller
 {
      //执行
     public function regdo(Request $request)
     {
         $user_plone = $request->post('user_plone');
-  
+
         $user_pwd = $request->post('user_pwd');
-         
+
         $user_pwds = $request->post('user_pwds');
-            // dd($user_pwds);
-        $len = strlen($user_pwd);
+        $code = $request->post('code');
+        // $len = strlen($user_pwd);
+        $codes=Redis::get('forgetcode');
+   
+         if($code!=$codes){  
+            return [
+                    'code'=>'00007',
+                    'message'=>'验证码错误',
+                    'result'=>''
+                ];
+        }
         $t = UserModel::where(['user_plone'=>$user_plone])->first();
         if($t){
-             $data=[
+             return [
                     'code'=>'00001',
                     'message'=>'手机号已存在',
                     'result'=>''
                 ];
         }
-        if($len<6){
-             $data=[
-                    'code'=>'00003',
-                    'message'=>'密码长度不能小于六位',
-                    'result'=>''
-                ];
-        }
-        if($user_pwds != $user_pwd){
-             $data=[
-                    'code'=>'00004',
-                    'message'=>'确认密码与密码不一致',
-                    'result'=>''
-                ];
-        }
+        // if($len < 6){
+        //      return [
+        //             'code'=>'00003',
+        //             'message'=>'密码长度不能小于六位',
+        //             'result'=>''
+        //         ];
+        // }
         $user_pwd = password_hash($user_pwd,PASSWORD_BCRYPT);
-        $data = [
+
+       
+        // $codes = 1111;
+
+        // if($code==$codes){
+             $data = [
             'user_plone' => $user_plone,
-            'user_pwd'=>$user_pwd
-        ];
-        $res = UserModel::insert($data);
-        if(!$res){
-             $data=[
+            'user_pwd'=>$user_pwd,
+            ];
+             $res = UserModel::insert($data);
+             if(!$res){
+             return [
                     'code'=>'00005',
                     'message'=>'注册失败',
                     'result'=>''
                 ];
         }else{
-             $data=[
+             return [
                     'code'=>'00000',
                     'message'=>'注册成功',
                     'result'=>''
                 ];
         }
-        return json_encode($data,JSON_UNESCAPED_UNICODE);
     }
     //手机验证码验证
     public function sendSMS()
     {
         $name = request()->name;
-    //    dd($name);
-        $reg = '/^1[3|5|6|7|8|9]\d{9}$/';
-        if(!preg_match($reg,$name)){
-            $jyl=[
-                    'code'=>00001,
-                    'message'=>'请输入正确的手机号',
-                    'result'=>''
-                ];
-        }
         $code = rand(10000,999999);
+        // $code ="11223";
         $result = $this->send($name,$code);
         if($result['Message']=='OK'){
-            $jyl=[
+            return  [
                     'code'=>00000,
                     'message'=>'发送成功',
                     'result'=>''
                 ];
         }else{
-            $jyl=[
+            return  [
                     'code'=>00002,
                     'message'=>'发送失败',
                     'result'=>''
                 ];
         }
-            return json_encode($jyl,JSON_UNESCAPED_UNICODE);
     }
     //短信验证
     public function send($name,$code){
-
+        Redis::del('forgetcode');
+        Redis::setex('forgetcode',24*60*60,$code);
         AlibabaCloud::accessKeyClient('LTAI4GFccq2jJ5vjx9C1XNir', 'V97fmw5pHOmq5J0ij8RUZtQgdXDSko')
             ->regionId('cn-hangzhou')
             ->asDefaultClient();
@@ -127,19 +127,21 @@ class LoginController extends Controller
     }
     //执行登录
     public function logindo(Request $request){
-          $data=$request->all();
-            // dd($data);
-          $user = UserModel::where(['user_plone'=>$data['user_plone']])->first();
-        //   dd($user);
+        $data=$request->all();
+        $user = UserModel::where(['user_plone'=>$data['user_plone']])->first();
+        //   print_r($user);
           if(!$user){
-              return json_encode(['code'=>'00002','msg'=>'没有此账号或账号错误']);
+              return json_encode(['code'=>'00003','msg'=>'没有此账号']);
+          }else{
+               $pwd=password_verify($data['user_pwd'],$user->user_pwd);
+               if($pwd==$data['user_plone']){
+                    $token =  jwt::instance()->setuid($user->user_id)->encode()->gettoken();
+                    //   dd($token);
+                    return json_encode(['code'=>'00000','msg'=>'登录成功','token'=>$token,'user'=>$user]);
+                }else{
+                    return json_encode(['code'=>'00002','msg'=>'账号密码错误']);
+               }    
           }
-         // return json_encode($user,JSON_UNESCAPED_UNICODE);
-        //   dd($user->user_id);
-          $token =  jwt::instance()->setuid($user->user_id)->encode()->gettoken();
-        //   dd($token);
-        return json_encode(['code'=>'00000','msg'=>'登录成功','token'=>$token,'user'=>$user]);
-
     }
     public function getuserinfo(){
         $token = request()->header('token');

@@ -45,7 +45,7 @@
 <script src="/static/js/jquery.js"></script>
 <script>
      $("#login").click(function () {
-        alert(111);
+        // alert(111);
         var user_plone = $('input[name="user_plone"]').val();
       
         var user_pwd = $('input[name="user_pwd"]').val();
