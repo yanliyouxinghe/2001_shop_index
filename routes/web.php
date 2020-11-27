@@ -23,9 +23,12 @@ Route::get('/createcollect','Index\GoodsController@createcollect');    //个人�
 Route::get('/favorite','Index\GoodsController@listcollect');    //个人收藏添加
 Route::post('/cancel','Index\GoodsController@cancel');    //取消个人收藏
 
-Route::get('/pay/{order_id}','Index\OrderController@pay');  //支付
-Route::get('/return_url','Index\OrderController@pay');    //支付宝同步跳转
-Route::post('/notify_url','Index\OrderController@pay');  //支付宝异步跳转
+Route::get('/pay/{order_id}','Index\PayController@pay');  //支付
+Route::get('/return_url','Index\PayController@return_url');    //支付宝同步跳转
+Route::post('/notify_url','Index\PayController@notify_url');  //支付宝异步跳转
+
+
+
 
 Route::get('/goods/{goods_id}','Index\GoodsController@goodsinfo');//详情
 Route::get('/getattrprice','Index\CartController@getattrprice');

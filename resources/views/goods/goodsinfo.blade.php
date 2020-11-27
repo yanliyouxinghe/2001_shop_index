@@ -465,7 +465,6 @@ $('.fav').click(function(){
           $.post('/addcart',{goods_id:goods_id,buy_number:buy_number,goods_attr_id:goods_attr_id},function(res){
 			//未登录
             if(res.code=='1001'){
-                alert(res.msg);
                 location.href="/login?refer="+location.href;
             }
 			//加入购物车成功

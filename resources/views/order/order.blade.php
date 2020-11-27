@@ -262,6 +262,14 @@ $(document).ready(function(){
             if(ret.code == 1){
               location.href="/login?refer="+location.href;
             }
+            if(ret.code == 0){
+              var order_id =ret.data;
+              location.href="/pay/"+order_id;
+            }else{
+              window.history.go(-1); //返回上一页
+              window.location.href=document.referrer;
+              alert(ret.msg);
+            }
        },'json');
       //  
     });
