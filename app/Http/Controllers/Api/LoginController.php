@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Model\UserModel;
 use App\Common\jwt;
 use App\Model\CodeModel;
+use Illuminate\Support\Facades\Redis;
 class LoginController extends Controller
 {
      //执行
@@ -22,16 +23,17 @@ class LoginController extends Controller
 
         $user_pwds = $request->post('user_pwds');
         $code = $request->post('code');
-        $len = strlen($user_pwd);
-        $t = UserModel::where(['user_plone'=>$user_plone])->first();
-        $s = CodeModel::where(['code'=>$code])->first();
-         if($s){
-             return [
-                    'code'=>'00002',
+        // $len = strlen($user_pwd);
+        $codes=Redis::get('forgetcode');
+   
+         if($code!=$codes){  
+            return [
+                    'code'=>'00007',
                     'message'=>'验证码错误',
                     'result'=>''
                 ];
         }
+        $t = UserModel::where(['user_plone'=>$user_plone])->first();
         if($t){
              return [
                     'code'=>'00001',
@@ -39,6 +41,7 @@ class LoginController extends Controller
                     'result'=>''
                 ];
         }
+
         if($len<6){
              return [
                     'code'=>'00003',
@@ -47,10 +50,9 @@ class LoginController extends Controller
                 ];
         }
         $user_pwd = bcrypt($user_pwd);
-       
-        // $codes = 1111;
 
-        // if($code==$codes){
+        $user_pwd = password_hash($user_pwd,PASSWORD_BCRYPT);
+    
              $data = [
             'user_plone' => $user_plone,
             'user_pwd'=>$user_pwd,
@@ -69,18 +71,6 @@ class LoginController extends Controller
                     'result'=>''
                 ];
         }
-        // }else{
-            
-            return [
-                    'code'=>'00006',
-                    'message'=>'验证码错误',
-                    'result'=>$codes
-                ];
-        // }
-       
-       
-        
-       
     }
     //手机验证码验证
     public function sendSMS()
@@ -105,10 +95,8 @@ class LoginController extends Controller
     }
     //短信验证
     public function send($name,$code){
-        $jyl = [
-            'code'=>$code,
-            ];
-             $res = CodeModel::insert($jyl);
+        Redis::del('forgetcode');
+        Redis::setex('forgetcode',24*60*60,$code);
         AlibabaCloud::accessKeyClient('LTAI4GFccq2jJ5vjx9C1XNir', 'V97fmw5pHOmq5J0ij8RUZtQgdXDSko')
             ->regionId('cn-hangzhou')
             ->asDefaultClient();
@@ -140,11 +128,9 @@ class LoginController extends Controller
     //执行登录
     public function logindo(Request $request){
         $data=$request->all();
-       // echo 123;die;
-        // print_r($data);die;
-        //echo bcrypt(123);die;
-        $user = UserModel::where(['user_plone'=>$data['user_plone']])->first(); 
-        //    print_r($user);die;
+
+        $user = UserModel::where(['user_plone'=>$data['user_plone']])->first();
+
           if(!$user){
               return json_encode(['code'=>'00003','msg'=>'没有此账号']);
           }else{

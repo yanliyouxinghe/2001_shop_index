@@ -23,9 +23,16 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::get('sendSMS','Api\LoginController@sendSMS');//注册
     Route::post('regdo','Api\LoginController@regdo');//执行注册
     Route::get('/','Api\IndexController@index');   //前台首页
+    Route::post('noticeinfo','Api\IndexController@noticeinfo'); //首页公告数据
     Route::get('createcollect','Api\GoodsController@createcollect'); //Api个人收藏添加
     Route::post('listcollect','Api\GoodsController@listcollect'); //Api个人收藏展示
     Route::post('/cancel','Api\GoodsController@cancel');    //Api取消个人收藏
+
+    Route::get('/createhistory/{goods_id?}','Api\GoodsController@createhistory');    //Api 登录后 添加历史浏览记录
+    Route::get('/listhistory','Api\ListController@listhistory');    //Api 登录后 展示历史浏览记录
+
+    
+
 
     Route::any('getuserinfo','Api\LoginController@getuserinfo');//k
     Route::get('goods/{goods_id}','Api\GoodsController@goods');//详情

@@ -87,7 +87,7 @@ layui.use(['element','form','layedit'], function(){
        //日期
       layedit.set({
       uploadImage: {
-        url: '/goods/upload' //接口url
+        url: '/upload' //接口url
         ,type: 'post' //默认post
         ,height: 800 //设置编辑器高度
         ,width : 1000
@@ -122,7 +122,7 @@ layui.use(['layer', 'jquery', 'form'], function () {
             if(!cat_id){
               return;
             }
-            $.get('/goods/getattr',{cat_id:cat_id},function(ret){
+            $.get('/getattr',{cat_id:cat_id},function(ret){
                   $('#attrTable').html(ret);
                   layui.use(['element','form'], function() {
             var element = layui.element;
@@ -139,7 +139,7 @@ layui.use('upload', function(){
     //拖拽上传
     upload.render({
         elem: '#test10'
-        ,url: 'http://www.rbc.com/brand/uploads' //改成您自己的上传接口
+        ,url: 'http://2001.shop.index.com/uploads' //改成您自己的上传接口
         ,done: function(res){
             layer.msg(res.msg);
             layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.data);
@@ -150,7 +150,7 @@ layui.use('upload', function(){
 
     upload.render({
         elem: '#test1'
-        ,url: 'http://www.rbc.com/brand/uploads' //改成您自己的上传接口
+        ,url: 'http://2001.shop.index.com/uploads' //改成您自己的上传接口
         ,done: function(res){
             layer.msg(res.msg);
             layui.$('#uploadDemoView1').removeClass('layui-hide').find('img').attr('src', res.data);
@@ -162,7 +162,7 @@ layui.use('upload', function(){
      //多图片上传
    upload.render({
     elem: '#test2'
-    ,url: 'http://www.rbc.com/brand/uploads' //改成您自己的上传接口
+    ,url: 'http://2001.shop.index.com/uploads' //改成您自己的上传接口
     ,multiple: true
     ,before: function(obj){
       //预读本地文件示例，不支持ie8

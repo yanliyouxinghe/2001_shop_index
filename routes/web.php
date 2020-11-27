@@ -20,8 +20,12 @@ Route::get('/confirm','Index\OrderController@index');  //提交订单视图页�
 Route::post('/address_del','Index\OrderController@address_del');  //收货地址ajax删除
 Route::post('/orderdo','Index\OrderController@orderdo');  //执行提交订单
 Route::get('/createcollect','Index\GoodsController@createcollect');    //个人收藏添加
-Route::get('/favorite','Index\GoodsController@listcollect');    //个人收藏添加
+Route::get('/favorite','Index\GoodsController@listcollect');    //个人收藏展示
 Route::post('/cancel','Index\GoodsController@cancel');    //取消个人收藏
+Route::post('/noticeinfo','Index\IndexController@noticeinfo');    //前台首页公告
+
+
+Route::post('/listhistory','Index\ListController@listhistory');    //登录后历史浏览记录展示
 
 Route::get('/pay/{order_id}','Index\PayController@pay');  //支付
 Route::get('/return_url','Index\PayController@return_url');    //支付宝同步跳转
@@ -53,6 +57,8 @@ Route::get('/business','Admin\BusinessController@business');//商家后台登录
 Route::post('/selog','Admin\BusinessController@selogin');//商家执行登录
 Route::get('/index','Admin\SellController@index');//商家后台首页
 Route::get('/goods','Admin\GoodsController@goods');//商家后台商品添加
+Route::any('/upload','Admin\GoodsController@upload');//图片上传接口
+Route::any('/uploads','Admin\GoodsController@uploads');//图片上传接口
 Route::get('/goodslist','Admin\GoodsController@goodslist');//商家后台商品列表
 Route::get('/getattr','Admin\GoodsController@getattr')->name('gooods.getattr');//商品属性
 

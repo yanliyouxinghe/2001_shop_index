@@ -36,12 +36,52 @@ class GoodsController extends Controller
         }
         return $res;
     }
+     //文件上传
+     public function upload(Request $request)
+     {
+         //接收文件上传的值
+         $photo = $request->file();
+         //判断文件上传是否有文件或者有没有出错
+         if ($request->hasFile('file') && $request->file('file')->isValid()) {
+         $photo = $request->file('file');
+ //        dd($photo);
+         //文件上传
+         $store_result = $photo->store("upload");
+             $store_results = '/'.$store_result;
+         //返回json
+         if($request->ajax()){
+            return json_encode(['code'=>0,'msg'=>'上传成功','data'=>['src'=>$store_results,'title'=>'']]);
+         }
+         return $store_results;
+ //            dd($store_result);die;
+             // return $this->JsonResponse('0','上传成功',$store_results);
 
+         }
+         return json_encode(['code'=>1,'msg'=>'文件上传失败']);
+
+     }
+      //文件上传
+
+    public function uploads(Request $request)
+    {
+        //接收文件上传的值
+        $photo = $request->file();
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+        $photo = $request->file('file');
+        //文件上传
+        $store_result = $photo->store("upload");
+            $store_results = '/'.$store_result;
+            return json_encode(['code'=>0,'msg'=>'上传成功','data'=>$store_results]);
+        }
+        return json_encode(['code'=>1,'msg'=>'文件上传失败']);
+
+    }
+    
     public function getattr(Request $request){
         $cat_id = $request->all();
         $attr = GoodsAttrModel::where('cat_id',$cat_id)->get();
         // dd($attr);
-        return view('goods.typeattr',['attr'=>$attr]);
+        return view('admin.goods.typeattr',['attr'=>$attr]);
     }
     //商品列表
     public function goodslist(){

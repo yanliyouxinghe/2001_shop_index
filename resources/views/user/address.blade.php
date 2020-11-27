@@ -187,7 +187,7 @@ $(document).ready(function(){
                         '  <td><address>'+item.country+'.'+item.province+'.'+item.city+'.'+item.district+'.'+item.address+'</address></td>\n' +
                         '    <td><label><input type="radio" name="moren"/>设为默认地址</label><input type="button" value="编辑" class="btn"/><input type="button" value="删除" class="btn"/></td>\n' +
                         '  </tr>';
-                });
+                })
                  $('.add').html(hotgoods);
                  if(window.location.href.indexOf('refer') > -1){
                    window.history.go(-1); //返回上一页

@@ -14,8 +14,7 @@ class GoodsController extends Controller
 {
     
     public function goods($id){
-          
-        //商品基本信息
+       //商品基本信息
        $goodsinfo=GoodsModel::leftjoin('sh_brand','sh_goods.brand_id','=','sh_brand.brand_id')->where('sh_goods.goods_id',$id)->get();
        foreach($goodsinfo as $v){
         $cat_id=$v['cat_id'];
@@ -23,7 +22,7 @@ class GoodsController extends Controller
       
        $recommended=GoodsModel::where(['cat_id'=>$cat_id])->get();
        //dd($goodsinfo);
-    //商品规格
+        //商品规格
         $attr = Goods_AttrModel::select('goods_attr_id','sh_goods_attr.attr_id','sh_attribute.attr_name','sh_goods_attr.attr_value')
         ->leftjoin('sh_attribute','sh_goods_attr.attr_id','=','sh_attribute.attr_id')
         ->where(['goods_id'=>$id,'sh_attribute.attr_type'=>1])
@@ -108,5 +107,30 @@ class GoodsController extends Controller
         return json_encode($respoer);
 
     }
+
+    /**API登录后  添加历史浏览记录 */
+    public function createhistory($goods_id){
+
+        //获取用户id
+        $user_id=Redis::hget('reg','user_id');
+        // print_r($user_id);
+        // $data['user_id'] = $user_id;
+        //根据商品id判断此用户是否浏览过商品
+        $history = Shop_HistoryModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->count();
+        // print_r($history);
+        if($history<1){
+            $data = [
+                'user_id'=>$user_id,
+                'goods_id'=>$goods_id,
+                'add_time'=>time()
+            ];
+            Shop_HistoryModel::insert($data);
+        }else{
+            Shop_HistoryModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->update(['add_time'=>time()]);
+        }
+        return true;
+    }
+
+   
    
 }

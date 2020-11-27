@@ -19,10 +19,10 @@ $(document).ready(function(){
 	  $(".asideNav").slideUp();
 	  });
   //冒泡
-  $(".favorite_list li a").click(function(){
-	alert("链接");
-	window.location.href='shop.html';
-	});
+//   $(".favorite_list li a").click(function(){
+// 	alert("链接");
+// 	window.location.href='shop.html';
+// 	});
 	$(".favorite_list li .shop_collect_goods").click(function(){
 	alert("收藏本店铺");
 	event.stopPropagation();
@@ -81,7 +81,7 @@ $(document).ready(function(){
          @endforeach
        </dl>
       </li>
-      <li>
+      <!-- <li>
        <dl>
         <dt>按上架时间筛选：</dt>
         <dd>
@@ -91,7 +91,7 @@ $(document).ready(function(){
          <a>本月</a>
         </dd>
        </dl>
-      </li>
+      </li> -->
      </ul>
   </div>
   <!--产品列表-->
@@ -127,8 +127,8 @@ $(document).ready(function(){
  </div>
  <aside class="rtWrap">
   <dl class="rtLiTwoCol">
-   <dt>热门推荐</dt>
-   @foreach($goodsInfo as $v)
+   <dt>历史浏览记录</dt>
+   @foreach($listhistory as $k=>$v)
       <dd>
       <a href="{{url('goods/'.$v['goods_id'])}}">
       <img src="{{$v['goods_img']}}"/>
