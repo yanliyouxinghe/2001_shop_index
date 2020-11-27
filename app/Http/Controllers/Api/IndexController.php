@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\Model\GoodsModel;
 use App\Model\CartgoryModel;
+use App\Model\NoticeModel;
 class IndexController extends Controller
 {
     /**首页分类数据 */
@@ -44,6 +45,20 @@ class IndexController extends Controller
             ]
         ];
 
+        return json_encode($reposer);
+    }
+
+    /**首页公告数据 */
+    public function noticeinfo(){
+        $noticeinfo = NoticeModel::limit(8)->get();
+        // print_r($noticeinfo);
+        $reposer = [
+            'code'=>0,
+            'msg'=>'OK',
+            'data'=>[
+                'noticeinfo'=>$noticeinfo
+            ],
+        ];
         return json_encode($reposer);
     }
 

@@ -124,20 +124,13 @@ $(document).ready(function(){
      <em class="obviousText">最新公告</em>
      <a href="article_list.html">more</a>
     </dt>
-    <dd><a href="article_read.html">2015年12月20日系统升级通告统升级通告</a></dd>
-    <dd><a href="article_read.html">2015年12月20日系统升级通告</a></dd>
-    <dd><a href="article_read.html">2015年12月20日系统升级通告</a></dd>
-    <dd><a href="article_read.html">2015年12月20日系统升级通告</a></dd>
-    <dd><a href="article_read.html">2015年12月20日系统升级通告</a></dd>
+    @foreach($noticeinfo as $v)
+    @foreach($v as $vv)
+    <dd><a href="http://news.baidu.com/">{{$vv['notice_desc']}}</a></dd>
+    @endforeach
+   @endforeach
    </dl>
-   <dl class="idxRtAtc">
-    <dt>
-     <em>质量标准技术参数</em>
-     <a href="article_list.html">more</a>
-    </dt>
-    <dd><a href="article_read.html">2015年12月20日系统升级通告统升级通告</a></dd>
-    <dd><a href="article_read.html">2015年12月20日系统升级通告</a></dd>
-   </dl>
+ 
   </div>
 </section>
 <!--productList-->
