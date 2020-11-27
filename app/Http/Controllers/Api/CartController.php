@@ -20,7 +20,7 @@ class CartController extends Controller
 
         $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_img')
                     ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
-                    ->where(['user_id'=>$user_id,'is_del'=>1])
+                    ->where(['user_id'=>$user_id])
                     ->get();
 
         foreach ($cart_data as $key=>$val){
@@ -75,7 +75,7 @@ class CartController extends Controller
         $user_id = request()->input('user_id');
         $cart_id = request()->input('cart_id');
         
-        $del = CartModel::where(['user_id'=>$user_id,'cart_id'=>$cart_id])->update(['is_del'=>2]);
+        $del = CartModel::where(['user_id'=>$user_id,'cart_id'=>$cart_id])->delete();
         if($del){
             $respoer = [
                 'code'=>'0',
