@@ -23,7 +23,7 @@ class LoginController extends Controller
         if($res['code']=='00000'){
             // dd($res);
              Redis::Hmset('reg','token',$res['token'],'user_id',$res['user']["user_id"],'user_plone',$res['user']["user_plone"]);
-
+            
             return json_encode($res);
         }else{
             return json_encode($res);

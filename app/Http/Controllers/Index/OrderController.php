@@ -12,6 +12,7 @@ use App\Model\RegionModel;
 use App\Model\Order_GoodsModel;
 use App\Model\Order_InfoModel;
 use App\Model\CartModel;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use Log;
 use function AlibabaCloud\Client\redTable;
@@ -88,6 +89,9 @@ class OrderController extends Controller
 
     /**支付 */
     public function pay($order_id){
+        if(!$order_id){
+            return false;
+        }
         $config = config('alipay');
 
         require_once app_path('Common/lib/alipay/pagepay/service/AlipayTradeService.php');
@@ -321,8 +325,10 @@ class OrderController extends Controller
                 $order_id = Order_InfoModel::insertGetId($data);
                 $goodsinfo = CartModel::select('sh_cart.goods_id','sh_cart.goods_sn','sh_cart.product_id','sh_cart.goods_name','sh_cart.shop_price','sh_cart.buy_number','sh_cart.goods_attr_id')
                         ->whereIn('cart_id',$cart_id)
-                        ->where('is_del',1)
                         ->get();
+                if(!count($goodsinfo->toArray())){
+                    throw new Exception('购物车内没有此商品');
+                }
                         $goods_data = [];
                         foreach($goodsinfo as $k=>$v){
                             $goods_data[$k]['order_id'] = $order_id;
@@ -338,12 +344,13 @@ class OrderController extends Controller
                         // print_r($goods_data);die;
                 $ret = Order_GoodsModel::insert($goods_data);
                 foreach($cart_id as $k=>$v){
-                    CartModel::where(['cart_id'=>$v])->update(['is_del'=>2]);
+                    CartModel::destroy($v);
                 }
                 DB::commit();
                 return json_encode(['code'=>2,'msg'=>'订单生成成功','data'=>$order_id]);
-            } catch (\Throwable $th) {
+            } catch (\Exception $e) {
                 DB::rollBack();
+                //echo $e->getMessage();
                 return json_encode(['code'=>3,'msg'=>'订单生成失败']);
             }
 

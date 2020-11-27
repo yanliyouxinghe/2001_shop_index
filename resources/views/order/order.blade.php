@@ -259,7 +259,9 @@ $(document).ready(function(){
             return false;
        }
        $.post('/orderinfo',{address_id:address_id,pay_type:pay_type,order_leave:order_leave,cart_id:cart_id,total_price:total_price},function(ret){
-         console.log(ret.code);
+            if(ret.code == 1){
+              location.href="/login?refer="+location.href;
+            }
        },'json');
       //  
     });
