@@ -188,11 +188,9 @@ $(document).ready(function(){
                         '    <td><label><input type="radio" name="moren"/>设为默认地址</label><input type="button" value="编辑" class="btn"/><input type="button" value="删除" class="btn"/></td>\n' +
                         '  </tr>';
                 });
-              //  alert(hotgoods);
                  $('.add').html(hotgoods);
                  if(window.location.href.indexOf('refer') > -1){
                    window.history.go(-1); //返回上一页
-                   window.location.go(-1); //刷新上一页
                  }
                  
                 

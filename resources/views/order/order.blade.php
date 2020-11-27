@@ -259,7 +259,17 @@ $(document).ready(function(){
             return false;
        }
        $.post('/orderinfo',{address_id:address_id,pay_type:pay_type,order_leave:order_leave,cart_id:cart_id,total_price:total_price},function(ret){
-         console.log(ret.code);
+            if(ret.code == 1){
+              location.href="/login?refer="+location.href;
+            }
+            if(ret.code == 0){
+              var order_id =ret.data;
+              location.href="/pay/"+order_id;
+            }else{
+              window.history.go(-1); //返回上一页
+              window.location.href=document.referrer;
+              alert(ret.msg);
+            }
        },'json');
       //  
     });

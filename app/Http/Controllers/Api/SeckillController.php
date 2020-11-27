@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redis;
 class SeckillController extends Controller
 {
     public function seckill(){ 
+        
         $data=SeckillModel::select('sh_seckill.*','sh_goods.*')->leftjoin('sh_goods','sh_seckill.goods_id','=','sh_goods.goods_id')->get();
 
         return  $data;
@@ -17,7 +18,7 @@ class SeckillController extends Controller
     }
     public function seckilldo(){
         $goods_id = request()->goods_id;
-        $user_id=3;
+        $user_id=Redis::hget('reg','user_id');
         if(!$user_id){
             return json_encode(['code'=>'1001','msg'=>'请先登录']);
         }

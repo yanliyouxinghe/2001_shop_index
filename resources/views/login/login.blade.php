@@ -101,14 +101,18 @@ $(document).ready(function(){
         $.post('/logdo',{user_plone:user_plone,user_pwd:user_pwd},function (res) {
             console.log(res);
             // alert(res);
-            if(res.code== '00002'){
+            if(res.code==00002){
               alert(res.msg);
             }
-             if(res.code== '00003'){
+            if(res.code==00003){
               alert(res.msg);
             }
-            if(res.code== '00000'){
-                 location.href = "/"
+            if(res.code==00000){
+              if(window.location.href.indexOf('refer') > -1){
+                   window.history.go(-1); //返回上一页
+                 }else{
+                  location.href = "/";
+                 }
             }else{
               alert(res.msg);
             }

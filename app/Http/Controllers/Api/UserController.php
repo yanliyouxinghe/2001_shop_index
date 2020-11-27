@@ -25,9 +25,6 @@ class UserController extends Controller
         $post['user_id'] = $user_id;
        // print_r($post);exit;
          $res = UseraddressModel::insert($post);
-         if(request()->refer){
-            return redirect($request['refer']);die;
-        }
          $address = array();
         
         // return redirect('/');die;

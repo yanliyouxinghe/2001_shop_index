@@ -17,9 +17,9 @@ class LoginController extends Controller
     public function logindo(Request $request){
        $data['user_plone'] = $request->user_plone;
        $data['user_pwd'] = $request->user_pwd;
-//  dd($data);
        $url = "http://2001.shop.api.com/logindo";
-       $res=$this->posturl($url,$data);
+       $res= $this->posturl($url,$data);
+    //    print_r($res);die;
         if($res['code']=='00000'){
             // dd($res);
              Redis::Hmset('reg','token',$res['token'],'user_id',$res['user']["user_id"],'user_plone',$res['user']["user_plone"]);
@@ -32,9 +32,11 @@ class LoginController extends Controller
 
 
     public function posturl($url,$data){
-
-            $headerArray = [];
-           // $headerArray =["Content-type:application/json;charset='utf-8'","Accept:application/json"];
+            if(is_array($data)){
+                $data = json_encode($data);
+            }
+           
+            $headerArray =["Content-type:application/json;charset='utf-8'","Accept:application/json"];
             $curl = curl_init();//初始化
             curl_setopt($curl, CURLOPT_URL, $url);
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
@@ -49,6 +51,9 @@ class LoginController extends Controller
             // print_r(curl_errno($curl));die;
             // echo $output;exit;
             curl_close($curl);
+            if(is_null(json_decode($output,true))){
+                return $output;
+            }
             return json_decode($output,true);
         } 
 

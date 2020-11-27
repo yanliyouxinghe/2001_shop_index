@@ -53,7 +53,7 @@ $(document).ready(function(){
         <td><img src="https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1024102881,2497395939&fm=26&gp=0.jpg" alt="" width="300px" height="300px"></td>
         <td> <div class="order_btm_btn">
               <h1 style="color:red">您还没有登录哦~先去登录吧</h1>
-              <a href="/login" class="link_btn_01 buy_btn"/>去登录</a>
+              <a href="javascript:void(0)" class="link_btn_01 buy_btn login"/>去登录</a>
             </div>
        </td>
       </tr>
@@ -291,5 +291,10 @@ $(document).ready(function(){
    
 
     })
+
+  //登录
+  $('.login').click(function(){
+    location.href="/login?refer="+location.href;
+  });
 
 </script>

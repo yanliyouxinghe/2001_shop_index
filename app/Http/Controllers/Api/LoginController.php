@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use AlibabaCloud\Client\AlibabaCloud;
 use AlibabaCloud\Client\Exception\ClientException;
 use AlibabaCloud\Client\Exception\ServerException;
+use Illuminate\Support\Facades\Hash;
 use App\Model\UserModel;
 use App\Common\jwt;
 use App\Model\CodeModel;
@@ -40,17 +41,6 @@ class LoginController extends Controller
                     'result'=>''
                 ];
         }
-        // if($len < 6){
-        //      return [
-        //             'code'=>'00003',
-        //             'message'=>'密码长度不能小于六位',
-        //             'result'=>''
-        //         ];
-        // }
-        $user_pwd = password_hash($user_pwd,PASSWORD_BCRYPT);
-
-       
-        // $codes = 1111;
 
         // if($code==$codes){
              $data = [
@@ -128,19 +118,21 @@ class LoginController extends Controller
     //执行登录
     public function logindo(Request $request){
         $data=$request->all();
-        $user = UserModel::where(['user_plone'=>$data['user_plone']])->first();
-        //   print_r($user);
+
+        $user = UserModel::where(['user_plone'=>$data['user_plone']])->first(); 
           if(!$user){
               return json_encode(['code'=>'00003','msg'=>'没有此账号']);
           }else{
-               $pwd=password_verify($data['user_pwd'],$user->user_pwd);
-               if($pwd==$data['user_plone']){
-                    $token =  jwt::instance()->setuid($user->user_id)->encode()->gettoken();
-                    //   dd($token);
-                    return json_encode(['code'=>'00000','msg'=>'登录成功','token'=>$token,'user'=>$user]);
-                }else{
+            //   return $user['user_pwd'];
+            
+               if(!Hash::check($data['user_pwd'], $user->user_pwd)){
                     return json_encode(['code'=>'00002','msg'=>'账号密码错误']);
-               }    
+               }
+                
+                $token =  jwt::instance()->setuid($user->user_id)->encode()->gettoken();
+                    //   dd($token);
+                return json_encode(['code'=>'00000','msg'=>'登录成功','token'=>$token,'user'=>$user]);
+                
           }
     }
     public function getuserinfo(){
