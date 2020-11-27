@@ -142,6 +142,9 @@ $(document).ready(function(){
              if(result.code=='00006'){
                 alert(result.message);
             }
+             if(result.code=='00007'){
+                alert(result.message);
+            }
             if(result.code=='00000'){
                 location.href = "/login"
             }
