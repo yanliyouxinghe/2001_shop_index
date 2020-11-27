@@ -23,7 +23,6 @@ class LoginController extends Controller
 
         $user_pwds = $request->post('user_pwds');
         $code = $request->post('code');
-        // $len = strlen($user_pwd);
         $codes=Redis::get('forgetcode');
    
          if($code!=$codes){  
@@ -38,14 +37,6 @@ class LoginController extends Controller
              return [
                     'code'=>'00001',
                     'message'=>'手机号已存在',
-                    'result'=>''
-                ];
-        }
-
-        if($len<6){
-             return [
-                    'code'=>'00003',
-                    'message'=>'密码长度不能小于六位',
                     'result'=>''
                 ];
         }
