@@ -53,14 +53,24 @@ Route::post('/mor','Index\OrderController@mor');//修改默认收货地址
 
 
 Route::get('/sereg','Admin\BusinessController@sereg');//商家后太注册
+Route::get('/seregdo','Admin\BusinessController@seregdo');//执行商家后太注册
+Route::get('/sendSMS','Admin\BusinessController@sendSMS');//商家后太注册手机验证码
 Route::get('/business','Admin\BusinessController@business');//商家后台登录
-Route::post('/selog','Admin\BusinessController@selogin');//商家执行登录
+Route::post('/selogin','Admin\BusinessController@selogin');//商家执行登录
 Route::get('/index','Admin\SellController@index');//商家后台首页
 Route::get('/goods','Admin\GoodsController@goods');//商家后台商品添加
+Route::post('/goods/store','Admin\GoodsController@store');//商家后台商品添加
 Route::any('/upload','Admin\GoodsController@upload');//图片上传接口
 Route::any('/uploads','Admin\GoodsController@uploads');//图片上传接口
+  Route::post('/pruct','Admin\GoodsController@pruct');
+
+//   Route::get('/list','Admin\GoodsController@list')->name('goods.list');//商品列表
+//   Route::get('/jyl/{id}','Admin\GoodsController@item')->name('goods.jyl');//查看商品
+
+
+
 Route::get('/goodslist','Admin\GoodsController@goodslist');//商家后台商品列表
-Route::get('/getattr','Admin\GoodsController@getattr')->name('gooods.getattr');//商品属性
+Route::get('/getattr','Admin\GoodsController@getattr');//商品属性
 
 Route::post('/cart_del','Index\CartController@cart_del');//购物车删除
 Route::post('/buy_jian','Index\CartController@buy_jian');//购物车减号

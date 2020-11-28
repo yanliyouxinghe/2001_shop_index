@@ -22,11 +22,11 @@
    <dt>登录联盟平台</dt>
    <dd>
     <span>账号：</span>
-    <input type="text" name="user_plone" placeholder="输入账号" class="txtbox"/>
+    <input type="text" name="seuser_plone" placeholder="输入账号" class="txtbox"/>
    </dd>
    <dd>
     <span>密码：</span>
-    <input type="password" name="user_pwd" placeholder="输入密码" class="txtbox"/>
+    <input type="password" name="seuser_pwd" placeholder="输入密码" class="txtbox"/>
    </dd>
    <dd>
     <input type="button" id="login" value="立 即 登 陆" class="loginBtn"/>
@@ -45,12 +45,38 @@
 <script src="/static/js/jquery.js"></script>
 <script>
      $("#login").click(function () {
-        // alert(111);
-        var user_plone = $('input[name="user_plone"]').val();
-      
-        var user_pwd = $('input[name="user_pwd"]').val();
-         $.post('/selog',{user_plone:user_plone,user_pwd:user_pwd},function (res) {
+      var falg = false;
+        var seuser_plone = $('input[name="seuser_plone"]').val();
+            if (seuser_plone == '') {
+                $("input[name='seuser_plone']+span").html("<font color='red'>用户名不能为空</font>");
+                falg = false;
+            } else {
+                $("input[name='seuser_plone']+span").html("<font color='green'>√</font>");
+                falg = true;
+            }
+        var pfalg = false;
+        var seuser_pwd = $('input[name="seuser_pwd"]').val();
+         if (seuser_pwd == '') {
+                $("input[name='seuser_pwd']+span").html("<font color='red'>密码不能为空</font>");
+                pfalg = false;
+            } else {
+                $("input[name='seuser_pwd']+span").html("<font color='green'>√</font>");
+                pfalg = true;
+            }
+          if (falg === false || pfalg === false) {
+                return false;
+          }
+         $.post('/selogin',{seuser_plone:seuser_plone,seuser_pwd:seuser_pwd},function (res) {
             // console.log(res);
+            if(res.code== '00002'){
+              alert(res.msg);
+            }
+            if(res.code== '00003'){
+              alert(res.msg);
+            }
+            if(res.code== '00004'){
+              alert(res.msg);
+            }
             if(res.code== '00000'){
                  location.href = "/index"
             }else{

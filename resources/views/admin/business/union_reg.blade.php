@@ -17,12 +17,12 @@
  </div>
 </div>
 <div class="unionLoginBg">
- <div class="wrap" style="background:url(static/images/unbg.jpg) center no-repeat;height:486px;">
+ <div class="wrap" style="background:url(static/images/unbg.jpg) center no-repeat;height:586px;">
   <dl class="loginForm">
    <dt>注册联盟平台</dt>   
    <dd>
     <span>账号：</span>
-    <input type="text" name="user_plone" placeholder="输入账号" class="txtbox"/>
+    <input type="text" name="seuser_plone" placeholder="输入账号" class="txtbox"/><span></span>
    </dd>
    <dd>
     <span>手机验证码：</span>
@@ -30,15 +30,15 @@
    </dd>
     <dd>
     <span>手机校验码：</span>
-     <input type="text" class="textbox" name="code" placeholder="手机校验码"/>
+     <input type="text" class="textbox" name="code" placeholder="手机校验码"/><span></span>
    </dd>
    <dd>
     <span>密码：</span>
-    <input type="text" name="user_pwd" placeholder="输入密码" class="txtbox"/>
+    <input type="password" name="seuser_pwd" placeholder="输入密码" class="txtbox"/><span></span>
    </dd>
    <dd>
     <span>确认密码：</span>
-    <input type="text" name="user_pwds" placeholder="输入密码" class="txtbox"/>
+    <input type="password" name="seuser_pwds" placeholder="输入密码" class="txtbox"/><span></span>
    </dd>
    <dd>
     <input type="button" value="立 即 注 册" class="loginBtn"/>
@@ -57,38 +57,87 @@
 <script src="static/js/jquery.js"></script>
 <script>
   $('.loginBtn').on('click',function(){
-    var user_plone = $('input[name="user_plone"]').val();
-      var user_pwd = $('input[name="user_pwd"]').val();
-      var user_pwds = $('input[name="user_pwds"]').val();
+    var falg = false;
+      var seuser_plone = $('input[name="seuser_plone"]').val();
+      if (seuser_plone == '') {
+                $("input[name='seuser_plone']+span").html("<font color='red'>用户名不能为空</font>");
+                falg = false;
+            } else {
+                $("input[name='seuser_plone']+span").html("<font color='green'>√</font>");
+                falg = true;
+        }
+      var pfalg = false;
+      var seuser_pwd = $('input[name="seuser_pwd"]').val();
+      if (seuser_pwd == '') {
+                $("input[name='seuser_pwd']+span").html("<font color='red'>密码不能为空</font>");
+                pfalg = false;
+            } else {
+                $("input[name='seuser_pwd']+span").html("<font color='green'>√</font>");
+                pfalg = true;
+          }
+      var ofalg = false;
+      var seuser_pwds = $('input[name="seuser_pwds"]').val();
+      if (seuser_pwds == '') {
+                $("input[name='seuser_pwds']+span").html("<font color='red'>确认密码不能为空</font>");
+                ofalg = false;
+            } else {
+                $("input[name='seuser_pwds']+span").html("<font color='green'>√</font>");
+                ofalg = true;
+          }
+      var ifalg = false;
       var code = $('input[name="code"]').val();
-           $.post('http://2001.shop.api.com/sereg',{user_plone:user_plone,user_pwd:user_pwd,user_pwds:user_pwds,code:code},function (result) {
+      if (code == '') {
+                $("input[name='code']+span").html("<font color='red'>验证码不能为空</font>");
+                ifalg = false;
+            } else {
+                $("input[name='code']+span").html("<font color='green'>√</font>");
+                ifalg = true;
+            }
+            // alert(code);
+      if(falg === false || pfalg === false || ofalg === false || ifalg === false){
+          return false;
+      }
+      if(seuser_pwd!=seuser_pwds){
+          alert('密码不一致');
+      }
+        var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
+    if(myreg.test(seuser_plone)){
+        // alert(1111);
+           $.get('/seregdo',{seuser_plone:seuser_plone,seuser_pwd:seuser_pwd,seuser_pwds:seuser_pwds,code:code},function (result) {
+               console.log(result);
             if(result.code=='00001'){
-                alert(result.msg);
+                alert(result.message);
             }
             if(result.code=='00002'){
-                alert(result.msg);
+                alert(result.message);
             }
             if(result.code=='00003'){
-                alert(result.msg);
+                alert(result.message);
             }
             if(result.code=='00004'){
-                alert(result.msg);
+                alert(result.message);
+            }
+            if(result.code=='00005'){
+                alert(result.message);
             }
             if(result.code=='00000'){
-                location.href = "/login"
+                location.href = "/business"
             }else{
-                alert(result.msg);
+                alert(result.message);
             }
         },'json')
+    }else{
+        alert('请输入正确的手机号');
+    }
      
   })
     $('button').click(function () {
-        var name = $('input[name="user_plone"]').val();
+        var name = $('input[name="seuser_plone"]').val();
         // alert(name);
         var mobilereg = /^1[3|5|6|7|8|9]\d{9}$/;
         if(mobilereg.test(name)){
             //发送手机号验证码
-            $.get('http://2001.shop.api.com/sendSMS',{name:name},function (res) {
+            $.get('/sendSMS',{name:name},function (res) {
                 if(res.code=='00001'){
                     alert(res.msg);
                 }
