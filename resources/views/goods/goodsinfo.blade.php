@@ -156,7 +156,7 @@ $(document).ready(function(){
     <li>
      <dl class="horizontal">
       <dt>优惠券：</dt>
-      <dd><strong class="univalent"><a href="coupons/">点击领取优惠券</a></strong></dd>
+      <dd><strong class="univalent"><a href="/coupons/{{$v['goods_id']}}">点击领取优惠券</a></strong></dd>
     <li>
      </dl>
     </li>

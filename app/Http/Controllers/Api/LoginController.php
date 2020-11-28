@@ -51,7 +51,7 @@ class LoginController extends Controller
         }
         $user_pwd = bcrypt($user_pwd);
 
-        $user_pwd = password_hash($user_pwd,PASSWORD_BCRYPT);
+        // $user_pwd = password_hash($user_pwd,PASSWORD_BCRYPT);
     
              $data = [
             'user_plone' => $user_plone,

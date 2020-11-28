@@ -69,6 +69,13 @@ class GoodsController extends Controller
    public function cookiehistory(){
 
    }
+   function coupons($id){
+    $url = 'http://2001.shop.api.com/coupons/'.$id;
+    $data = geturl($url);
+    // print_r($data);
+    return view('goods.coupons',['data'=>$data]);
+   }
+
 
 //    public function lll($goods_id){
 //     $user_id=  "11";

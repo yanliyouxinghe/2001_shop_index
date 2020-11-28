@@ -76,6 +76,7 @@ Route::post('/orderinfo','Index\OrderController@orderinfo');  //生成订单
 
 
 
+Route::get('/coupons/{goods_id}','Index\GoodsController@coupons');//优惠券
 
 
 });
