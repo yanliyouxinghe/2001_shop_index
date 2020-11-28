@@ -91,8 +91,7 @@ class PayController extends Controller
             }
             //5.更改订单状态和支付状态
             $data = [
-                'is_paid'=>2,    //支付状态1 待支付 2 已支付
-                'order_status'=>0      //0未确认 1 确认 2已取消 3无效 4退货
+                'is_paid'=>1,    //支付状态 0待支付 1已支付
             ];
             $res = Order_InfoModel::where(['order_sn'=>$arr['out_trade_no']])->update($data);
             if($res){
