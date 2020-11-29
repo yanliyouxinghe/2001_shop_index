@@ -150,6 +150,20 @@ $(document).ready(function(){
   </li>
   <li>
    <dl>
+    <dt>优惠券</dt>
+   <!-- istrue -->
+
+    <dd class="payType">
+    @foreach($coupons as $v)
+      <label class="coupons" coupons_id="{{$v['coupons_id']}}"><input type="radio" name="coupons" /><img src="{{$v['coupons_img']}}"  alt=""></label>
+      
+  @endforeach
+    </dd>
+
+   </dl>
+  </li>
+  <li>
+   <dl>
     <dt>订单留言</dt>
     <dd>
      <textarea class="order_leave" name="order_leave"></textarea>
@@ -158,7 +172,8 @@ $(document).ready(function(){
   </li>
  </ul>
  <div class="order_btm_btn">
-  <a href="javascript:void(0)" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon total">{{$account['end_price'][0]['total']}}</strong>提交订单</a>
+ 共计金额{{$account['end_price'][0]['total']}}
+  <a href="javascript:void(0)" class="link_btn_02 add_btn"/>应付金额<strong class="rmb_icon total">{{$account['end_price'][0]['total']}}</strong>提交订单</a>
  </div>
 </section>
 <!--footer-->
@@ -166,6 +181,16 @@ $(document).ready(function(){
 </body>
 <script scr="/static/jyl/js/jquery.js"></script>
 <script>
+//使用优惠券
+$(document).on("click",".coupons",function(){
+  $(this).addClass("selected");
+  $(this).prev().removeClass("selected");
+  $(this).next().removeClass("selected");
+  var coupons_id=$('.selected').attr("coupons_id");
+ 
+})
+
+
  $(document).on('click','.addres',function(){
   alert('添加完成后请刷新本页面');
   location.href="/address?refer="+location.href;

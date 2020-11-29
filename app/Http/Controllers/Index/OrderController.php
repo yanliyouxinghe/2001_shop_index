@@ -47,8 +47,12 @@ class OrderController extends Controller
         }
         $url = "http://2001.shop.api.com/account";
         $account = posturl($url,$data);
-        return view('order.order',['addressinfo'=>$addressinfo['data'],'account'=>$account['data'],'goods_id'=>$goods_id,'cart_id'=>$cart_id]);
+        //使用优惠券
+        $url = 'http://2001.shop.api.com/couponsuse/'.$goods_id;
+        $coupons=geturl($url);
+        return view('order.order',['addressinfo'=>$addressinfo['data'],'account'=>$account['data'],'goods_id'=>$goods_id,'cart_id'=>$cart_id,'coupons'=>$coupons]);
     }
+    
 
     /**收货地址ajax删除 */
     public function address_del(){

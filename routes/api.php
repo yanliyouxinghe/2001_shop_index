@@ -66,6 +66,8 @@ Route::domain('2001.shop.api.com')->group(function () {
 
     Route::get('/coupons/{goods_id}','Api\GoodsController@coupons');//优惠券
     Route::post('couponsdo','Api\CouponsController@couponsdo');//领取优惠券
+    Route::get('/couponsuse/{goods_id}','Api\OrderController@couponsuse');//使用优惠券
+
 });
 
   

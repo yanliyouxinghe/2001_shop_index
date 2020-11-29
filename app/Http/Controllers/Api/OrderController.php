@@ -13,6 +13,10 @@ use App\Model\RegionModel;
 use App\Model\Order_GoodsModel;
 use App\Model\Order_InfoModel;
 use DB;
+use Illuminate\Support\Facades\Redis;
+use App\Model\CouponsModel;
+use App\Model\User_CouponsModel;
+
 
 class OrderController extends Controller
 {
@@ -105,6 +109,19 @@ class OrderController extends Controller
                 ];
             
         return json_encode($respoer);
+        }
+        //查询优惠券
+        function couponsuse($goods_id){
+            $user_id=Redis::hget('reg','user_id');
+         $user_coupons =  User_CouponsModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id,'coupons_state'=>0])->get();
+         $coupons_id=[];
+         foreach($user_coupons as $v){
+            $coupons_id[] = $v['coupons_id'];
+         }         
+
+        $coupons = CouponsModel::whereIn('coupons_id',$coupons_id)->get();
+        return $coupons;
+
         }
 
     /**执行提交订单 */
