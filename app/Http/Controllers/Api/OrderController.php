@@ -16,7 +16,7 @@ use DB;
 use Illuminate\Support\Facades\Redis;
 use App\Model\CouponsModel;
 use App\Model\User_CouponsModel;
-
+use App\Model\CrtModel;
 
 class OrderController extends Controller
 {
@@ -77,16 +77,25 @@ class OrderController extends Controller
         /**提交订单页面商品信息数据 */
         public function account(){
         $cart_ids = request()->input('cart_id');
+       
         $price = DB::select("select SUM(shop_price*buy_number) as total FROM sh_cart where cart_id in ($cart_ids)");
+       
         $cart_ids = explode(',',$cart_ids);
 
         $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_img')
             ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
             ->whereIn('cart_id',$cart_ids)
             ->get();
+            // print_r($cart_data);die;
+                $goods_id=[];
+                $coupons=[];
             foreach($cart_data as $k=>$v){
+                $goods_id[]=$v['goods_id'];
+               
                 // print_r($v);die;
                 $attr = [];
+                
+                
                 if(isset($v->goods_attr_id) && $v->goods_attr_id!=''){
                     $goods_attr_id = explode('|',$v->goods_attr_id);
                     foreach($goods_attr_id as $kk=>$vv){
@@ -95,16 +104,22 @@ class OrderController extends Controller
                                 ->where('goods_attr_id',$vv)
                                 ->get();
                         $attr[] = $attr_data[0]['attr_name'].":".$attr_data[0]['attr_value'];
+                       
                     }
+                    
+                
                     $v['attr'] = $attr;
                 }
-            } 
+            }
+            $coupons=$this->couponsuse($goods_id);
+            // print_r($coupons);die; 
                 $respoer = [
                     'code'=>0,
                     'msg'=>'OK',
                     'data'=>[
                         'cart_data'=>$cart_data,
                         'end_price'=>$price,
+                        'coupons'=>$coupons
                     ],
                 ];
             
@@ -112,16 +127,45 @@ class OrderController extends Controller
         }
         //查询优惠券
         function couponsuse($goods_id){
-            $user_id=Redis::hget('reg','user_id');
-         $user_coupons =  User_CouponsModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id,'coupons_state'=>0])->get();
+        //    return $goods_id;
+            // print_r($goods_id);die;
+            // $cart_ids = request()->input('cart_id');
+            // $goods_id=CartModel::where(['cart_id'=>$cart_ids])->value('goods_id');
+        $user_id=Redis::hget('reg','user_id');
+         $user_coupons =  User_CouponsModel::where(['user_id'=>$user_id,'coupons_state'=>0])->whereIn('goods_id',$goods_id)->get();
          $coupons_id=[];
          foreach($user_coupons as $v){
             $coupons_id[] = $v['coupons_id'];
          }         
 
         $coupons = CouponsModel::whereIn('coupons_id',$coupons_id)->get();
-        return $coupons;
+      
+        return  $coupons;
 
+        }
+        //点击优惠券改变价格
+        function couponsprice(){
+            $goods_id = request()->goods_id;
+            $goods_id=implode(',',$goods_id);
+            $goods_id=explode(',',$goods_id);
+            // print_r($goods_id);die;
+            $goods_attr_id = request()->goods_attr_id;
+            $goods_attr_id= explode('|',$goods_attr_id);
+            $coupons_id = request()->coupons_id;
+            $attr_price = Goods_AttrModel::whereIn('goods_attr_id',$goods_attr_id)
+            ->sum('attr_price');
+            // print_r($attr_price);die;            
+               //  dd($attr_price);
+                //    print_r($attr_price);die;
+        $shop_price=GoodsModel::whereIn('goods_id',$goods_id)->sum('shop_price')+$attr_price;
+        // print_r($shop_price);die;
+        $coupons_price=CouponsModel::where(['coupons_id'=>$coupons_id])->value('coupons_price');
+        // print_r($coupons_price);die;
+        $deal_price=$shop_price-$coupons_price;
+        // print_r($deal_price);die;
+       $deal_price = number_format($deal_price,2,".","");
+    //    return $goods_id;
+       return json_encode(['code'=>0,'msg'=>'OK','data'=>$deal_price]);
         }
 
     /**执行提交订单 */

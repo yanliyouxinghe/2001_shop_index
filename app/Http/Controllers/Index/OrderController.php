@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\DB;
 use Log;
 use function AlibabaCloud\Client\redTable;
 use Illuminate\Support\Facades\Redis;
+use App\Model\CouponsModel;
+use App\Model\User_CouponsModel;
+use App\Model\CrtModel;
 class OrderController extends Controller
 {
 
@@ -47,10 +50,12 @@ class OrderController extends Controller
         }
         $url = "http://2001.shop.api.com/account";
         $account = posturl($url,$data);
+        $coupons = $account['data']['coupons'];
+        // print_r($coupons);die;
         //使用优惠券
-        $url = 'http://2001.shop.api.com/couponsuse/'.$goods_id;
-        $coupons=geturl($url);
-        return view('order.order',['addressinfo'=>$addressinfo['data'],'account'=>$account['data'],'goods_id'=>$goods_id,'cart_id'=>$cart_id,'coupons'=>$coupons]);
+        // $url = 'http://2001.shop.api.com/couponsuse/'.$goods_id;
+        // $coupons=geturl($url);
+        return view('order.order',['addressinfo'=>$addressinfo['data'],'account'=>$account['data'],'coupons'=>$coupons,'goods_id'=>$goods_id,'cart_id'=>$cart_id]);
     }
     
 
@@ -92,6 +97,27 @@ class OrderController extends Controller
     }
 
         public function orderinfo(){
+            $goods_id = request()->goods_id;
+            $goods_id=implode(',',$goods_id);
+            $goods_id=explode(',',$goods_id);
+            // print_r($goods_id);die;
+            $goods_attr_id = request()->goods_attr_id;
+            $goods_attr_id= explode('|',$goods_attr_id);
+            $coupons_id = request()->coupons_id;
+            $attr_price = Goods_AttrModel::whereIn('goods_attr_id',$goods_attr_id)
+            ->sum('attr_price');
+            // print_r($attr_price);die;            
+               //  dd($attr_price);
+                //    print_r($attr_price);die;
+        $shop_price=GoodsModel::whereIn('goods_id',$goods_id)->sum('shop_price')+$attr_price;
+        // print_r($shop_price);die;
+        $coupons_price=CouponsModel::where(['coupons_id'=>$coupons_id])->value('coupons_price');
+        // print_r($coupons_price);die;
+        $deal_price=$shop_price-$coupons_price;
+        // print_r($deal_price);die;
+       $deal_price = number_format($deal_price,2,".","");
+
+
             $user_id=Redis::hget('reg','user_id');
             if(!$user_id){
                 return json_encode(['code'=>1,'msg'=>'Error,请登录']);
@@ -136,7 +162,7 @@ class OrderController extends Controller
                     'pay_type' => $datas['pay_type'],
                     'pay_name' => $datas['pay_name'],
                     'total_price' => $datas['total_price'],
-                    // 'deal_price' => $datas['deal_price'],
+                    'deal_price' => $shop_price,
                     'addtime' => time(),
                     'order_leave'=>$datas['order_leave']
                 ];
@@ -162,6 +188,9 @@ class OrderController extends Controller
                         }
                         // print_r($goods_data);die;
                 $ret = Order_GoodsModel::insert($goods_data);
+                if($ret){
+                    User_CouponsModel::where(['user_id'=>$user_id,'coupons_id'=>$coupons_id])->update(['coupons_state'=>1]);
+                }
                 foreach($cart_id as $k=>$v){
                     CartModel::destroy($v);
                 }

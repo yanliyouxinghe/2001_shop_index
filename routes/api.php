@@ -69,10 +69,10 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('seckilldo','Api\SeckillController@seckilldo');//秒杀列表页
     Route::post('addcart','Api\CartController@addcart');//加入购物车
 
-    Route::get('/coupons/{goods_id}','Api\GoodsController@coupons');//优惠券
+
     Route::post('couponsdo','Api\CouponsController@couponsdo');//领取优惠券
     Route::get('/couponsuse/{goods_id}','Api\OrderController@couponsuse');//使用优惠券
-
+    Route::post('/couponsprice','Api\OrderController@couponsprice');//选择优惠券改变价格
     //user
     Route::get('getsondata','Api\UserController@getsondata'); //三级联动
     Route::get('store','Api\UserController@store'); //添加地址   地址列表
