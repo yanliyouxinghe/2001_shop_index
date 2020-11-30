@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('admin.layout.header')
 @section('title','货品列表')
 @section('content')
 <div class="list-div" style="margin-bottom: 5px; margin-top: 10px;" id="listDiv">

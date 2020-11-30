@@ -137,6 +137,13 @@ class BusinessController extends Controller
         if(!Hash::check($post['seuser_pwd'], $admin->seuser_pwd)){
             return json_encode(['code'=>'00004','msg'=>'账号密码错误']);
         }
+         session(['seuser_plone'=>$admin->seuser_plone]);
+         session(['seuser_id'=>$admin->seuser_id]);
         return json_encode(['code'=>'00000','msg'=>'登录成功']);
+   }
+   //商家退出
+   public function loginout(){
+        session(['seuser_plone'=>null]);
+        return redirect('/business');die;
    }
 }

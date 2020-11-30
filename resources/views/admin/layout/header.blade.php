@@ -15,9 +15,9 @@
     <div class="layui-logo"><img src="/static/admin/images/111.png" height="60px" width="200px"></div>
     <!-- 头部区域（可配合layui已有的水平导航） -->
     <ul class="layui-nav layui-layout-left">
-      <li class="layui-nav-item"><a href="">控制台</a></li>
-      <li class="layui-nav-item"><a href="">商品管理</a></li>
-      <li class="layui-nav-item"><a href="">用户</a></li>
+      <li class="layui-nav-item"><a href="/index">控制台</a></li>
+      <li class="layui-nav-item"><a href="/list">商品管理</a></li>
+      <li class="layui-nav-item"><a href="/addindex">用户</a></li>
       <li class="layui-nav-item">
         <a href="javascript:;">其它系统</a>
         <dl class="layui-nav-child">
@@ -38,7 +38,7 @@
           <dd><a href="">安全设置</a></dd>
         </dl>
       </li>
-      <li class="layui-nav-item"><a href="/logout">退出</a></li>
+      <li class="layui-nav-item"><a href="/loginout">退出</a></li>
     </ul>
   </div>
 
@@ -50,7 +50,7 @@
           <a class="" href="javascript:;">商户商品管理</a>
           <dl class="layui-nav-child">
             <dd><a href="/goods">添加商品</a></dd>
-            <dd><a href="/goodslist">商品列表</a></dd>
+            <dd><a href="/list">商品列表</a></dd>
           </dl>
         </li>
          <li class="layui-nav-item">

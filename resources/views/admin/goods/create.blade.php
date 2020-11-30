@@ -71,6 +71,31 @@
     </div>
 
  
+    <div class="form-group">
+        <label for="firstname" class="col-sm-2 control-label">商品图片</label>
+        <div class="layui-upload-drag" id="test10">
+            <input type="hidden" id="fileview" name="goods_img" value="">
+            <i class="layui-icon"></i>
+            <p>点击上传，或将文件拖拽到此处</p>
+            <div class="layui-hide" id="uploadDemoView">
+                <hr>
+                <img src="" alt="上传成功后渲染" style="max-width: 196px">
+            </div>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="firstname" class="col-sm-2 control-label">商品缩略图</label>
+        <div class="layui-upload-drag" id="test1">
+            <input type="hidden" id="fileview1" name="goods_thumb" value="">
+            <i class="layui-icon"></i>
+            <p>点击上传，或将文件拖拽到此处</p>
+            <div class="layui-hide" id="uploadDemoView1">
+                <hr>
+                <img src="" alt="上传成功后渲染" style="max-width: 196px">
+            </div>
+        </div>
+    </div>
 
     </div>
     <!-- 通用信息 -->
