@@ -8,8 +8,7 @@
 <meta name="author" content="DeathGhost,deathghost@deathghost.cn">
 <link rel="icon" href="/static/images/icon/favicon.ico" type="/static/image/x-icon">
 <link rel="stylesheet" type="text/css" href="/static/css/style.css" /><script src="/static/js/html5.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/css/webbase.css" />
-<link rel="stylesheet" type="text/css" href="/static/css/pages-paysuccess.css" />
+
 <script src="/static/js/jquery.js"></script>
 <script>
 $(document).ready(function(){
@@ -51,30 +50,7 @@ $(document).ready(function(){
  
 <section class="wrap user_center_wrap">
  <!--左侧导航-->
-  <aside class="user_aside_nav">
-  <dl>
-   <dt>买家中心</dt>
-   <dd><a href="order_list.html">我的订单</a></dd>
-   <dd><a href="price_list.html">我的询价单</a></dd>
-   <dd><a href="favorite.html">我的收藏</a></dd>
-   <dd><a href="address.html">我的地址库</a></dd>
-  </dl>
-  <dl>
-   <dt>商家管理中心</dt>
-   <dd><a href="authenticate.html">我要开店</a></dd>
-   <dd><a href="setting.html">店铺设置</a></dd>
-   <dd><a href="seller_product_list.html">商品列表</a></dd>
-   <dd><a href="seller_order_list.html">订单列表</a></dd>
-   <dd><a href="offer_list.html">询价单</a></dd>
-  </dl>
-  <dl>
-   <dt>控制面板</dt>
-   <dd><a href="message.html">站内短消息</a></dd>
-   <dd><a href="account.html">资金管理</a></dd>
-   <dd><a href="profile.html">个人资料</a></dd>
-   <dd><a href="change_password.html">修改密码</a></dd>
-  </dl>
- </aside>
+ @include('layout.myorder')
 @if(count($data))
  <!--右侧：内容区域-->
  <div class="user_rt_cont">
@@ -95,14 +71,25 @@ $(document).ready(function(){
    <input type="button" value="查询" class="group_btn"/>
   </div>
   <ul class="order_li">
-
   @foreach($data as $v)
+  <input type="hidden" name="order_id" value="{{$v['order_id']}}">
+
   <li>
     <table class="order_table">
      <caption>
       <strong>订单编号：{{$v['order_sn']}}</strong>
       <em class="shop_name">二号店</em>
-      <a href="order_detail.html">订单详情</a>
+      @if($v['is_paid'] == 0)
+      <a href="/pay/{{$v['order_id']}}" class="a_btn">支付</a>
+      @elseif($v['is_paid'] == 1 && $v['order_status'] == 0 && $v['is_deliver'] == 0 && $v['is_evaluate'] == 0)
+      <a href="order_comment.html" class="a_btn">催发货</a>
+      @elseif($v['is_paid'] == 1 && $v['order_status'] == 0 && $v['is_deliver'] == 1 && $v['is_evaluate'] == 0)
+      <a style="margin-left:20px;" href="order_comment.html" class="a_btn">确认收货</a>
+     
+      <a  href="/logistics/{{$v['order_id']}}" class="a_btn">查看物流</a>
+      @elseif($v['is_paid'] == 1 && $v['order_status'] == 1 && $v['is_deliver'] == 1 && $v['is_evaluate'] == 0)
+      <a href="order_comment.html" class="a_btn">评价</a>
+      @endif
      </caption>
      @foreach($v['goods_data'] as $vv)
      <tr>
@@ -111,9 +98,9 @@ $(document).ready(function(){
       <td class="center"><span class="rmb_icon">{{$vv['shop_price']}}</span></td>
       <td class="center"><b>{{$vv['buy_number']}}</b></td>
       <td class="center"><strong class="rmb_icon">{{$vv['shop_price']*$vv['buy_number']}}</strong></td>
-      <td class="center"><a href="order_comment.html" class="a_btn">评价</a></td>
      </tr>
      @endforeach
+  
     </table>
    </li>
    @endforeach
@@ -131,7 +118,6 @@ $(document).ready(function(){
  </div>
 </section>
 @else
-
 <div class="paysuccess">
 				<div class="success">
 					<h3><img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=49030976,3287915018&fm=26&gp=0.jpg" width="48" height="48">　您还没有任何订单哦~</h3>

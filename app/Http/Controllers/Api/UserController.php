@@ -88,7 +88,7 @@ class UserController extends Controller
     public function obligation(){
         $user_id = request()->user_id;
         //待付款订单
-        $obligation = Order_InfoModel::select('order_id','order_sn')->where(['user_id'=>$user_id])->get()->toArray();
+        $obligation = Order_InfoModel::select('order_id','order_sn','is_paid','order_status','is_deliver','is_evaluate')->where(['user_id'=>$user_id])->get()->toArray();
         if(count($obligation) <= 0){
             $respoer = [
                 'code'=>'1',

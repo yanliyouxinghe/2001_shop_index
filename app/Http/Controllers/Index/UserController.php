@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\UseraddressModel;
 use App\Model\RegionModel;
+use App\Model\UserModel;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
+
+use function AlibabaCloud\Client\json;
+
 class UserController extends Controller
 {
     
@@ -45,6 +50,29 @@ class UserController extends Controller
         $data = $data_json['data'];
         return view('user.order_list',compact('data'));
         
+    }
+
+
+    //修改密码
+    public function changepwd(){
+        $oldpwd = request()->oldpwd;
+        $newpwd = request()->newpwd2;
+        if(!$oldpwd || !$newpwd){
+            return json_encode(['code'=>1,'msg'=>'Error，参数丢失']);
+        }
+        $user=Redis::hmget('reg','user_id','user_plone');
+        $user_id = $user[0];
+        $user_pwd = UserModel::where('user_id',$user_id)->value('user_pwd');
+        if(!Hash::check($oldpwd, $user_pwd)){
+            return json_encode(['code'=>'2','msg'=>'请输入正确的原始密码']);
+       }
+        $newpwd = bcrypt($newpwd);
+        $change = UserModel::where('user_id',$user_id)->update(['user_pwd'=>$newpwd]);
+        if($change){
+            return json_encode(['code'=>'0','msg'=>'OK']);
+        }else{
+            return json_encode(['code'=>'3','msg'=>'修改失败']);
+        }
     }
 
 
