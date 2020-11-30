@@ -13,9 +13,11 @@ class CouponsController extends Controller
     public function couponsdo(){
         $coupons_id = request()->coupons_id;
         $user_id=Redis::hget('reg','user_id');
+        $goods_id=CouponsModel::where('coupons_id',$coupons_id)->get();
         $data=[
             'user_id'=>$user_id,
-            'coupons_id'=>$coupons_id
+            'coupons_id'=>$coupons_id,
+            'goods_id'=>$goods_id[0]['goods_id']
         ];
         if(!$user_id){
             return json_encode(['code'=>'1001','msg'=>'请先登录']);
