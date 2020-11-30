@@ -40,11 +40,8 @@ class LoginController extends Controller
                     'result'=>''
                 ];
         }
-
-        
         $user_pwd = bcrypt($user_pwd);
 
-       
     
              $data = [
             'user_plone' => $user_plone,

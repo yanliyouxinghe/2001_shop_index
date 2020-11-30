@@ -125,9 +125,7 @@ $(document).ready(function(){
      <a href="article_list.html">more</a>
     </dt>
     @foreach($noticeinfo as $v)
-    @foreach($v as $vv)
-    <dd><a href="http://news.baidu.com/">{{$vv['notice_desc']}}</a></dd>
-    @endforeach
+    <dd><a href="http://news.baidu.com/">{{$v['notice_desc']}}</a></dd>
    @endforeach
    </dl>
  
@@ -139,14 +137,6 @@ $(document).ready(function(){
   <strong>
    <a href="channel.html">产品展示区</a>
   </strong>
-  <span class="classLi">
-   <a href="product_list.html">夏装</a>
-   <a href="product_list.html">连衣裙</a>
-   <a href="product_list.html">开衫</a>
-   <a href="product_list.html">牛仔裤</a>
-   <a href="product_list.html">背带裤</a>
-   <a href="product_list.html">T恤</a>
-  </span>
  </h2>
  <div class="ltArea">
   <!--ad:category pic-->
@@ -232,14 +222,14 @@ $(document).ready(function(){
   <strong>
    <a href="channel.html">热卖商品</a>
   </strong>
-  <span class="classLi">
+  <!-- <span class="classLi">
    <a href="product_list.html">夏装</a>
    <a href="product_list.html">连衣裙</a>
    <a href="product_list.html">开衫</a>
    <a href="product_list.html">牛仔裤</a>
    <a href="product_list.html">背带裤</a>
    <a href="product_list.html">T恤</a>
-  </span>
+  </span> -->
  </h2>
  <div class="ltArea">
   <!--ad:category pic-->
@@ -317,7 +307,7 @@ $(document).ready(function(){
    <dd><a href="article_read.html">四川省资阳市安岳县民政局第二次全国地名普查外包服务采购项目公开招标采购公告</a></dd>
    <dd><a href="article_read.html">内蒙古君联生物发展有限公司阿巴嘎旗流化床锅炉除尘及链条炉排炉内脱硫设施采购项目公开招标招标公告</a></dd>
   </dl>
- </section>
+</section>
 <!--footer-->
   <!-- 尾部 -->
    @include('layout.foot')

@@ -58,48 +58,38 @@ $(document).ready(function(){
   
 <section class="wrap list_class_page">
  <div class="lt_area">
-  <div class="attr_filter">
-     <h2>属性筛选</h2>
-     <ul>
-      <li>
-       <dl>
-        <dt>按品牌筛选：</dt>    
-            @foreach($brandInfo as $v)
-               <dd class="searc" field="brand_id" value="{{$v['brand_id']}}" title="{{$v['brand_name']}}">
-                  <a class="">{{$v['brand_name']}}</a>
+ 
+   <div class="attr_filter">
+      <h2>属性筛选</h2>
+      <ul>
+         <li>
+         <dl>
+         <dt>按品牌筛选：</dt>    
+               @foreach($brandInfo as $v)
+                  <dd class="searc" field="brand_id" value="{{$v['brand_id']}}" title="{{$v['brand_name']}}">
+                     <a class="">{{$v['brand_name']}}</a>
+                  </dd>
+            @endforeach
+         </dl>
+         </li>
+         <li>
+         <dl>
+         <dt>按价格筛选：</dt>
+         @foreach($priceInfo as $v)
+               <dd class="searc" field="shop_price" value="{{$v}}"> 
+                  <a class="">{{$v}}</a>
                </dd>
-           @endforeach
-       </dl>
-      </li>
-      <li>
-       <dl>
-        <dt>按价格筛选：</dt>
-        @foreach($priceInfo as $v)
-            <dd class="searc" field="shop_price" value="{{$v}}"> 
-               <a class="">{{$v}}</a>
-            </dd>
-         @endforeach
-       </dl>
-      </li>
-      <!-- <li>
-       <dl>
-        <dt>按上架时间筛选：</dt>
-        <dd>
-         <a>今天</a>
-         <a>昨天</a>
-         <a>本周</a>
-         <a>本月</a>
-        </dd>
-       </dl>
-      </li> -->
-     </ul>
-  </div>
+            @endforeach
+         </dl>
+         </li>
+      </ul>
+   </div>
+
   <!--产品列表-->
     <section class="shop_li">
      <h2>商品列表</h2>
       <ul class="favorite_list">
          @foreach($goodsInfo as $v)
-
          <li>
          <a href="{{url('goods/'.$v['goods_id'])}}">
             <img src="{{$v['goods_img']}}"/>
@@ -108,23 +98,18 @@ $(document).ready(function(){
          </a>
       
          </li>
-
-     
          @endforeach
 
       </ul>
+    
        <!--分页-->
        <div class="paging">
-        <a>第一页</a>
-        <a class="active">2</a>
-        <a>3</a>
-        <a>...</a>
-        <a>89</a>
-        <a>最后一页</a>
+        {{$goodsInfo->links('vendor.pagination.adminshop')}}
        </div>
     </section>
 
  </div>
+
  <aside class="rtWrap">
   <dl class="rtLiTwoCol">
    <dt>历史浏览记录</dt>

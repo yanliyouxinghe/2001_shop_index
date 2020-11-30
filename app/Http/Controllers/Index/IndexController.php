@@ -22,11 +22,10 @@ class IndexController extends Controller
          $user_id=Redis::hmget('reg','user_id','user_plone');
 
         //首页公告数据
-        $user_id="1";
-        // Redis::hget('reg','user_id')
-        $data['user_id']=$user_id;
+        // $user_id="1";
+        // $data['user_id']=$user_id;
         $url = "http://2001.shop.api.com/noticeinfo";
-        $noticeinfo = posturl($url,$data);
+        $noticeinfo = geturl($url);
 
         return view('index.index',['slideshow'=>$slideshow['data'],'goodsInfo'=>$goodsInfo['data'],'user_id'=>$user_id,'noticeinfo'=>$noticeinfo['data']]);
        

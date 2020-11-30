@@ -2,8 +2,8 @@
   <aside class="user_aside_nav">
   <dl>
    <dt>买家中心</dt>
-   <dd><a href="{{url('/order')}}">我的订单</a></dd>
-   <dd><a href="{{url('/favo')}}">我的收藏</a></dd>
+   <dd><a href="{{url('/ser')}}">我的订单</a></dd>
+   <dd><a href="{{url('/favorite')}}">我的收藏</a></dd>
    <dd><a href="{{url('/address')}}">我的地址库</a></dd>
   </dl>
   <!-- <dl> -->

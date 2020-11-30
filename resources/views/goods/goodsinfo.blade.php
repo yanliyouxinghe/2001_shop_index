@@ -156,7 +156,7 @@ $(document).ready(function(){
     <li>
      <dl class="horizontal">
       <dt>优惠券：</dt>
-      <dd><strong class="univalent"><a href="coupons/">点击领取优惠券</a></strong></dd>
+      <dd><strong class="univalent"><a href="/coupons/{{$v['goods_id']}}">点击领取优惠券</a></strong></dd>
     <li>
      </dl>
     </li>
@@ -351,11 +351,15 @@ $(document).ready(function(){
 </html>
 <script src="/static/js/jquery.js"></script>
 <script>
-//浏览历史记录页面加载事件
+// //浏览历史记录 cookie
 // $(document).ready(function(){
+//   $.get('http://2001.shop.api.com/cookiehistory',function(res){
+//     var str= '';
+    
+//   })
 //   $.ajax({
 //           type:'post',
-//           url: "http://2001.shop.api.com/createcollect",
+//           url: "http://2001.shop.api.com/cookiehistory",
 //           dataType:'json',
 //           data: {goods_id:goods_id},
 //           success: function(res){
@@ -364,8 +368,8 @@ $(document).ready(function(){
 //         });
 // });
 
-//个人收藏
-$('.fav').click(function(){
+    //个人收藏
+  $('.fav').click(function(){
       var goods_id ="{{$goodsinfo[0]['goods_id']}}";
       $.ajax({
           type:'get',

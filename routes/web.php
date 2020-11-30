@@ -22,7 +22,7 @@ Route::post('/orderdo','Index\OrderController@orderdo');  //执行提交订单
 Route::get('/createcollect','Index\GoodsController@createcollect');    //个人收藏添加
 Route::get('/favorite','Index\GoodsController@listcollect');    //个人收藏展示
 Route::post('/cancel','Index\GoodsController@cancel');    //取消个人收藏
-Route::post('/noticeinfo','Index\IndexController@noticeinfo');    //前台首页公告
+Route::get('/noticeinfo','Index\IndexController@noticeinfo');    //前台首页公告
 
 
 Route::post('/listhistory','Index\ListController@listhistory');    //登录后历史浏览记录展示
@@ -96,7 +96,9 @@ Route::post('/orderinfo','Index\OrderController@orderinfo');  //收货地址ajax
 Route::post('/orderinfo','Index\OrderController@orderinfo');  //生成订单
 
 
-
-
+Route::get('/userorderlist','Index\UserController@userorderlist');  //生成订单
+Route::post('/changepwd','Index\UserController@changepwd');  //修改密码
+Route::get('/logistics/{id}','Index\LogisticsController@logistics');  //查看物流
+Route::get('/coupons/{goods_id}','Index\GoodsController@coupons');//优惠券
 
 });
