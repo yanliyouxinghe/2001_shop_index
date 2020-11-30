@@ -60,47 +60,30 @@
   
   <nav>
     <ul class="wrap navList">
-     <li class="category">
-      <a>全部产品分类</a>
-      <dl class="asideNav indexAsideNav">
-      @foreach(request()->cartgoryInfo as $v)
-      <dt><a href="{{url('list/'.$v['cat_id'])}}">{{$v['cat_name']}}</a></dt>
-        <dd>
-          @foreach($v['child'] as $vv)
-          <a href="{{url('list/'.$vv['cat_id'])}}">{{$vv['cat_name']}}</a>
+      <li class="category">
+        <a>全部产品分类</a>
+        <dl class="asideNav indexAsideNav">
+        @foreach(request()->cartgoryInfo as $v)
+        <dt><a href="{{url('list/'.$v['cat_id'])}}">{{$v['cat_name']}}</a></dt>
+          <dd>
+            @foreach($v['child'] as $vv)
+            <a href="{{url('list/'.$vv['cat_id'])}}">{{$vv['cat_name']}}</a>
+            @endforeach
+          </dd>
           @endforeach
-        </dd>
-        @endforeach
-      </dl>
+        </dl>
       </li>
 
       <li>
-          <a href="index.html" class="active">首页</a>
-          </li>
+          <a href="{{url('/')}}" class="active">首页</a>
+      </li>
+
+        @foreach(request()->cartgoryInfo as $v)
           <li>
-          <a href="#">时尚搭配</a>
+          <a href="{{url('list/'.$v['cat_id'])}}">{{$v['cat_name']}}</a>
           </li>
-          <li>
-          <a href="channel.html">原创设计</a>
-          </li>
-          <li>
-          <a href="channel.html">时尚代购</a>
-          </li>
-          <li>
-          <a href="channel.html">民族风</a>
-          </li>
-          <li>
-          <a href="information.html">时尚搭配</a>
-          </li>
-          <li>
-          <a href="library.html">搭配知识</a>
-          </li>
-          <li>
-          <a href="#">促销专区</a>
-          </li>
-          <li>
-          <a href="#">其他</a>
-          </li>
+          @endforeach
+         
       </ul>
   </nav>
 

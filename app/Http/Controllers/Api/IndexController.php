@@ -55,9 +55,7 @@ class IndexController extends Controller
         $reposer = [
             'code'=>0,
             'msg'=>'OK',
-            'data'=>[
-                'noticeinfo'=>$noticeinfo
-            ],
+            'data'=>$noticeinfo,
         ];
         return json_encode($reposer);
     }

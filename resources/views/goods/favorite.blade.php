@@ -123,14 +123,14 @@ $(document).ready(function(){
   </ul>
   
    <!--分页-->
-   <div class="paging">
+   <!-- <div class="paging">
     <a>第一页</a>
     <a class="active">2</a>
     <a>3</a>
     <a>...</a>
     <a>89</a>
     <a>最后一页</a>
-   </div>
+   </div> -->
   </div>
   <!--店铺收藏-->
   <div class="favoriteWrap">
