@@ -118,8 +118,7 @@ class LoginController extends Controller
     //执行登录
     public function logindo(Request $request){
         $data=$request->all();
-
-        $user = UserModel::where(['user_plone'=>$data['user_plone']])->first();
+        $user = UserModel::where(['user_plone'=>$data['user_plone']])->first(); 
 
           if(!$user){
               return json_encode(['code'=>'00003','msg'=>'没有此账号']);
