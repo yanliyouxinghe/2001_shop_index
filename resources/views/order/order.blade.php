@@ -115,9 +115,10 @@ $(document).ready(function(){
   <tbody>
 @foreach($account['cart_data'] as $kk=>$vv)
   <tr>
-   <td class="center"><a href="/goods/{{$vv['goods_id']}}"><img src="{{$vv['goods_img']}}" style="width:50px;height:50px;"></a></td>
+   <td class="center" goods_id="{{$vv['goods_id']}}"><a href="/goods/{{$vv['goods_id']}}"><img src="{{$vv['goods_img']}}" style="width:50px;height:50px;"></a></td>
    <td><a href="/goods/{{$vv['goods_id']}}">{{$vv['goods_name']}}</a></td>
    <td>
+   <input type="hidden" name="goods_attr_id" class="goods_attr_id" goods_attr_id="{{$vv['goods_attr_id']}}" value="{{$vv['goods_attr_id']}}">
    @if(isset($vv['attr']))
    @foreach($vv['attr'] as $vvv)
     <p>{{$vvv}}</p>
@@ -130,7 +131,7 @@ $(document).ready(function(){
   </tr>
 @endforeach
  </tbody></table>
- <input type="hidden" name="goods_id" value="{{$goods_id}}" id="goods_id">
+ <input type="hidden" name="goods_id" value="{{$goods_id}}" goods_id="{{$goods_id}}" id="goods_id">
  <input type="hidden" name="cart_id" value="{{$cart_id}}" id="cart_id">
 
  <!--支付与配送-->
@@ -150,6 +151,19 @@ $(document).ready(function(){
   </li>
   <li>
    <dl>
+    <dt>选择优惠券</dt>
+   <!-- istrue -->
+
+    <dd class="payType">
+    @foreach($coupons as $key =>$val)
+      <label class="coupons" coupons_id="{{$val['coupons_id']}}"><input type="radio" name="coupons" /><img src="{{$val['coupons_img']}}"  alt=""></label>
+  @endforeach
+    </dd>
+
+   </dl>
+  </li>
+  <li>
+   <dl>
     <dt>订单留言</dt>
     <dd>
      <textarea class="order_leave" name="order_leave"></textarea>
@@ -158,7 +172,8 @@ $(document).ready(function(){
   </li>
  </ul>
  <div class="order_btm_btn">
-  <a href="javascript:void(0)" class="link_btn_02 add_btn"/>共计金额<strong class="rmb_icon total">{{$account['end_price'][0]['total']}}</strong>提交订单</a>
+ 共计金额{{$account['end_price'][0]['total']}}
+  <a href="javascript:void(0)" class="link_btn_02 add_btn"/>应付金额<strong class="rmb_icon total">{{$account['end_price'][0]['total']}}</strong>提交订单</a>
  </div>
 </section>
 <!--footer-->
@@ -166,6 +181,26 @@ $(document).ready(function(){
 </body>
 <script scr="/static/jyl/js/jquery.js"></script>
 <script>
+//使用优惠券
+$(document).on("click",".coupons",function(){
+        $(this).addClass("selected");
+        $(this).prev().removeClass("selected");
+        $(this).next().removeClass("selected");
+        var coupons_id=$('.selected').attr("coupons_id");
+        var goods_id = new Array();
+         goods_id.push($('#goods_id').attr('goods_id'));
+        //  alert(goods_id);
+        var goods_attr_id=$('.goods_attr_id').attr('goods_attr_id');
+        // alert(goods_attr_id);
+        //点击优惠券改变价格
+        $.post('http://2001.shop.api.com/couponsprice',{coupons_id:coupons_id,goods_id:goods_id,goods_attr_id:goods_attr_id},function(res){
+                        // alert(res);
+                        $('.rmb_icon').text(res.data);
+                      },'json');
+              
+})
+
+
  $(document).on('click','.addres',function(){
   alert('添加完成后请刷新本页面');
   location.href="/address?refer="+location.href;
@@ -258,7 +293,14 @@ $(document).ready(function(){
         alert('参数丢失');
             return false;
        }
-       $.post('/orderinfo',{address_id:address_id,pay_type:pay_type,order_leave:order_leave,cart_id:cart_id,total_price:total_price},function(ret){
+       //优惠券id
+       var coupons_id=$('.selected').attr("coupons_id");
+       //商品id
+       var goods_id = new Array();
+         goods_id.push($('#goods_id').attr('goods_id'));
+         //规格id
+         var goods_attr_id=$('.goods_attr_id').attr('goods_attr_id');
+       $.post('/orderinfo',{address_id:address_id,pay_type:pay_type,order_leave:order_leave,cart_id:cart_id,total_price:total_price,goods_id:goods_id,goods_attr_id:goods_attr_id,coupons_id:coupons_id},function(ret){
             if(ret.code == 1){
               location.href="/login?refer="+location.href;
             }

@@ -73,9 +73,8 @@ class GoodsController extends Controller
 //      if(!empty($cookiehistory)){
 //          //从cookie中取出goods_id一列,判断当前商品是否存在
 
-//      }
 
-//    }
+//      }
 
 
    

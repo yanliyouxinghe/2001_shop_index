@@ -53,7 +53,7 @@ $(document).ready(function(){
 					<div class="paydetail">
 					<p>订单号：{{$order_sn}}</p>
 					<p>支付金额：￥{{$total_price}}元</p>
-					<p class="button"><a href="/myorder" class="sui-btn btn-xlarge btn-danger">查看订单</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/" class="sui-btn btn-xlarge ">继续购物</a></p>
+					<p class="button"><a href="/ser" class="sui-btn btn-xlarge btn-danger">查看订单</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/" class="sui-btn btn-xlarge ">继续购物</a></p>
 				    </div>
 				</div>
 			</div>

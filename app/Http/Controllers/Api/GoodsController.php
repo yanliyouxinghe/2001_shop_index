@@ -9,6 +9,8 @@ use App\Model\GoodsAttrModel;
 use App\Model\Goods_AttrModel;
 use App\Model\Shop_HistoryModel;
 use App\Model\CollectModel;
+use App\Model\CouponsModel;
+use App\Model\User_CouponsModel;
 use Illuminate\Support\Facades\Redis;
 class GoodsController extends Controller
 {
@@ -42,6 +44,12 @@ class GoodsController extends Controller
             return json_encode($data2);
         }
         
+    }
+
+    public function coupons($id){
+        
+        $data=CouponsModel::where(['goods_id'=>$id])->get();
+        return  $data;
     }
 
     /**API个人收藏  添加*/

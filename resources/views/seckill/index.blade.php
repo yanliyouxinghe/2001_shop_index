@@ -162,7 +162,7 @@ $(function(){
         
 		<div class="sectime">
 			<div class="item-time active">
-				<div class="time-clock"></div>
+				<div class="time-clock">12:00</div>
 				<div class="time-state-on">
 					<span class="on-text">快抢中</span>
 					<span class="on-over">距离结束：01:02:34</span>
@@ -204,12 +204,7 @@ $(function(){
 					</div>
 					<div class="intro"><span>{{$v['goods_name']}}</span></div>
 					<div class='price'><b class='sec-price'>￥{{$v['new_price']}}</b><b class='ever-price'>￥{{$v['shop_price']}}</b></div>
-					<div class='num'>
-						<div class='progress'>
-							<div class='sui-progress progress-danger'><span style='width: 70%;' class='bar'></span></div>
-						</div>
-						<div>剩余<b class='owned'>{{$v['seckill_number']}}</b>件</div>
-					</div>
+					
 					
                     <button class='sui-btn btn-block btn-buy seckilldo'>立即抢购</button>
 				</li>
@@ -383,7 +378,7 @@ undefined
 			//秒杀成功
             if(res.code=='0'){
                 alert(res.msg);
-                location.href="/login?refer="+location.href;
+               
             }else{
                alert(res.msg);
             }

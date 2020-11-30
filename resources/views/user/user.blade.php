@@ -55,46 +55,40 @@ $(document).ready(function(){
  <!--右侧：内容区域-->
  <div class="user_rt_cont">
   <div class="top_title">
-   <strong><em>DeathGhost</em>欢迎回到用户中心</strong>
+   <strong><em>{{$plone}}</em>欢迎回到用户中心</strong>
   </div>
   <!--用户信息-->
   <div class="user_factbook">
    <a href="profile.html" class="user_icon">
-    <img src="static/images/icon/DefaultAvatar.jpg"/>
+    <img src="static/images/2260223289996446_avatar.png"/>
     <span>修改头像</span>
    </a>
    <div class="user_infor">
-    <p><strong>DeathGhost</strong>（商户会员）<span class="user_vip unaccredited">未认证！</span><a href="authenticate.html">申请入驻</a></p><!--**未认证的class值为"unaccredited"**-->
-    <p>上次登录时间：<time>2013-01-14 13:55</time>，登录ip：192.168.1.1</p>
-    <p>账户余额：<strong class="rmb_icon">0.00</strong><a href="account.html" class="btn">充值</a><a href="account.html" class="btn">提现</a></p>
+    <p><strong>{{$plone}}</strong>（商户会员）</br><span class="user_vip unaccredited">未认证！</span><a href="authenticate.html">申请入驻</a></p><!--**未认证的class值为"unaccredited"**-->
+    <p>上次登录时间：<time>2013-01-14 13:55</time>，登录ip：{{$remote_addr}}</p>
+    <!-- <p>账户余额：<strong class="rmb_icon">0.00</strong><a href="account.html" class="btn">充值</a><a href="account.html" class="btn">提现</a></p> -->
    </div>
   </div>
   <!--买家订单提醒-->
   <dl class="user_order_tips">
-   <dt>买家订单提醒</dt>
+   <dt>买家订单提醒 <a href="/userorderlist"  title="点击可查看所有订单">查看全部订单</a></dt>
+
    <dd>
-    <a href="order_list.html">
-     <strong>20</strong>
+     <strong>{{$obligation}}</strong>
      <em>待付款订单</em>
-    </a>
    </dd>
    <dd>
-    <a href="order_list.html">
-     <strong>10</strong>
+     <strong>{{$deliver}}</strong>
      <em>待发货订单</em>
-    </a>
    </dd>
    <dd>
-    <a href="order_list.html">
-     <strong>30</strong>
+     <strong>{{$afrmm}}</strong>
      <em>待确认订单</em>
     </a>
    </dd>
    <dd>
-    <a href="order_list.html">
-     <strong>15</strong>
+     <strong>{{$evaluate}}</strong>
      <em>待评价订单</em>
-    </a>
    </dd>
   </dl>
   <!--卖家订单提醒-->

@@ -75,7 +75,15 @@ Route::post('/orderinfo','Index\OrderController@orderinfo');  //收货地址ajax
 Route::post('/orderinfo','Index\OrderController@orderinfo');  //生成订单
 
 
+Route::get('/userorderlist','Index\UserController@userorderlist');  //生成订单
+Route::post('/changepwd','Index\UserController@changepwd');  //修改密码
+Route::get('/logistics/{id}','Index\LogisticsController@logistics');  //查看物流
 
+
+
+
+
+Route::get('/coupons/{goods_id}','Index\GoodsController@coupons');//优惠券
 
 
 });

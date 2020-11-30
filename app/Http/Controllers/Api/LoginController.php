@@ -23,7 +23,6 @@ class LoginController extends Controller
 
         $user_pwds = $request->post('user_pwds');
         $code = $request->post('code');
-        // $len = strlen($user_pwd);
         $codes=Redis::get('forgetcode');
    
          if($code!=$codes){  
@@ -41,17 +40,8 @@ class LoginController extends Controller
                     'result'=>''
                 ];
         }
-
-        if($len<6){
-             return [
-                    'code'=>'00003',
-                    'message'=>'密码长度不能小于六位',
-                    'result'=>''
-                ];
-        }
         $user_pwd = bcrypt($user_pwd);
 
-        $user_pwd = password_hash($user_pwd,PASSWORD_BCRYPT);
     
              $data = [
             'user_plone' => $user_plone,
