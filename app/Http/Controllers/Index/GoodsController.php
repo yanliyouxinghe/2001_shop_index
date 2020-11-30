@@ -77,9 +77,10 @@ class GoodsController extends Controller
 //      }
 
  //领取优惠券
- function coupons($goods_id){
-    $url = "http://2001.shop.api.com/coupons";
-    $data=posturl($url,$goods_id);
+ function coupons($id){
+
+    $url = "http://2001.shop.api.com/couponsdo";
+    $data=posturl($url,$id);
     print_r($data);die;
     return view('goods.coupons',['data'=>$data]);
 }
