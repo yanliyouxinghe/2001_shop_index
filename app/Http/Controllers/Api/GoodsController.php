@@ -45,9 +45,8 @@ class GoodsController extends Controller
         }
         
     }
-
-    public function coupons($id){
-        
+//领取优惠券视图
+    public function couponsdo($id){
         $data=CouponsModel::where(['goods_id'=>$id])->get();
         return  $data;
     }
@@ -138,7 +137,7 @@ class GoodsController extends Controller
         }
         return true;
     }
-
+   
    
    
 }

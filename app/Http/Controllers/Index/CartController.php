@@ -119,7 +119,6 @@ class CartController extends Controller
             return json_encode(['code'=>1,'msg'=>'Error']);
         }
     }
-
-
+   
 }
 
