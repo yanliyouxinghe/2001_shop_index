@@ -297,4 +297,6 @@ $(document).ready(function(){
     location.href="/login?refer="+location.href;
   });
 
+
 </script>
+@include('layout.search_type')

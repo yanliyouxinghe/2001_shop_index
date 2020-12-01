@@ -2,14 +2,12 @@
 <html>
 <head>
 <meta charset="utf-8"/>
-<title>购物车</title>
+<title>商品列标-产品详情</title>
 <meta name="keywords"  content="DeathGhost" />
 <meta name="description" content="DeathGhost" />
 <meta name="author" content="DeathGhost,deathghost@deathghost.cn">
-<link rel="icon" href="static/images/icon/favicon.ico" type="static/image/x-icon">
+<link rel="icon" href="static/images/icon/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="static/css/style.css" /><script src="static/js/html5.js"></script>
-<link rel="stylesheet" type="text/css" href="/static/css/webbase.css" />
-<link rel="stylesheet" type="text/css" href="/static/css/pages-paysuccess.css" />
 <script src="static/js/jquery.js"></script>
 <script>
 $(document).ready(function(){
@@ -20,12 +18,20 @@ $(document).ready(function(){
   $("nav .asideNav").mouseleave(function(){
 	  $(".asideNav").slideUp();
 	  });
+  //冒泡
+  $(".favorite_list li a").click(function(){
+	window.location.href='product.html';
+	});
+	$(".favorite_list li .shop_collect_goods").click(function(){
+	event.stopPropagation();
+	});
 });
 </script>
 </head>
 <body>
 <!--header-->
- @include('layout.header')
+@include('layout.header')
+
  <script>
  $(document).ready(function(){
    //测试效果，程序对接如需变动重新编辑
@@ -47,19 +53,39 @@ $(document).ready(function(){
    });
    
  </script>
-        <div class="paysuccess">
-				<div class="success">
-					<h3><img src="/static/images/right.png" width="48" height="48">　恭喜您，支付成功啦！</h3>
-					<div class="paydetail">
-					<p>订单号：{{$order_sn}}</p>
-					<p>支付金额：￥{{$total_price}}元</p>
-					<p class="button"><a href="/ser" class="sui-btn btn-xlarge btn-danger">查看订单</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/" class="sui-btn btn-xlarge ">继续购物</a></p>
-				    </div>
-				</div>
-			</div>
+ 
+<section class="wrap shop_goods_li">
+  <ul class="favorite_list">
+   @if(count($search_data) > 0)
+   @foreach($search_data as $v)
+   <li>
+    <a href="/goods/{{$v['goods_id']}}">
+     <img src="{{$v['goods_img']}}"/>
+     <h3>{{$v['goods_name']}}</h3>
+     <p class="price"><span class="rmb_icon">298.00</span></p>
+    </a>
+   </li>
+   @endforeach
+   @else
+   <section class="wrap shop_header">
+ <div class="shop_logo"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4018625787,1425206529&fm=26&gp=0.jpg"/></div>
+ <div class="shop_infor">
+  <h2 class="user_vip accredited" title="认证企业">Error</h2>
+  <p>
+   <span>未搜索到相关商品</span>
+   <span></span>
+   <span></span>
+  </p>
+  <p>建议您换个关键字重新搜索</p>
+ </div>
+</section>
+   @endif
+  
+  </ul>
 
+</section>
 <!--footer-->
-@include('layout.foot');
+@include('layout.foot')
 @include('layout.search_type')
 
 </body>

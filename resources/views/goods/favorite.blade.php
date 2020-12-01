@@ -156,6 +156,7 @@ $(document).ready(function(){
 </section>
 <!--footer-->
 @include('layout.foot')
+@include('layout.search_type')
 
 </body>
 </html>

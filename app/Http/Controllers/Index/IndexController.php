@@ -31,6 +31,31 @@ class IndexController extends Controller
        
     }
 
+    //搜索
+    public function search(){
+        $search_val = request()->input('search_val');
+        if(!$search_val){
+            if($_SERVER['HTTP_REFERER'] == "http://2001.shop.index.com/search"){
+                return view('index.search_list',['search_data'=>[]]);
+            }else{
+                return redirect($_SERVER['HTTP_REFERER']);
+            }
+        }
+        $search_type = request()->input('search_type');
+
+        if($search_type == 1){
+            $data['search_val'] = $search_val;
+            $url = "http://2001.shop.api.com/search";
+            $search_data = posturl($url,$data);
+            $data = $search_data['data'];
+            return view('index.search_list',['search_data'=>$data]);
+        }else{
+            echo "2";die;
+        }
+    }
+
+
+    
 
 
 

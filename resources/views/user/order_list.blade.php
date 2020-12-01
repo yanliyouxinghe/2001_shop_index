@@ -130,6 +130,7 @@ $(document).ready(function(){
 
 @endif
 @include('layout.foot');
+@include('layout.search_type')
 
 </body>
 </html>
