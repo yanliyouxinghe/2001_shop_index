@@ -23,6 +23,10 @@ Route::get('/createcollect','Index\GoodsController@createcollect');    //个人�
 Route::get('/favorite','Index\GoodsController@listcollect');    //个人收藏展示
 Route::post('/cancel','Index\GoodsController@cancel');    //取消个人收藏
 Route::get('/noticeinfo','Index\IndexController@noticeinfo');    //前台首页公告
+Route::view('/notice_list','index/notice_list');    //前台首页公告展示页
+Route::view('/notice_read','index/notice_read');    //前台首页公告详情页
+
+Route::get('/noticeinfo','Index\IndexController@noticeinfo');    //前台首页公告
 
 
 Route::post('/listhistory','Index\ListController@listhistory');    //登录后历史浏览记录展示

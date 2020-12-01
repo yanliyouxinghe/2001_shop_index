@@ -122,10 +122,10 @@ $(document).ready(function(){
    <dl class="idxRtAtc">
     <dt>
      <em class="obviousText">最新公告</em>
-     <a href="article_list.html">more</a>
+     <a href="{{url('/notice_list')}}">more</a>
     </dt>
     @foreach($noticeinfo as $v)
-    <dd><a href="http://news.baidu.com/">{{$v['notice_desc']}}</a></dd>
+    <dd><a href="{{url('/notice_read')}}">{{$v['notice_desc']}}</a></dd>
    @endforeach
    </dl>
  

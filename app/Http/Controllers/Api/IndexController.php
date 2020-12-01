@@ -31,6 +31,7 @@ class IndexController extends Controller
 
     /**首页商品数据数据 */
     public function goodsInfo(){
+
         $goodslove = GoodsModel::select('goods_name','goods_img','goods_id')->where('is_new','=',1)->limit(8)->get();
         $goodshot = GoodsModel::select('goods_name','goods_img','goods_id')->where('is_hot','=',1)->orderBy('goods_id','desc')->limit(10)->get();
         $goodsbest=GoodsModel::select('goods_name','goods_img','goods_id')->where('is_best','=',1)->orderBy('shop_price','ASC')->limit(5)->get();
@@ -51,7 +52,6 @@ class IndexController extends Controller
     /**首页公告数据 */
     public function noticeinfo(){
         $noticeinfo = NoticeModel::limit(8)->get();
-        // print_r($noticeinfo);
         $reposer = [
             'code'=>0,
             'msg'=>'OK',

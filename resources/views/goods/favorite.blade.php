@@ -89,7 +89,7 @@ $(document).ready(function(){
    @foreach($collectgoodsInfo as $v)
    @foreach($v as $vv)
    <li>
-    <a>
+    <a href="{{url('goods/'.$vv['goods_id'])}}">
      <img src="{{$vv['goods_img']}}"/>
      <h2>{{$vv['goods_name']}}</h2>
      <p class="price"><span class="rmb_icon">{{$vv['shop_price']}}</span></p>
