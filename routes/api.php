@@ -74,7 +74,7 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('seckilldo','Api\SeckillController@seckilldo');//秒杀列表页
     Route::post('addcart','Api\CartController@addcart');//加入购物车
 
-
+    Route::post('/coupons','Api\GoodsController@coupons');//领取优惠券视图
     Route::post('/couponsdo','Api\CouponsController@couponsdo');//领取优惠券
     Route::get('/couponsuse/{goods_id}','Api\OrderController@couponsuse');//使用优惠券
     Route::post('/couponsprice','Api\OrderController@couponsprice');//选择优惠券改变价格
