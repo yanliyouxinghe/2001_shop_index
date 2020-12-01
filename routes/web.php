@@ -13,7 +13,7 @@
 
 Route::middleware(['header'])->group(function () {
 
-
+Route::post('/search','Index\IndexController@search');//搜索
 Route::get('/','Index\IndexController@index');  //前台首页
 Route::get('/list/{id}','Index\ListController@list');  //列表页
 Route::get('/confirm','Index\OrderController@index');  //提交订单视图页面
@@ -70,17 +70,6 @@ Route::post('/goods/pruct','Admin\GoodsController@pruct');//货品入库跳转�
 Route::get('/goods/jyl/{id}','Admin\GoodsController@item');//查看商品
 Route::get('/list','Admin\GoodsController@list');//商家后台商品列表
 Route::get('/getattr','Admin\GoodsController@getattr');//商品属性
-
-
-
-
-
-
-
-
-
-
-
 
 
 Route::post('/cart_del','Index\CartController@cart_del');//购物车删除

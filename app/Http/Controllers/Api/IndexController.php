@@ -60,4 +60,42 @@ class IndexController extends Controller
         return json_encode($reposer);
     }
 
+    //搜索
+    public function search(){
+
+        $search_val = request()->input('search_val');
+        if(!$search_val){
+            $reposer = [
+                'code'=>1,
+                'msg'=>'Error',
+                'data'=>[],
+            ]; 
+        }
+        $where1 = [];
+        if($search_val){
+            $where1[] = ['goods_name','like',"%$search_val%"];
+        }
+
+        $search_data = GoodsModel::select('goods_id','goods_name','goods_img')->where($where1)->get();
+        // print_r($search_data);die;
+        if($search_data){
+            $reposer = [
+                'code'=>0,
+                'msg'=>'OK',
+                'data'=>$search_data,
+            ]; 
+        }else{
+            $reposer = [
+                'code'=>2,
+                'msg'=>'Error',
+                'data'=>[],
+            ]; 
+        }
+        // print_r($reposer);die;
+      
+        return json_encode($reposer);
+
+
+    }
+
 }

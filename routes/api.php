@@ -49,6 +49,9 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::get('goodsInfo','Api\IndexController@goodsInfo'); //首页商品表数据
     Route::post('noticeinfo','Api\IndexController@noticeinfo'); //首页公告数据
     Route::get('/','Api\IndexController@index');   //前台首页
+    Route::post('search','Api\IndexController@search');   //前台搜索
+
+    
 
 
     //cart

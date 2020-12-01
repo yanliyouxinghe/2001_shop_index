@@ -130,5 +130,7 @@ $(document).ready(function(){
       });
 
    </script>
+@include('layout.search_type')
+
 </body>
 </html>
