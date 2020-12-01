@@ -22,8 +22,8 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($aes as $v)
-                <td>{{$v->seuser_id}}</td>
+        @foreach($aes as $k=>$v)
+                <td>{{$v->firm_id}}</td>
                 <td>{{$v->firm_name}}</td>
                 <td>{{$v->firm_tel}}</td>
                 <td>{{$v->firm_address}}</td>
