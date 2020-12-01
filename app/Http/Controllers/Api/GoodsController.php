@@ -45,11 +45,13 @@ class GoodsController extends Controller
         }
         
     }
-
-    public function coupons($id){
-        
+//领取优惠券视图
+    public function coupons(){
+        $id = request()->goods_id;
+        // return $id;
         $data=CouponsModel::where(['goods_id'=>$id])->get();
-        return  $data;
+        // print_r($data);die;
+        return $data;
     }
 
     /**API个人收藏  添加*/
@@ -138,7 +140,7 @@ class GoodsController extends Controller
         }
         return true;
     }
-
+   
    
    
 }

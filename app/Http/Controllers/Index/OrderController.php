@@ -50,6 +50,7 @@ class OrderController extends Controller
         }
         $url = "http://2001.shop.api.com/account";
         $account = posturl($url,$data);
+        // print_r($account);die;
         $coupons = $account['data']['coupons'];
         // print_r($coupons);die;
         //使用优惠券

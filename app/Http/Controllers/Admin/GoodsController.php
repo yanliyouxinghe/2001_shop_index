@@ -4,25 +4,46 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Model\GoodsAttrModel;
 use App\Model\CartgoryModel;
 use App\Model\BrandModel;
 use App\Model\GoodsTypeModel;
-use App\Model\GoodsModel;
-use App\Model\GoodsAttrModel;
-
+use App\Models\SegoodsModel;
+use App\Model\Goods_AttrModel;
+use App\Model\Goods_GalleryModel;
+use App\Models\SeproductModel;
+use Illuminate\Support\Facades\DB;
+use Carbon\Traits\Timestamp;
 class GoodsController extends Controller
 {
-    //商品添加
-    public function goods(){
-         $data = CartgoryModel::all();
+     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list()
+    {
+        $goods = SegoodsModel::where(["is_static"=>1])->get();
+        return view('admin.goods.list',['goods'=>$goods]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function goods()
+    {
+        $data = CartgoryModel::all();
         $Ecsbrand = BrandModel::all();
         $type = GoodsTypeModel::all();
         // dd($data);
         $weight_list =  $this->weightTrees($data);
+        // dd($weight_list);
         return view('admin.goods.create',['weight_list'=>$weight_list,'Ecsbrand'=>$Ecsbrand,'type'=>$type]);
     }
-     public function weightTrees($data,$parent_id=0,$level=0){
+
+    public function weightTrees($data,$parent_id=0,$level=0){
         if(!$data){
             return;
         }
@@ -36,6 +57,119 @@ class GoodsController extends Controller
         }
         return $res;
     }
+
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+                $attr_id_list = $request->input('attr_id_list')??[];
+                $attr_value_list = $request->input('attr_value_list')??[];
+                $attr_price_list = $request->input('attr_price_list')??[];
+                $goods_imgs = $request->input('goods_imgs')??[];
+                $promote_start_date = $request->input('promote_start_date');
+                $promote_end_date = $request->input('promote_end_date');
+                $data = $request->except(['attr_id_list','attr_value_list','attr_price_list','goods_imgs']);
+                    //  print_r($data);
+                    $goods = [
+                        "goods_name" => $data['goods_name'],
+                        "cat_id" => $data['cat_id'],
+                        "brand_id" => $data['brand_id'],
+                        "shop_price" => $data['shop_price'],
+                        "goods_img"=> $data['goods_img'],
+                        "goods_thumb" => $data['goods_thumb'],
+                        "goods_desc" => $data['goods_desc'],
+                        "goods_sn" => $data['goods_sn']?$data['goods_sn']:$this->addProduct(),
+                        "goods_number" => $data['goods_number'],
+                        "warn_number" => $data['warn_number'],
+                        "is_best" => $data['is_best'],
+                        "is_new" => $data['is_new'],
+                        "promote_start_date" => strtotime($promote_start_date),
+                        "promote_end_date" => strtotime($promote_end_date)
+                    ];
+                $goods_id = SegoodsModel::insertGetId($goods);
+                // print_r($goods_id);
+                if(!$goods_id){
+                    return false;
+                }
+                if(count($attr_id_list) && count($attr_value_list)){
+                    // echo 1111;
+                         $data = [];
+                        for($i=0; $i< count($attr_id_list); $i++){
+                            $data[] = [
+                                'goods_id' => $goods_id,
+                                'attr_id' => $attr_id_list[$i],
+                                'attr_value' => $attr_value_list[$i],
+                                'attr_price' => $attr_price_list[$i],
+                            ];
+                        }
+                      Goods_AttrModel::insert($data);
+                }
+                $arr = [];
+                foreach($goods_imgs as $v){
+                    $arr[] = [
+                        'goods_id' => $goods_id,
+                        'img_url' => $v,
+                    ];
+                }
+                Goods_GalleryModel::insert($arr);
+                //判断是否有规格
+                $goods_sper= $this->Attrnum($goods_id);
+                // print_r($goods_sper);
+                if(count($goods_sper)){
+                    $new_goods_sper = [];
+                    foreach($goods_sper as $k=>$v){
+                        $new_goods_sper['attr_name'][$v['attr_id']] = $v['attr_name'];
+                        $new_goods_sper['attr_value'][$v['attr_id']][$v['goods_attr_id']] = $v['attr_value'];
+                    }
+                    //  dd($new_goods_sper);
+                        $goods = SegoodsModel::select('goods_id','goods_name','goods_sn')
+                                 ->where('goods_id',$goods_id)
+                                 ->first();
+                        return view('admin.goods.product',['goods_sper'=>$new_goods_sper,'goods_id'=>$goods_id,'goods'=>$goods]);
+                }
+    }
+
+        public function pruct(){
+            $post = request()->all();
+            if(count($post['attr'])){
+                $attr = $post['attr'];
+                // dump($post);
+                $firstkey = array_key_first($attr);
+                $count = count($attr[$firstkey]);
+                for($i = 0; $i<$count; $i++){
+                    $new_attr[] = array_column($attr,$i);
+                }
+
+                $product = [];
+                foreach($new_attr as $k=>$v){
+                    $product[] = [
+                        'goods_id' => $post['goods_id'],
+                        'goods_attr' => implode('|',$v),
+                        'product_sn' => $post['product_sn'][$k]?:$this->addProduct(),
+                        'product_number' => $post['product_number'][$k]?:'1',
+                    ];
+                }
+                $srt = SeproductModel::insert($product);
+                //dd($srt);
+                if($srt){
+                    return redirect('/list');
+                }else{
+                    echo "<script>alert('操作繁忙请稍后重试');location.href='/goods/create'</script>";
+
+                }
+            }
+        }
+
+        public function addProduct(){
+            return 'ECS'.time().rand(1000,9999);
+        }
+
      //文件上传
      public function upload(Request $request)
      {
@@ -77,14 +211,25 @@ class GoodsController extends Controller
 
     }
     
+
     public function getattr(Request $request){
         $cat_id = $request->all();
         $attr = GoodsAttrModel::where('cat_id',$cat_id)->get();
         // dd($attr);
         return view('admin.goods.typeattr',['attr'=>$attr]);
     }
-    //商品列表
-    public function goodslist(){
-        return view('');
+
+
+    public function Attrnum($goods_id){
+            $res =  Goods_AttrModel::select('goods_attr_id','sh_goods_attr.attr_id','sh_attribute.attr_name','sh_goods_attr.attr_value')
+                    ->leftjoin('sh_attribute','sh_goods_attr.attr_id','=','sh_attribute.attr_id')
+                    ->where(['goods_id'=>$goods_id,'attr_type'=>1])
+                    ->get();
+            return $res ? $res->toArray() : [];
+
+    }
+    public function item($id){
+//        $goods = GoodsModel::find($id);
+        return view('admin.goods.jyl');
     }
 }

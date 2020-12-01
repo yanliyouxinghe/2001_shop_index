@@ -16,7 +16,6 @@ use DB;
 use Illuminate\Support\Facades\Redis;
 use App\Model\CouponsModel;
 use App\Model\User_CouponsModel;
-use App\Model\CrtModel;
 
 class OrderController extends Controller
 {

@@ -36,12 +36,6 @@ $(document).ready(function(){
    $("#shangjia").click(function(){
      $(".inputWrap input[type='text']").attr("placeholder","输入商家店铺名");
      });
-   $("#zixun").click(function(){
-     $(".inputWrap input[type='text']").attr("placeholder","输入关键词查找文章内容");
-     });
-   $("#wenku").click(function(){
-     $(".inputWrap input[type='text']").attr("placeholder","输入关键词查找文库内容");
-     });
    });
    
  </script>
@@ -53,8 +47,6 @@ $(document).ready(function(){
   <div class="top_title">
    <strong>我的地址列表</strong>
   </div>
-
-
 
 <form>
   <table class="order_table">
@@ -103,6 +95,8 @@ $(document).ready(function(){
 </section>
 <!--footer-->
 @include('layout.foot')
+@include('layout.search_type')
+
 </body>
 </html>
 <script src="/static/js/jquery.js"></script>
@@ -174,9 +168,7 @@ $(document).ready(function(){
                 // console.log(obj.data);
                 // return false;
                 //var result=obj.consignee,tel,country,province,city,district,address;
-              
-              
-                
+    
                  var result=obj.data;
                 var hotgoods = '';
 
@@ -187,6 +179,8 @@ $(document).ready(function(){
                         '  <td><address>'+item.country+'.'+item.province+'.'+item.city+'.'+item.district+'.'+item.address+'</address></td>\n' +
                         '    <td><label><input type="radio" name="moren"/>设为默认地址</label><input type="button" value="编辑" class="btn"/><input type="button" value="删除" class="btn"/></td>\n' +
                         '  </tr>';
+
+                });
                 })
                  $('.add').html(hotgoods);
                  if(window.location.href.indexOf('refer') > -1){
@@ -196,11 +190,4 @@ $(document).ready(function(){
                 
                });
         });
-        
-      })
-
-
-
-
-
 </script>

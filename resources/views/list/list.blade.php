@@ -179,4 +179,7 @@ $(document).ready(function(){
 
   
 </script>
+
 </html>
+@include('layout.search_type')
+

@@ -13,7 +13,7 @@
 
 Route::middleware(['header'])->group(function () {
 
-
+Route::post('/search','Index\IndexController@search');//搜索
 Route::get('/','Index\IndexController@index');  //前台首页
 Route::get('/list/{id}','Index\ListController@list');  //列表页
 Route::get('/confirm','Index\OrderController@index');  //提交订单视图页面
@@ -56,15 +56,25 @@ Route::get('/changepass','Index\ProfileController@changepass');//修改密码
 Route::post('/mor','Index\OrderController@mor');//修改默认收货地址
 
 
-Route::get('/sereg','Admin\BusinessController@sereg');//商家后太注册
-Route::get('/business','Admin\BusinessController@business');//商家后台登录
-Route::post('/selog','Admin\BusinessController@selogin');//商家执行登录
+
+Route::get('/addindex','Admin\SellController@addindex');//添加商家资料
+Route::post('/store','Admin\SellController@store');//执行添加商家资料
 Route::get('/index','Admin\SellController@index');//商家后台首页
+Route::get('/sereg','Admin\BusinessController@sereg');//商家后太注册
+Route::get('/seregdo','Admin\BusinessController@seregdo');//执行商家后太注册
+Route::get('/sendSMS','Admin\BusinessController@sendSMS');//商家后太注册手机验证码
+Route::get('/business','Admin\BusinessController@business');//商家后台登录
+Route::post('/selogin','Admin\BusinessController@selogin');//商家执行登录
+Route::get('/loginout','Admin\BusinessController@loginout');//商家退出
 Route::get('/goods','Admin\GoodsController@goods');//商家后台商品添加
+Route::post('/goods/store','Admin\GoodsController@store');//商家后台商品添加
 Route::any('/upload','Admin\GoodsController@upload');//图片上传接口
 Route::any('/uploads','Admin\GoodsController@uploads');//图片上传接口
-Route::get('/goodslist','Admin\GoodsController@goodslist');//商家后台商品列表
-Route::get('/getattr','Admin\GoodsController@getattr')->name('gooods.getattr');//商品属性
+Route::post('/goods/pruct','Admin\GoodsController@pruct');//货品入库跳转列表
+Route::get('/goods/jyl/{id}','Admin\GoodsController@item');//查看商品
+Route::get('/list','Admin\GoodsController@list');//商家后台商品列表
+Route::get('/getattr','Admin\GoodsController@getattr');//商品属性
+
 
 Route::post('/cart_del','Index\CartController@cart_del');//购物车删除
 Route::post('/buy_jian','Index\CartController@buy_jian');//购物车减号
@@ -82,10 +92,6 @@ Route::post('/orderinfo','Index\OrderController@orderinfo');  //生成订单
 Route::get('/userorderlist','Index\UserController@userorderlist');  //生成订单
 Route::post('/changepwd','Index\UserController@changepwd');  //修改密码
 Route::get('/logistics/{id}','Index\LogisticsController@logistics');  //查看物流
-
-
-
-
 
 Route::get('/coupons/{goods_id}','Index\GoodsController@coupons');//优惠券
 

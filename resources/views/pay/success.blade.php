@@ -60,5 +60,7 @@ $(document).ready(function(){
 
 <!--footer-->
 @include('layout.foot');
+@include('layout.search_type')
+
 </body>
 </html>
