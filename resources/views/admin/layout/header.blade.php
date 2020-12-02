@@ -54,10 +54,9 @@
           </dl>
         </li>
          <li class="layui-nav-item">
-          <a class="" href="javascript:;">运营管理</a>
+          <a class="" href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="/seckill/create">添加运营</a></dd>
-            <dd><a href="/seckill/list">运营列表</a></dd>
+            <dd><a href="/seckill/list">订单列表</a></dd>
           </dl>
         </li>
       </ul>

@@ -5,12 +5,16 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\SeuserModel;
+use App\Model\FirmModel;
 class SellController extends Controller
 {
     //商家后台首页或者商家资料展示
     public function index(){
-
-        $aes = SeuserModel::get();
+        // $seuser_id = session('seuser_id');
+        // print_r($seuser_id);exit;
+        // $aes = FirmModel::where(['seuser_id'=>$seuser_id])->first();
+        // print_r($aes);exit;
+         $aes = FirmModel::get();
         return view('admin.admin.index',['aes'=>$aes]);
     }
     //商家资料上传
@@ -19,7 +23,10 @@ class SellController extends Controller
     }
     //执行商家资料上传
     public function store(Request $Request){
+        
         $data = $Request->except('_token');
+         $seuser_id = session('seuser_id');
+        // print_r($data);
          $goods = [
                         "firm_name" => $data['firm_name'],
                         "firm_tel" => $data['firm_tel'],
@@ -28,10 +35,11 @@ class SellController extends Controller
                         "seuser_qq"=> $data['seuser_qq'],
                         "seuser_email" => $data['seuser_email'],
                         "firm_img" => $data['firm_img'],
-                        "firm_desc" => $data['firm_desc']
+                        "firm_desc" => $data['firm_desc'],
+                        "seuser_id"=> $seuser_id
                     ];
-        // print_r($post);
-        $res = SeuserModel::insert($goods);
+        // print_r($goods);exit;
+        $res = FirmModel::insert($goods);
         if($res){
         return redirect('/index');
             }else{
