@@ -26,6 +26,7 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('regdo','Api\LoginController@regdo');//执行注册
     Route::get('/','Api\IndexController@index');   //前台首页
     Route::get('noticeinfo','Api\IndexController@noticeinfo'); //首页公告数据
+    
     Route::any('getuserinfo','Api\LoginController@getuserinfo');//k
     Route::post('logindo','Api\LoginController@logindo');//执行登录
 
@@ -49,6 +50,9 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::get('goodsInfo','Api\IndexController@goodsInfo'); //首页商品表数据
     Route::post('noticeinfo','Api\IndexController@noticeinfo'); //首页公告数据
     Route::get('/','Api\IndexController@index');   //前台首页
+    Route::post('search','Api\IndexController@search');   //前台搜索
+
+    
 
 
     //cart
@@ -74,8 +78,8 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('seckilldo','Api\SeckillController@seckilldo');//秒杀列表页
     Route::post('addcart','Api\CartController@addcart');//加入购物车
 
-
-    Route::post('couponsdo','Api\CouponsController@couponsdo');//领取优惠券
+    Route::post('/coupons','Api\GoodsController@coupons');//领取优惠券视图
+    Route::post('/couponsdo','Api\CouponsController@couponsdo');//领取优惠券
     Route::get('/couponsuse/{goods_id}','Api\OrderController@couponsuse');//使用优惠券
     Route::post('/couponsprice','Api\OrderController@couponsprice');//选择优惠券改变价格
     //user

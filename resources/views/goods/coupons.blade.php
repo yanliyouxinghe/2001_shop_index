@@ -98,3 +98,4 @@
         },'json');
    })
 </script>
+@include('layout.search_type')

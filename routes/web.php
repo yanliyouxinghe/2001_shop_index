@@ -13,7 +13,7 @@
 
 Route::middleware(['header'])->group(function () {
 
-
+Route::post('/search','Index\IndexController@search');//搜索
 Route::get('/','Index\IndexController@index');  //前台首页
 Route::get('/list/{id}','Index\ListController@list');  //列表页
 Route::get('/confirm','Index\OrderController@index');  //提交订单视图页面
@@ -22,6 +22,10 @@ Route::post('/orderdo','Index\OrderController@orderdo');  //执行提交订单
 Route::get('/createcollect','Index\GoodsController@createcollect');    //个人收藏添加
 Route::get('/favorite','Index\GoodsController@listcollect');    //个人收藏展示
 Route::post('/cancel','Index\GoodsController@cancel');    //取消个人收藏
+Route::get('/noticeinfo','Index\IndexController@noticeinfo');    //前台首页公告
+Route::view('/notice_list','index/notice_list');    //前台首页公告展示页
+Route::view('/notice_read','index/notice_read');    //前台首页公告详情页
+
 Route::get('/noticeinfo','Index\IndexController@noticeinfo');    //前台首页公告
 
 
@@ -72,17 +76,6 @@ Route::get('/list','Admin\GoodsController@list');//商家后台商品列表
 Route::get('/getattr','Admin\GoodsController@getattr');//商品属性
 
 
-
-
-
-
-
-
-
-
-
-
-
 Route::post('/cart_del','Index\CartController@cart_del');//购物车删除
 Route::post('/buy_jian','Index\CartController@buy_jian');//购物车减号
 Route::post('/buy_jia','Index\CartController@buy_jia');//购物车加号
@@ -99,6 +92,8 @@ Route::post('/orderinfo','Index\OrderController@orderinfo');  //生成订单
 Route::get('/userorderlist','Index\UserController@userorderlist');  //生成订单
 Route::post('/changepwd','Index\UserController@changepwd');  //修改密码
 Route::get('/logistics/{id}','Index\LogisticsController@logistics');  //查看物流
+
 Route::get('/coupons/{goods_id}','Index\GoodsController@coupons');//优惠券
+
 
 });

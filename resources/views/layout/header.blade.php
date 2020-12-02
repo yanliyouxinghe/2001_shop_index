@@ -40,24 +40,21 @@
     <ul class="switchNav">
      <li class="active" id="chanpin">产品</li>
      <li id="shangjia">商家</li>
-     <li id="zixun">搭配</li>
-     <li id="wenku">文库</li>
     </ul>
     <div class="searchBox">
-     <form>
+     <form action="/search" method="post">
       <div class="inputWrap">
-      <input type="text" placeholder="输入产品关键词或货号"/>
+      <input type="hidden" value="1" name="search_type">
+      <input type="text" name="search_val" placeholder="输入产品关键词或货号"/>
       </div>
       <div class="btnWrap">
       <input type="submit" value="搜索"/>
       </div>
      </form>
-     <a href="#" class="advancedSearch">高级搜索</a>
     </div>
    </div>
   </div>
   <!--nav-->
-  
   <nav>
     <ul class="wrap navList">
       <li class="category">

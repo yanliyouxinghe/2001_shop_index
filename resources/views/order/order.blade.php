@@ -325,4 +325,6 @@ $(document).on("click",".coupons",function(){
   
 
 </script>
+@include('layout.search_type')
+
 </html>

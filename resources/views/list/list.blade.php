@@ -67,7 +67,7 @@ $(document).ready(function(){
          <dt>按品牌筛选：</dt>    
                @foreach($brandInfo as $v)
                   <dd class="searc" field="brand_id" value="{{$v['brand_id']}}" title="{{$v['brand_name']}}">
-                     <a class="">{{$v['brand_name']}}</a>
+                     <a @if(isset($query['brand_id']) && $query['brand_id']==$v['brand_id']) class="redhover" @endif>{{$v['brand_name']}}</a>
                   </dd>
             @endforeach
          </dl>
@@ -77,7 +77,7 @@ $(document).ready(function(){
          <dt>按价格筛选：</dt>
          @foreach($priceInfo as $v)
                <dd class="searc" field="shop_price" value="{{$v}}"> 
-                  <a class="">{{$v}}</a>
+                  <a @if(isset($query['shop_price']) && $query['shop_price']==$v) class="redhover" @endif>{{$v}}</a>
                </dd>
             @endforeach
          </dl>
@@ -104,7 +104,7 @@ $(document).ready(function(){
     
        <!--分页-->
        <div class="paging">
-        {{$goodsInfo->links('vendor.pagination.adminshop')}}
+
        </div>
     </section>
 
@@ -130,34 +130,56 @@ $(document).ready(function(){
 </body>
 <script src="/static/js/jquery.js"></script>
    <script>
-         $(function(){
-           $('.redhover').each(function(i,k){
-               var s_key = $(this).parent().attr('field');
-               var s_val = $(this).parent().attr('value');
-               if(s_key=='brand_id'){
-                   var s_val = $(this).parent().attr('title');
-               }
-           });
-       });
+   //       $(function(){
+   //         $('.redhover').each(function(i,k){
+   //             var s_key = $(this).parent().attr('field');
+   //             var s_val = $(this).parent().attr('value');
+  
+   //             if(s_key=='brand_id'){
+   //                 var s_val = $(this).parent().attr('title');
+   //             }
+   //         });
+   //     });
+
+ 
+
       $(document).ready(function(){
          $('.searc').click(function(){ 
+            // alert(11);
             $(this).find('a').addClass('redhover');
             $(this).siblings().find('a').removeClass('redhover');
-             var search = '';
-           $('.redhover').each(function(i,k){
-               var s_key = $(this).parent().attr('field');
-               var s_val = $(this).parent().attr('value');
-               search += s_key+'='+s_val+'&';
 
+            var searc = '';
+
+            // var s_val=$('.redhover').val();
+
+            $('.redhover').each(function(i,k){
+               var s_key = $(this).parent().attr('field');
+               //alert(s_key);
+               var s_val = $(this).parent().attr('value');
+               searc += s_key+'='+s_val+'&';
+              
            });
             var url="{{$urls}}";
+            // alert(url);
+            // return false;
             //将搜索条件中多余符号删除
-            if(search){
-               url += '?'+search.substring(0, search.length -1);
+            if(searc){
+               // alert(searc);
+               // return false;
+               url += '?'+searc.substring(0, searc.length -1);
+               // alert(url);
+               // return false;
                location.href=url;
             }
           
          })
       })
+
+
+  
 </script>
+
 </html>
+@include('layout.search_type')
+

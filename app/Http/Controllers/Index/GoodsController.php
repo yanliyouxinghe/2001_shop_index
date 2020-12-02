@@ -24,8 +24,7 @@ class GoodsController extends Controller
 
    /**个人收藏 展示*/
    public function listcollect(){
-        $user_id="1";
-        // Redis::hget('reg','user_id')
+        $user_id=Redis::hget('reg','user_id');
         $data['user_id']=$user_id;
         $url = 'http://2001.shop.api.com/listcollect';
         $collectgoodsInfo = posturl($url,$data);
@@ -35,7 +34,7 @@ class GoodsController extends Controller
 
    /**ajax取消收藏 */
    public function cancel(){
-        $user_id = "1";
+        $user_id = Redis::hget('reg','user_id');
         $data['user_id'] = $user_id;
         $data['goods_id'] = request()->goods_id;
         $url = 'http://2001.shop.api.com/cancel';
@@ -76,6 +75,16 @@ class GoodsController extends Controller
 
 //      }
 
+ //领取优惠券
+ function coupons($id){
+     $data['goods_id'] = $id;
+    //  print_r($data);die;
+    $url = "http://2001.shop.api.com/coupons";
+    // print_r($url);die;
+    $data=posturl($url,$data);
+    // print_r($data);die;
+    return view('goods.coupons',['data'=>$data]);
+}
 
    
 }
