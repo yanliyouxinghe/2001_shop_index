@@ -45,7 +45,8 @@ class GoodsController extends Controller
         }
         
     }
-//领取优惠券视图
+
+    //领取优惠券视图
     public function coupons(){
         $id = request()->goods_id;
         // return $id;

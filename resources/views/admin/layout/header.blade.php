@@ -31,7 +31,9 @@
       <li class="layui-nav-item">
         <a href="javascript:;">
           <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-          贤心
+          
+          {{session('seuser_plone')}}
+          <!-- session(['seuser_plone'=>$admin->seuser_plone]); -->
         </a>
         <dl class="layui-nav-child">
           <dd><a href="">基本资料</a></dd>

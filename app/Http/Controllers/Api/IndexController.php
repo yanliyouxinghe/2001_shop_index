@@ -45,7 +45,7 @@ class IndexController extends Controller
                 'goodsbest'=>$goodsbest,
             ]
         ];
-
+        
         return json_encode($reposer);
     }
 

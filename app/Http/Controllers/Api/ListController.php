@@ -39,7 +39,7 @@ class ListController extends Controller
         //判断此分类下有无子分类
         $cat_id = CartgoryModel::where('parent_id',$id)->pluck('cat_id');
         $cat_id=$cat_id?$cat_id->toArray():[];    //没有子分类给个空
-        // array_push($cat_id,$id);
+        array_push($cat_id,$id);
          //获取商品数据
         $goodsInfo= GoodsModel::whereIn('cat_id',$cat_id)->where($where)->get();  
         $goodsInfo =  $goodsInfo? $goodsInfo->toArray():[];
@@ -92,6 +92,8 @@ class ListController extends Controller
          $totalprice[] = $max_price.'元以上';
          return $totalprice;
     }
+
+
 
     // /**API登录后 展示历史浏览记录 */
     public function listhistory(){

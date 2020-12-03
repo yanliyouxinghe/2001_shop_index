@@ -8,10 +8,10 @@ use App\Model\GoodsAttrModel;
 use App\Model\CartgoryModel;
 use App\Model\BrandModel;
 use App\Model\GoodsTypeModel;
-use App\Models\SegoodsModel;
+use App\Model\GoodsModel;
 use App\Model\Goods_AttrModel;
 use App\Model\Goods_GalleryModel;
-use App\Models\SeproductModel;
+use App\Model\ProductModel;
 use Illuminate\Support\Facades\DB;
 use Carbon\Traits\Timestamp;
 class GoodsController extends Controller
@@ -23,7 +23,7 @@ class GoodsController extends Controller
      */
     public function list()
     {
-        $goods = SegoodsModel::where(["is_static"=>1])->get();
+        $goods = GoodsModel::where(["is_static"=>1])->get();
         return view('admin.goods.list',['goods'=>$goods]);
     }
 
@@ -75,6 +75,7 @@ class GoodsController extends Controller
                 $promote_start_date = $request->input('promote_start_date');
                 $promote_end_date = $request->input('promote_end_date');
                 $data = $request->except(['attr_id_list','attr_value_list','attr_price_list','goods_imgs']);
+                $seuser_id=session('seuser_id');
                     //  print_r($data);
                     $goods = [
                         "goods_name" => $data['goods_name'],
@@ -90,9 +91,10 @@ class GoodsController extends Controller
                         "is_best" => $data['is_best'],
                         "is_new" => $data['is_new'],
                         "promote_start_date" => strtotime($promote_start_date),
-                        "promote_end_date" => strtotime($promote_end_date)
+                        "promote_end_date" => strtotime($promote_end_date),
+                        'seuser_id' => $seuser_id?$seuser_id:''
                     ];
-                $goods_id = SegoodsModel::insertGetId($goods);
+                $goods_id = GoodsModel::insertGetId($goods);
                 // print_r($goods_id);
                 if(!$goods_id){
                     return false;
@@ -128,7 +130,7 @@ class GoodsController extends Controller
                         $new_goods_sper['attr_value'][$v['attr_id']][$v['goods_attr_id']] = $v['attr_value'];
                     }
                     //  dd($new_goods_sper);
-                        $goods = SegoodsModel::select('goods_id','goods_name','goods_sn')
+                        $goods = GoodsModel::select('goods_id','goods_name','goods_sn')
                                  ->where('goods_id',$goods_id)
                                  ->first();
                         return view('admin.goods.product',['goods_sper'=>$new_goods_sper,'goods_id'=>$goods_id,'goods'=>$goods]);
