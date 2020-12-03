@@ -61,4 +61,58 @@ class LoginController extends Controller
            Redis::hdel('reg','user_id','user_plone');
            return redirect('/login');
         }
+
+
+        //忘记密码
+        public function find_pwd(){
+            return view('login.find_pwd');
+        }
+        
+        //找回密码
+        public function find_pwddo(){
+            $plone = request()->input('plone');
+            $code = rand(100000,999999);
+            
+            $data['name'] = $plone;
+            $data['code'] = $code;
+            $url = "http://2001.shop.api.com/send_s";
+            $code_data = posturl($url,$data);
+            if($code_data['code'] == 0){
+                return json_encode(['code'=>0,'msg'=>'OK，发送成功']);
+            }else{
+                return json_encode(['code'=>1,'msg'=>'Error,验证码发送失败']);
+            }
+        }
+
+        //修改密码
+        
+        public function find_pwds(){
+            $plone = request()->input('plone');
+            $code = request()->input('code');
+            $pwd = request()->input('pwd');
+            
+            if(!$plone || !$code || !$pwd){
+                return json_encode(['code'=>1,'msg'=>'Error,参数丢失']);die;
+            }
+
+            $data['plone'] = $plone;
+            $data['code'] = $code;
+            $data['pwd'] = $pwd;
+
+            $url = "http://2001.shop.api.com/change_pwd";
+            $change_pwd = posturl($url,$data);
+            if($change_pwd['code'] == 0){
+                return json_encode(['code'=>0,'msg'=>'OK']);
+            }else if($change_pwd['code'] == 1){
+                return json_encode(['code'=>1,'msg'=>'未查询到您输入的手机号码']);
+            }else if($change_pwd['code'] == 2){
+                return json_encode(['code'=>2,'msg'=>'请输入正确的验证码']);
+            }else{
+                return json_encode(['code'=>3,'msg'=>'操作繁忙']);
+            }
+
+
+
+
+        }
 }

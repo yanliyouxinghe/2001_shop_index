@@ -32,7 +32,7 @@ Route::get('/noticeinfo','Index\IndexController@noticeinfo');    //前台首页�
 Route::post('/listhistory','Index\ListController@listhistory');    //登录后历史浏览记录展示
 
 Route::get('/pay/{order_id}','Index\PayController@pay');  //支付
-Route::get('/return_url','Index\PayController@return_url');    //支付宝同步跳转
+Route::get('/return_url','Index\PayController@return_url');   //支付宝同步跳转
 Route::post('/notify_url','Index\PayController@notify_url');  //支付宝异步跳转
 
 
@@ -42,6 +42,14 @@ Route::get('/goods/{goods_id}','Index\GoodsController@goodsinfo');//详情
 Route::get('/getattrprice','Index\CartController@getattrprice');
 Route::post('/addcart','Index\CartController@addcart');//加入购物车
 Route::get('/login','Index\LoginController@login');//登录
+Route::get('/find_pwd','Index\LoginController@find_pwd');//忘记密码
+Route::post('/find_pwddo','Index\LoginController@find_pwddo');//忘记密码验证码
+Route::post('/find_pwds','Index\LoginController@find_pwds');//忘记密码修改密码
+
+
+
+
+
 
 
 Route::get('/reg','Index\LoginController@reg');//注册
