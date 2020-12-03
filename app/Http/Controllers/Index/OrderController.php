@@ -11,6 +11,7 @@ use App\Model\UseraddressModel;
 use App\Model\RegionModel;
 use App\Model\Order_GoodsModel;
 use App\Model\Order_InfoModel;
+use App\Model\Se_Order_InfoModel;
 use App\Model\CartModel;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,8 @@ class OrderController extends Controller
         $post = request()->all();
         $cart_id = $post['cart_id'];
         $goods_id = $post['goods_id'];
-
+        // print_r($goods_id);die;
+        
         $user_id=Redis::hget('reg','user_id');
         if(!$user_id){
             return redirect('/login');
@@ -99,9 +101,11 @@ class OrderController extends Controller
 
         public function orderinfo(){
             $goods_id = request()->goods_id;
-            $goods_id=implode(',',$goods_id);
+            $goods_id=implode(',',$goods_id);          
             $goods_id=explode(',',$goods_id);
-            // print_r($goods_id);die;
+         
+            
+        
             $goods_attr_id = request()->goods_attr_id;
             $goods_attr_id= explode('|',$goods_attr_id);
             $coupons_id = request()->coupons_id;
@@ -129,7 +133,11 @@ class OrderController extends Controller
                 return json_encode(['code'=>2,'msg'=>'Error,参数丢失']);
             }
 
+            $seuser=CartModel::whereIn('cart_id',$cart_id)->get();
+            // print_r($seuser);die;
             
+            // print_r($seuser_id);die;
+            // echo ($seuser_id);die;
 
             if($datas['pay_type']==1){
                 $datas['pay_name'] = "支付宝";
@@ -145,7 +153,14 @@ class OrderController extends Controller
             DB::beginTransaction();
            
             try {
-                $order_sn = $this->order_sn($user_id);
+                $seuser_id=[];
+            foreach($seuser as $v){
+
+                $seuser_id[]=$v->seuser_id;
+            }
+            // print_r($seuser);die;
+               $seuser_id=array_unique($seuser_id);
+               $order_sn = $this->order_sn($user_id);
                 $addressdatas = UseraddressModel::where(['user_id'=>$user_id,'address_id'=>$datas['address_id']])->get();
                 $addressdata = $addressdatas[0];
                 $data = [
@@ -167,11 +182,47 @@ class OrderController extends Controller
                     'addtime' => time(),
                     'order_leave'=>$datas['order_leave']
                 ];
-    
-                $order_id = Order_InfoModel::insertGetId($data);
-                $goodsinfo = CartModel::select('sh_cart.goods_id','sh_cart.goods_sn','sh_cart.product_id','sh_cart.goods_name','sh_cart.shop_price','sh_cart.buy_number','sh_cart.goods_attr_id')
+                // print_r($data);exit;
+                       //生成订单
+                     $order_id = Order_InfoModel::insertGetId($data);
+                    //  print_r($order_id);exit;
+              foreach($seuser_id as $k=>$v){
+                $order_sn = $this->order_sn($user_id);
+                $order_data = [
+                    
+                    'seuser_id'=>$v,
+                    'order_id' => $order_id,
+                    'order_sn' => $order_sn,
+                    'user_id' => $user_id,
+                    'email' => $addressdata->email,
+                    'consignee' => $addressdata->consignee,
+                    'country' => $addressdata->country,
+                    'province' => $addressdata->province,
+                    'city' => $addressdata->city,
+                    'district' => $addressdata->district,
+                    'address' => $addressdata->address,
+                    'zipcode' => $addressdata->zipcode,
+                    'tel' => $addressdata->tel,
+                    'pay_type' => $datas['pay_type'],
+                    'pay_name' => $datas['pay_name'],
+                    'total_price' => $datas['total_price'],
+                    'deal_price' => $shop_price,
+                    'addtime' => time(),
+                    'order_leave'=>$datas['order_leave']
+                ];
+                      //生成商户订单
+                    //   print_r($order_data);exit;
+                Se_Order_InfoModel::insert($order_data);
+                
+                $goodsinfo = CartModel::select('sh_cart.goods_id','sh_cart.goods_sn','sh_cart.product_id','sh_cart.goods_name','sh_cart.shop_price','sh_cart.buy_number','sh_cart.goods_attr_id','sh_cart.seuser_id')
                         ->whereIn('cart_id',$cart_id)
                         ->get();
+                        // print_r($goodsinfo);exit;
+              }
+
+               
+
+               
                 if(!count($goodsinfo->toArray())){
                     throw new Exception('购物车内没有此商品');
                 }
@@ -185,9 +236,10 @@ class OrderController extends Controller
                             $goods_data[$k]['shop_price'] = $v->shop_price;
                             $goods_data[$k]['buy_number'] = $v->buy_number;
                             $goods_data[$k]['goods_attr_id'] = $v->goods_attr_id?$v->goods_attr_id:'';
-    
+                            $goods_data[$k]['seuser_id']=$v->seuser_id?$v->seuser_id:'';
                         }
-                        // print_r($goods_data);die;
+                        // print_r($goods_data);exit;
+                        //添加到订单商品表
                 $ret = Order_GoodsModel::insert($goods_data);
                 if($ret){
                     User_CouponsModel::where(['user_id'=>$user_id,'coupons_id'=>$coupons_id])->update(['coupons_state'=>1]);

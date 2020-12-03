@@ -192,6 +192,9 @@ class CartController extends Controller
         }
             $goods_id=$request->goods_id;
             $buy_number= $request->buy_number;
+            $seuser_id=GoodsModel::where('goods_id',$goods_id)->value('seuser_id');
+            
+            // print_r($seuser_id);die;
             $goods_attr_id= $request->goods_attr_id;
             if(isset($goods_attr_id)){
                 $attr_price = Goods_AttrModel::whereIn('goods_attr_id',$goods_attr_id)
@@ -263,7 +266,8 @@ class CartController extends Controller
                 'buy_number'=>$buy_number,
                 'goods_attr_id'=>$goods_attr_id??'',
                 'goods_sn'=>$product->product_sn??$goods->goods_sn,
-                'shop_price'=>$shop_price
+                'shop_price'=>$shop_price,
+                'seuser_id'=>$seuser_id??''
             ];
             $goods = $goods?$goods->toArray():[];
             unset($goods['shop_price']);

@@ -301,6 +301,7 @@ $(document).on("click",".coupons",function(){
          //规格id
          var goods_attr_id=$('.goods_attr_id').attr('goods_attr_id');
        $.post('/orderinfo',{address_id:address_id,pay_type:pay_type,order_leave:order_leave,cart_id:cart_id,total_price:total_price,goods_id:goods_id,goods_attr_id:goods_attr_id,coupons_id:coupons_id},function(ret){
+            console.log(ret);
             if(ret.code == 1){
               location.href="/login?refer="+location.href;
             }
