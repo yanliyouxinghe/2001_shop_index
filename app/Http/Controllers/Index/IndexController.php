@@ -55,6 +55,30 @@ class IndexController extends Controller
     }
 
 
+
+    //冒泡排序
+    public function maopao(){
+       $arr = [3,69,9,100,32,67];
+        if(!is_array($arr)){
+            return;
+        }
+        if(count($arr) < 2){
+            return;
+        }
+        $len = count($arr);
+        for($i=0;$i<$len-1;$i++){
+            for($j=$i+1;$j<$len;$j++){
+                if($arr[$i] > $arr[$j]){
+                    $temp = $arr[$i];
+                    $arr[$i] = $arr[$j];
+                    $arr[$j] = $temp;
+                }
+            }
+        }
+        print_r($arr);die;
+    }
+
+
     
 
 

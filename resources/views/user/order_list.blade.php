@@ -86,7 +86,7 @@ $(document).ready(function(){
       @elseif($v['is_paid'] == 1 && $v['order_status'] == 0 && $v['is_deliver'] == 1 && $v['is_evaluate'] == 0)
       <a style="margin-left:20px;" href="order_comment.html" class="a_btn">确认收货</a>
      
-      <a  href="/logistics/{{$v['order_id']}}" class="a_btn">查看物流</a>
+      <a  href="/logistics" class="a_btn">查看物流</a>
       @elseif($v['is_paid'] == 1 && $v['order_status'] == 1 && $v['is_deliver'] == 1 && $v['is_evaluate'] == 0)
       <a href="order_comment.html" class="a_btn">评价</a>
       @endif

@@ -18,8 +18,10 @@ class UserController extends Controller
     	return json_encode(['code'=>0,'msg'=>'OK','data'=>$region_son]);
     }
     public function store(Request $request){
+        // echo 1234;die;
          $callback=$request->callback;
-        $post = $request->except(['_token','callback','_']);
+        $post = $request->except(['_token','callback','_','search_type','search_val']);
+        // print_r($post);
         foreach($post as $k=>$v){
             $data['consignee'] = $k;
         }
