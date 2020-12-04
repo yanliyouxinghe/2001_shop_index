@@ -100,10 +100,7 @@ class OrderController extends Controller
     }
 
         public function orderinfo(){
-            $goods_id = request()->goods_id;
-            $goods_id=implode(',',$goods_id);          
-            $goods_id=explode(',',$goods_id);
-         
+           
             
         
             $goods_attr_id = request()->goods_attr_id;
@@ -114,8 +111,14 @@ class OrderController extends Controller
             // print_r($attr_price);die;            
                //  dd($attr_price);
                 //    print_r($attr_price);die;
+                $goods_id = request()->goods_id;
+                $goods_id=implode(',',$goods_id);    
+                // print_r($goods_id);exit;
+                $goods_id=explode(',',$goods_id);
+            //  print_r($goods_id);exit;
         $shop_price=GoodsModel::whereIn('goods_id',$goods_id)->sum('shop_price')+$attr_price;
-        // print_r($shop_price);die;
+
+        // print_r($ashop_price);die;
         $coupons_price=CouponsModel::where(['coupons_id'=>$coupons_id])->value('coupons_price');
         // print_r($coupons_price);die;
         $deal_price=$shop_price-$coupons_price;
@@ -182,12 +185,22 @@ class OrderController extends Controller
                     'addtime' => time(),
                     'order_leave'=>$datas['order_leave']
                 ];
-                // print_r($data);exit;
+                //  print_r($data);exit;
                        //生成订单
                      $order_id = Order_InfoModel::insertGetId($data);
+                // print_r($seuser_id);exit;
                     //  print_r($order_id);exit;
               foreach($seuser_id as $k=>$v){
+                $goodsinfo = CartModel::select('sh_cart.goods_id','sh_cart.goods_sn','sh_cart.product_id','sh_cart.goods_name','sh_cart.shop_price','sh_cart.buy_number','sh_cart.goods_attr_id','sh_cart.seuser_id')
+                ->whereIn('cart_id',$cart_id)
+                ->get();
+                //   print_r($v);exit;
+               
+
+
                 $order_sn = $this->order_sn($user_id);
+                  
+               
                 $order_data = [
                     
                     'seuser_id'=>$v,
@@ -205,27 +218,31 @@ class OrderController extends Controller
                     'tel' => $addressdata->tel,
                     'pay_type' => $datas['pay_type'],
                     'pay_name' => $datas['pay_name'],
-                    'total_price' => $datas['total_price'],
-                    'deal_price' => $shop_price,
                     'addtime' => time(),
-                    'order_leave'=>$datas['order_leave']
+                    'order_leave'=>$datas['order_leave'],
+                    'total_price'=>$shop_price,
+                    'deal_price'=>$deal_price
+                    
                 ];
+                               
                       //生成商户订单
                     //   print_r($order_data);exit;
-                Se_Order_InfoModel::insert($order_data);
-                
+                $se_order_id=Se_Order_InfoModel::insertGetId($order_data);
+                    //  print_r($se_order_id);exit;
+            
+               
                 $goodsinfo = CartModel::select('sh_cart.goods_id','sh_cart.goods_sn','sh_cart.product_id','sh_cart.goods_name','sh_cart.shop_price','sh_cart.buy_number','sh_cart.goods_attr_id','sh_cart.seuser_id')
                         ->whereIn('cart_id',$cart_id)
                         ->get();
                         // print_r($goodsinfo);exit;
-              }
+                    
 
-               
+                    }
 
-               
-                if(!count($goodsinfo->toArray())){
-                    throw new Exception('购物车内没有此商品');
-                }
+                // if(!count($goodsinfo->toArray())){
+                //     throw new Exception('购物车内没有此商品');
+                // }
+                
                         $goods_data = [];
                         foreach($goodsinfo as $k=>$v){
                             $goods_data[$k]['order_id'] = $order_id;
@@ -237,21 +254,31 @@ class OrderController extends Controller
                             $goods_data[$k]['buy_number'] = $v->buy_number;
                             $goods_data[$k]['goods_attr_id'] = $v->goods_attr_id?$v->goods_attr_id:'';
                             $goods_data[$k]['seuser_id']=$v->seuser_id?$v->seuser_id:'';
+                            
                         }
                         // print_r($goods_data);exit;
                         //添加到订单商品表
+                        // Se_Order_Info::update('total_price' ,$goodsinfo->shop_price);
                 $ret = Order_GoodsModel::insert($goods_data);
+                    
                 if($ret){
                     User_CouponsModel::where(['user_id'=>$user_id,'coupons_id'=>$coupons_id])->update(['coupons_state'=>1]);
                 }
                 foreach($cart_id as $k=>$v){
                     CartModel::destroy($v);
                 }
+                
                 DB::commit();
                 return json_encode(['code'=>0,'msg'=>'订单生成成功','data'=>$order_id]);
-            } catch (\Exception $e) {
+            }
+       
+
+        
+        catch (\Exception $e) {
+            // DB::commit();
+            //print_r(123);exit;
                 DB::rollBack();
-                //echo $e->getMessage();
+                echo $e->getMessage();
                 return json_encode(['code'=>3,'msg'=>'订单生成失败']);
             }
 

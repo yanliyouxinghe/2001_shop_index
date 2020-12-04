@@ -181,8 +181,9 @@ $(document).ready(function(){
                         '  </tr>';
 
                 });
+                $('.add').html(hotgoods);
                 })
-                 $('.add').html(hotgoods);
+                 
                  if(window.location.href.indexOf('refer') > -1){
                    window.history.go(-1); //返回上一页
                  }
