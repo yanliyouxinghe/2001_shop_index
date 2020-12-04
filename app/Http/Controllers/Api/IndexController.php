@@ -62,7 +62,6 @@ class IndexController extends Controller
 
     //搜索
     public function search(){
-
         $search_val = request()->input('search_val');
         if(!$search_val){
             $reposer = [

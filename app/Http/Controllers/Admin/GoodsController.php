@@ -9,9 +9,12 @@ use App\Model\CartgoryModel;
 use App\Model\BrandModel;
 use App\Model\GoodsTypeModel;
 use App\Model\GoodsModel;
+use App\Model\UserModel;
 use App\Model\Goods_AttrModel;
 use App\Model\Goods_GalleryModel;
 use App\Model\ProductModel;
+use App\Model\Se_Order_InfoModel;
+use App\Model\UseraddressModel;
 use Illuminate\Support\Facades\DB;
 use Carbon\Traits\Timestamp;
 class GoodsController extends Controller
@@ -231,7 +234,16 @@ class GoodsController extends Controller
 
     }
     public function item($id){
-//        $goods = GoodsModel::find($id);
+        //$goods = GoodsModel::find($id);
         return view('admin.goods.jyl');
+    }
+
+    /**商家订单列表展示 */
+    public function mercharordertlist(){
+
+        $orderInfo = Se_Order_InfoModel::leftjoin('sh_user','sh_se_order_info.user_id','=','sh_user.user_id')->orderBy('se_order_id','desc')->paginate(3);
+        // print_r($orderInfo);die;
+        
+        return view('admin.goods.mercharordertlist',['orderInfo'=>$orderInfo]);
     }
 }
