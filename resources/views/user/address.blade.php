@@ -165,8 +165,6 @@ $(document).ready(function(){
         var data = $('form').serialize();
         //{consignee:consignee,tel:tel,country:country,province:province,city:city,district,address:address}
         $.getJSON('http://2001.shop.api.com/store?callback=?',data,function (obj) {
-                // console.log(obj.data);
-                // return false;
                 //var result=obj.consignee,tel,country,province,city,district,address;
     
                  var result=obj.data;

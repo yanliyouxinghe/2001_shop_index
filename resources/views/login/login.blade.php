@@ -61,7 +61,7 @@ $(document).ready(function(){
    </li>
    <li class="link_li">
     <a href="{{url('/reg')}}" title="注册新用户" class="fl">注册新用户</a>
-    <a href="find_pwd.html" title="忘记密码" class="fr">忘记密码？</a>
+    <a href="{{url('/find_pwd')}}" title="忘记密码" class="fr">忘记密码？</a>
    </li>
    <li class="link_li">
     <input type="button" id="login" value="立即登录" class="sbmt_btn"/>

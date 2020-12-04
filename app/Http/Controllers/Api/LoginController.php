@@ -69,24 +69,54 @@ class LoginController extends Controller
         $code = rand(10000,999999);
         // $code ="11223";
         $result = $this->send($name,$code);
+         if($result['Message']=='OK'){
+            $resopme =  [
+                'code'=>00000,
+                'message'=>'发送成功',
+                'result'=>''
+                ];
+        return json_encode($resopme);
+
+        }else{
+            $resopme =  [
+                'code'=>00002,
+                'message'=>'发送失败',
+                'result'=>''
+                ];
+        return json_encode($resopme);
+
+        }
+    }
+
+
+    public function send_s(){
+        $name = request()->input('name');
+        $code = request()->input('code');
+        $result = $this->send($name,$code);
+        // print_r($result);die;
         if($result['Message']=='OK'){
-            return  [
-                    'code'=>00000,
+            $resopme =  [
+                    'code'=>0,
                     'message'=>'发送成功',
                     'result'=>''
                 ];
+        return json_encode($resopme);
+
         }else{
-            return  [
-                    'code'=>00002,
+            $resopme =  [
+                    'code'=>1,
                     'message'=>'发送失败',
                     'result'=>''
                 ];
+        return json_encode($resopme);
+
         }
+
     }
     //短信验证
     public function send($name,$code){
         Redis::del('forgetcode');
-        Redis::setex('forgetcode',24*60*60,$code);
+        Redis::setex('forgetcode',300,$code);
         AlibabaCloud::accessKeyClient('LTAI4GFccq2jJ5vjx9C1XNir', 'V97fmw5pHOmq5J0ij8RUZtQgdXDSko')
             ->regionId('cn-hangzhou')
             ->asDefaultClient();
@@ -108,11 +138,11 @@ class LoginController extends Controller
                     ],
                 ])
                 ->request();
-            print_r($result->toArray());
+            return $result->toArray();
         } catch (ClientException $e) {
-            echo $e->getErrorMessage() . PHP_EOL;
+            return $e->getErrorMessage() . PHP_EOL;
         } catch (ServerException $e) {
-            echo $e->getErrorMessage() . PHP_EOL;
+            return $e->getErrorMessage() . PHP_EOL;
         }
     }
     //执行登录
@@ -150,5 +180,47 @@ class LoginController extends Controller
             $user_id = $jwt->getuid();
             // dd($uid);
         }
+    }
+
+
+    public function change_pwd(){
+        $plone = request()->input('plone');
+        $code = request()->input('code');
+        $pwd = request()->input('pwd');
+        $codes=Redis::get('forgetcode');
+
+
+        //获取用户输入的手机号是否存在此条数据
+        $is_plone = UserModel::where(['user_plone'=>$plone])->first();
+        if(!$is_plone){
+            $resopme =  [
+                'code'=>1,
+                'message'=>'Error,未查询到您输入的手机号码',
+            ];
+            return json_encode($resopme);
+        }
+   
+        if($code!=$codes){  
+            $resopme =  [
+                'code'=>2,
+                'message'=>'Error,请输入正确的验证码',
+            ];
+            return json_encode($resopme);
+       }
+       $user_pwd = bcrypt($pwd);
+       $change_pwd = UserModel::where('user_id',$is_plone->user_id)->update(['user_pwd'=>$user_pwd]);
+       if($change_pwd){
+        $resopme =  [
+            'code'=>0,
+            'message'=>'Success,OK',
+        ];
+        return json_encode($resopme);
+       }else{
+        $resopme =  [
+            'code'=>3,
+            'message'=>'Error,操作繁忙',
+        ];
+        return json_encode($resopme);
+       }
     }
 }

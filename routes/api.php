@@ -23,12 +23,18 @@ Route::domain('2001.shop.api.com')->group(function () {
 
     //login
     Route::get('sendSMS','Api\LoginController@sendSMS');//注册
+    Route::post('send_s','Api\LoginController@send_s');//注册
+
+    
     Route::post('regdo','Api\LoginController@regdo');//执行注册
     Route::get('/','Api\IndexController@index');   //前台首页
     Route::get('noticeinfo','Api\IndexController@noticeinfo'); //首页公告数据
     
     Route::any('getuserinfo','Api\LoginController@getuserinfo');//k
     Route::post('logindo','Api\LoginController@logindo');//执行登录
+    Route::post('change_pwd','Api\LoginController@change_pwd');//找回密码修改密码
+
+    
 
     //goods
     Route::get('/createhistory/{goods_id?}','Api\GoodsController@createhistory');    //Api 登录后 添加历史浏览记录

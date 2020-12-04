@@ -71,8 +71,6 @@ class GoodsController extends Controller
 //      $cookiehistory = unserialize($cookiehistory);
 //      if(!empty($cookiehistory)){
 //          //从cookie中取出goods_id一列,判断当前商品是否存在
-
-
 //      }
 
  //领取优惠券
