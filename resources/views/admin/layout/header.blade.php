@@ -31,7 +31,9 @@
       <li class="layui-nav-item">
         <a href="javascript:;">
           <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-          贤心
+          
+          {{session('seuser_plone')}}
+          <!-- session(['seuser_plone'=>$admin->seuser_plone]); -->
         </a>
         <dl class="layui-nav-child">
           <dd><a href="">基本资料</a></dd>
@@ -56,7 +58,7 @@
          <li class="layui-nav-item">
           <a class="" href="javascript:;">订单管理</a>
           <dl class="layui-nav-child">
-            <dd><a href="/seckill/list">订单列表</a></dd>
+            <dd><a href="/mercharordertlist">订单列表</a></dd>
           </dl>
         </li>
       </ul>

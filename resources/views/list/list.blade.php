@@ -58,48 +58,38 @@ $(document).ready(function(){
   
 <section class="wrap list_class_page">
  <div class="lt_area">
-  <div class="attr_filter">
-     <h2>属性筛选</h2>
-     <ul>
-      <li>
-       <dl>
-        <dt>按品牌筛选：</dt>    
-            @foreach($brandInfo as $v)
-               <dd class="searc" field="brand_id" value="{{$v['brand_id']}}" title="{{$v['brand_name']}}">
-                  <a class="">{{$v['brand_name']}}</a>
+ 
+   <div class="attr_filter">
+      <h2>属性筛选</h2>
+      <ul>
+         <li>
+         <dl>
+         <dt>按品牌筛选：</dt>    
+               @foreach($brandInfo as $v)
+                  <dd class="searc" field="brand_id" value="{{$v['brand_id']}}" title="{{$v['brand_name']}}">
+                     <a @if(isset($query['brand_id']) && $query['brand_id']==$v['brand_id']) class="redhover" @endif>{{$v['brand_name']}}</a>
+                  </dd>
+            @endforeach
+         </dl>
+         </li>
+         <li>
+         <dl>
+         <dt>按价格筛选：</dt>
+         @foreach($priceInfo as $v)
+               <dd class="searc" field="shop_price" value="{{$v}}"> 
+                  <a @if(isset($query['shop_price']) && $query['shop_price']==$v) class="redhover" @endif>{{$v}}</a>
                </dd>
-           @endforeach
-       </dl>
-      </li>
-      <li>
-       <dl>
-        <dt>按价格筛选：</dt>
-        @foreach($priceInfo as $v)
-            <dd class="searc" field="shop_price" value="{{$v}}"> 
-               <a class="">{{$v}}</a>
-            </dd>
-         @endforeach
-       </dl>
-      </li>
-      <!-- <li>
-       <dl>
-        <dt>按上架时间筛选：</dt>
-        <dd>
-         <a>今天</a>
-         <a>昨天</a>
-         <a>本周</a>
-         <a>本月</a>
-        </dd>
-       </dl>
-      </li> -->
-     </ul>
-  </div>
+            @endforeach
+         </dl>
+         </li>
+      </ul>
+   </div>
+
   <!--产品列表-->
     <section class="shop_li">
      <h2>商品列表</h2>
       <ul class="favorite_list">
          @foreach($goodsInfo as $v)
-
          <li>
          <a href="{{url('goods/'.$v['goods_id'])}}">
             <img src="{{$v['goods_img']}}"/>
@@ -108,23 +98,18 @@ $(document).ready(function(){
          </a>
       
          </li>
-
-     
          @endforeach
 
       </ul>
+    
        <!--分页-->
        <div class="paging">
-        <a>第一页</a>
-        <a class="active">2</a>
-        <a>3</a>
-        <a>...</a>
-        <a>89</a>
-        <a>最后一页</a>
+
        </div>
     </section>
 
  </div>
+
  <aside class="rtWrap">
   <dl class="rtLiTwoCol">
    <dt>历史浏览记录</dt>
@@ -145,34 +130,56 @@ $(document).ready(function(){
 </body>
 <script src="/static/js/jquery.js"></script>
    <script>
-         $(function(){
-           $('.redhover').each(function(i,k){
-               var s_key = $(this).parent().attr('field');
-               var s_val = $(this).parent().attr('value');
-               if(s_key=='brand_id'){
-                   var s_val = $(this).parent().attr('title');
-               }
-           });
-       });
+   //       $(function(){
+   //         $('.redhover').each(function(i,k){
+   //             var s_key = $(this).parent().attr('field');
+   //             var s_val = $(this).parent().attr('value');
+  
+   //             if(s_key=='brand_id'){
+   //                 var s_val = $(this).parent().attr('title');
+   //             }
+   //         });
+   //     });
+
+ 
+
       $(document).ready(function(){
          $('.searc').click(function(){ 
+            // alert(11);
             $(this).find('a').addClass('redhover');
             $(this).siblings().find('a').removeClass('redhover');
-             var search = '';
-           $('.redhover').each(function(i,k){
-               var s_key = $(this).parent().attr('field');
-               var s_val = $(this).parent().attr('value');
-               search += s_key+'='+s_val+'&';
 
+            var searc = '';
+
+            // var s_val=$('.redhover').val();
+
+            $('.redhover').each(function(i,k){
+               var s_key = $(this).parent().attr('field');
+               //alert(s_key);
+               var s_val = $(this).parent().attr('value');
+               searc += s_key+'='+s_val+'&';
+              
            });
             var url="{{$urls}}";
+            // alert(url);
+            // return false;
             //将搜索条件中多余符号删除
-            if(search){
-               url += '?'+search.substring(0, search.length -1);
+            if(searc){
+               // alert(searc);
+               // return false;
+               url += '?'+searc.substring(0, searc.length -1);
+               // alert(url);
+               // return false;
                location.href=url;
             }
           
          })
       })
+
+
+  
 </script>
+
 </html>
+@include('layout.search_type')
+

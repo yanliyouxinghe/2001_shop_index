@@ -24,8 +24,7 @@ class GoodsController extends Controller
 
    /**个人收藏 展示*/
    public function listcollect(){
-        $user_id="1";
-        // Redis::hget('reg','user_id')
+        $user_id=Redis::hget('reg','user_id');
         $data['user_id']=$user_id;
         $url = 'http://2001.shop.api.com/listcollect';
         $collectgoodsInfo = posturl($url,$data);
@@ -35,7 +34,7 @@ class GoodsController extends Controller
 
    /**ajax取消收藏 */
    public function cancel(){
-        $user_id = "1";
+        $user_id = Redis::hget('reg','user_id');
         $data['user_id'] = $user_id;
         $data['goods_id'] = request()->goods_id;
         $url = 'http://2001.shop.api.com/cancel';
@@ -55,7 +54,7 @@ class GoodsController extends Controller
      // $data['user_id']=$user_id;
       if(!$user_id){
           //不登录历史浏览记录
-          $this->cookiehistory($id);
+        //   $this->cookiehistory($id);
       }else{
           //登录后 
           $url = 'http://2001.shop.api.com/createhistory/'.$goods_id;
@@ -66,18 +65,24 @@ class GoodsController extends Controller
    }
 
    /**cookie 添加历史浏览记录 */
-   public function cookiehistory(){
+//    public function cookiehistory($id){
+//      //判断cookie是否存在  从cookie中去值
+//      $cookiehistory = Cookie::get('historyInfo');
+//      $cookiehistory = unserialize($cookiehistory);
+//      if(!empty($cookiehistory)){
+//          //从cookie中取出goods_id一列,判断当前商品是否存在
+//      }
 
-   }
+ //领取优惠券
+ function coupons($id){
+     $data['goods_id'] = $id;
+    //  print_r($data);die;
+    $url = "http://2001.shop.api.com/coupons";
+    // print_r($url);die;
+    $data=posturl($url,$data);
+    // print_r($data);die;
+    return view('goods.coupons',['data'=>$data]);
+}
 
-//    public function lll($goods_id){
-//     $user_id=  "11";
-//     if($user_id){
-
-//     }else{
-            
-//     }
-
-//    }
    
 }

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\UseraddressModel;
 use App\Model\RegionModel;
+use App\Model\Order_InfoModel;
+use App\Model\Order_GoodsModel;
+use App\Model\GoodsModel;
 use Illuminate\Support\Facades\Redis;
 class UserController extends Controller
 {
@@ -15,8 +18,10 @@ class UserController extends Controller
     	return json_encode(['code'=>0,'msg'=>'OK','data'=>$region_son]);
     }
     public function store(Request $request){
+        // echo 1234;die;
          $callback=$request->callback;
-        $post = $request->except(['_token','callback','_']);
+        $post = $request->except(['_token','callback','_','search_type','search_val']);
+        // print_r($post);
         foreach($post as $k=>$v){
             $data['consignee'] = $k;
         }
@@ -49,5 +54,69 @@ class UserController extends Controller
         );
       
             echo  $callback.'('.json_encode($data).')';
+    }
+
+
+
+    public function user(){
+        $user_id = request()->user_id;
+
+        //待付款订单
+        $obligation = Order_InfoModel::where(['is_paid'=>0,'user_id'=>$user_id,'order_status'=>0,'is_deliver'=>0,'is_evaluate'=>0])->count();
+        // //待发货订单
+        $deliver = Order_InfoModel::where(['is_paid'=>1,'user_id'=>$user_id,'order_status'=>0,'is_deliver'=>0,'is_evaluate'=>0])->count();
+        // //待确认订单
+        $afrmm = Order_InfoModel::where(['is_paid'=>1,'user_id'=>$user_id,'order_status'=>0,'is_deliver'=>1,'is_evaluate'=>0])->count();
+        // //待评价
+        $evaluate = Order_InfoModel::where(['is_paid'=>1,'user_id'=>$user_id,'order_status'=>1,'is_deliver'=>1,'is_evaluate'=>0])->count();
+
+        $respoer = [
+            'code'=>'0',
+            'msg'=>'OK',
+            'data'=>[
+                'obligation'=>$obligation,
+                'deliver'=>$deliver,
+                'afrmm'=>$afrmm,
+                'evaluate'=>$evaluate,
+                'remote_addr' =>$_SERVER['REMOTE_ADDR'],
+            ], 
+        ];   
+
+    	return json_encode($respoer);
+
+    }
+
+
+    public function obligation(){
+        $user_id = request()->user_id;
+        //待付款订单
+        $obligation = Order_InfoModel::select('order_id','order_sn','is_paid','order_status','is_deliver','is_evaluate')->where(['user_id'=>$user_id])->get()->toArray();
+        if(count($obligation) <= 0){
+            $respoer = [
+                'code'=>'1',
+                'msg'=>'您没有未付款订单', 
+            ];   
+        }
+
+        $order_goods_data=[];
+        foreach($obligation as $k=>$v){
+            $v['goods_data'] = Order_GoodsModel::where('order_id',$v['order_id'])->get()->toArray();
+            $order_goods_data[]=$v;
+            $goods_data_img = [];
+            foreach($v['goods_data'] as $kk=>$vv){
+                $vv['goods_img'] = GoodsModel::where('goods_id',$vv['goods_id'])->value('goods_img');
+                $goods_data_img[] = $vv;
+            }
+            $order_goods_data[$k]['goods_data'] = $goods_data_img;
+        }
+
+     
+        $respoer = [
+            'code'=>'0',
+            'msg'=>'OK',
+            'data'=>$order_goods_data
+        ];   
+    	return json_encode($respoer);
+
     }
 }

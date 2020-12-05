@@ -13,7 +13,7 @@ class ListController extends Controller
 {
     /**获取Api列表页数据 */
     public function getlist($id){
-    //    //  dd($id);
+        //  dd($id);
         $query = request()->all();
         $where = [];
         //按价格搜索
@@ -29,7 +29,6 @@ class ListController extends Controller
                 ];
             }
         }
-        //dd($where);
         //按品牌名称搜索
         if(isset($query['brand_id'])){
             $where[] = [
@@ -43,23 +42,24 @@ class ListController extends Controller
         array_push($cat_id,$id);
          //获取商品数据
         $goodsInfo= GoodsModel::whereIn('cat_id',$cat_id)->where($where)->get();  
-        // dd($goodsInfo);
         $goodsInfo =  $goodsInfo? $goodsInfo->toArray():[];
-        $goods_brand = array_column($goodsInfo,'brand_id');
-        $brand_id = array_unique($goods_brand);
+        // print_r($goodsInfo);die;
 
+        $goods_brand = array_column($goodsInfo,'brand_id');
+        // print_r($goods_brand);die;
+        $brand_id = array_unique($goods_brand);
+        // print_r($brand_id);die;
         //获取品牌name
         $brandInfo = BrandModel::whereIn('brand_id',$brand_id)->get();  
-        //dd($brandInfo);  
-        // $brandInfo = GoodsModel::select("brand_name","sh_brand.brand_id")->leftjoin("sh_brand",'sh_goods.brand_id','=','sh_brand.brand_id')->whereIn('sh_brand.brand_id',$brand_id)->get()->toArray();
+        // print_r($brandInfo);die;
         $val=[];
         foreach($brandInfo as $k=>$v){
             $val[$v['brand_id']]=$v;
         }       
-        //dd($brandInfo);
+        // print_r($brandInfo);die;
         //获取列表价格数据
         $priceInfo = GoodsModel::whereIn('cat_id',$cat_id)->max('shop_price');  
-        // dd($priceInfo);
+        // dd($priceInfo);die;
         $priceInfo = $this->getprice($priceInfo);
          $response = [
             'code'=>0,
@@ -68,9 +68,10 @@ class ListController extends Controller
                 'brandInfo'=>$val,
                 'priceInfo'=>$priceInfo,
                 'goodsInfo'=>$goodsInfo, 
+                'query'=>$query
             ],
         ];
-    
+ 
         return json_encode($response);
     }
 
@@ -91,6 +92,8 @@ class ListController extends Controller
          $totalprice[] = $max_price.'元以上';
          return $totalprice;
     }
+
+
 
     // /**API登录后 展示历史浏览记录 */
     public function listhistory(){

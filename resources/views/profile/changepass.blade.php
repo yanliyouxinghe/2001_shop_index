@@ -55,25 +55,82 @@ $(document).ready(function(){
   </div>
   <table class="order_table">
    <tr>
+    <span class="tips_errors error4"></span>
     <td width="80" align="right">原始密码：</td>
-    <td><input type="password" class="textbox"/><mark class="tips_errors">这里是提示性或错误信息</mark></td>
+    <td><input type="password" class="textbox oldpwd" />
+    <span class="tips_errors error1"></span>
+  </td>
    </tr>
    <tr>
     <td width="80" align="right">设置新密码：</td>
-    <td><input type="password" class="textbox"/><mark class="tips_errors">这里是提示性或错误信息</mark></td>
+    <td><input type="password" class="textbox newpwd1"/>
+    <span class="tips_errors error2"></span>
+  </td>
    </tr>
    <tr>
     <td width="80" align="right">确认新密码：</td>
-    <td><input type="password" class="textbox"/><mark class="tips_errors">这里是提示性或错误信息</mark></td>
+    <td><input type="password" class="textbox newpwd2"/>
+    <span class="tips_errors error3"></span>
+  </td>
    </tr>
    <tr>
     <td width="80" align="right"></td>
-    <td><input type="button" class=" group_btn" value="修改密码"/></td>
+    <td><input type="button" class="group_btn" value="修改密码"/></td>
    </tr>
   </table>
  </div>
 </section>
 <!--footer-->
 @include('layout.foot')
+   <script>
+      $(document).on('click','.group_btn',function(){
+          var _this = $(this);
+          var oldpwd = $(".oldpwd").val();
+          var newpwd1 = $(".newpwd1").val();
+          var newpwd2 = $(".newpwd2").val();
+          
+          if(!oldpwd){
+              $('.error1').text("初始密码不能为空哦~");
+              return;
+          }else{
+              $('.error1').text("");
+          }
+          if(!newpwd1){
+              $('.error2').text("新密码不能为空哦~");
+              return;
+          }else{
+              $('.error2').text("");
+          }
+          if(!newpwd2){
+              $('.error3').text("确认密码不能为空哦~");
+              return;
+          }else{
+              $('.error3').text("");
+          }
+
+          if(newpwd1 != newpwd2){
+            $('.error3').text("新密码与确认密码要保持一致哦~");
+            return;
+          }else if(newpwd1.length <= 6){
+            $('.error2').text("密码长度太短哦~");
+            return;
+          }else{
+              $.post('/changepwd',{oldpwd:oldpwd,newpwd2:newpwd2},function(rets){
+                  if(rets.code == 0){
+                    location.href="/login?refer="+location.href;
+                  }else{
+                    $('.error4').text(rets.msg);
+                  }
+              },'json');
+              // 
+          }
+          
+         
+          
+      });
+
+   </script>
+@include('layout.search_type')
+
 </body>
 </html>

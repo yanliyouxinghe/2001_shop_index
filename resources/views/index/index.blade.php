@@ -28,28 +28,7 @@ $(document).ready(function(){
 <!-- 头部 -->
    @include('layout.header')
 
- 
- <script>
- $(document).ready(function(){
-   //测试效果，程序对接如需变动重新编辑
-   $(".switchNav li").click(function(){
-     $(this).addClass("active").siblings().removeClass("active");
-     });
-   $("#chanpin").click(function(){
-     $(".inputWrap input[type='text']").attr("placeholder","输入产品关键词或货号");
-     });
-   $("#shangjia").click(function(){
-     $(".inputWrap input[type='text']").attr("placeholder","输入商家店铺名");
-     });
-   $("#zixun").click(function(){
-     $(".inputWrap input[type='text']").attr("placeholder","输入关键词查找文章内容");
-     });
-   $("#wenku").click(function(){
-     $(".inputWrap input[type='text']").attr("placeholder","输入关键词查找文库内容");
-     });
-   });
-   
- </script>
+
  
 <!--advertisment area-->
 <section class="wrap">
@@ -103,31 +82,49 @@ $(document).ready(function(){
  <!--asdCont-->
  <div class="IdxAsideRt">
   <!--login-->
+  @php  use Illuminate\Support\Facades\Redis; @endphp
+  @php  $user_id=Redis::hmget('reg','user_id','user_plone'); @endphp
+      @if($user_id[0]==false||$user_id[1]==false||empty($user_id))
   <div class="idxRtLogin">
    <div class="fstArea">
      <a href="#" class="userIcon">
       <img src="static/images/icon/DefaultAvatar.jpg">
      </a>
      <div class="rtInfor">
-      <p>Hi!你好</p>
+      <p>Hi!你好,请登录</p>
       <p class="obviousText">免费入驻，提升品牌效应！</p>
      </div>
     </div>
     <div class="secArea">
-     <a href="login.html">登录</a>
-     <a href="register.html">免费注册</a>
-     <a href="register.html">商户入驻</a>
+     <a href="/login">登录</a>
+     <a href="/reg">免费注册</a>
+    </div>
+   </div> 
+   @else 
+   <div class="idxRtLogin">
+   <div class="fstArea">
+     <a href="#" class="userIcon">
+      <img src="static/images/icon/DefaultAvatar.jpg">
+     </a>
+     <div class="rtInfor">
+      <p>Hi!你好:</br>@php echo $user_id[1] @endphp</p>
+      <p class="obviousText">免费入驻，提升品牌效应！</p>
+     </div>
+    </div>
+    <div class="secArea">
+     <a href="/sereg">成为商家</a>
+     <a href="/business">登录商家</a>
     </div>
    </div>
+   @endif
+
    <dl class="idxRtAtc">
     <dt>
      <em class="obviousText">最新公告</em>
-     <a href="article_list.html">more</a>
+     <a href="{{url('/notice_list')}}">more</a>
     </dt>
     @foreach($noticeinfo as $v)
-    @foreach($v as $vv)
-    <dd><a href="http://news.baidu.com/">{{$vv['notice_desc']}}</a></dd>
-    @endforeach
+    <dd><a href="{{url('/notice_read')}}">{{$v['notice_desc']}}</a></dd>
    @endforeach
    </dl>
  
@@ -139,14 +136,6 @@ $(document).ready(function(){
   <strong>
    <a href="channel.html">产品展示区</a>
   </strong>
-  <span class="classLi">
-   <a href="product_list.html">夏装</a>
-   <a href="product_list.html">连衣裙</a>
-   <a href="product_list.html">开衫</a>
-   <a href="product_list.html">牛仔裤</a>
-   <a href="product_list.html">背带裤</a>
-   <a href="product_list.html">T恤</a>
-  </span>
  </h2>
  <div class="ltArea">
   <!--ad:category pic-->
@@ -232,14 +221,14 @@ $(document).ready(function(){
   <strong>
    <a href="channel.html">热卖商品</a>
   </strong>
-  <span class="classLi">
+  <!-- <span class="classLi">
    <a href="product_list.html">夏装</a>
    <a href="product_list.html">连衣裙</a>
    <a href="product_list.html">开衫</a>
    <a href="product_list.html">牛仔裤</a>
    <a href="product_list.html">背带裤</a>
    <a href="product_list.html">T恤</a>
-  </span>
+  </span> -->
  </h2>
  <div class="ltArea">
   <!--ad:category pic-->
@@ -317,9 +306,27 @@ $(document).ready(function(){
    <dd><a href="article_read.html">四川省资阳市安岳县民政局第二次全国地名普查外包服务采购项目公开招标采购公告</a></dd>
    <dd><a href="article_read.html">内蒙古君联生物发展有限公司阿巴嘎旗流化床锅炉除尘及链条炉排炉内脱硫设施采购项目公开招标招标公告</a></dd>
   </dl>
- </section>
+</section>
 <!--footer-->
   <!-- 尾部 -->
    @include('layout.foot')
+    
+ <script>
+ $(document).ready(function(){
+   //测试效果，程序对接如需变动重新编辑
+   $(".switchNav li").click(function(){
+     $(this).addClass("active").siblings().removeClass("active");
+     });
+   $("#chanpin").click(function(){
+     $(".inputWrap input[type='text']").attr("placeholder","输入产品关键词或货号");
+     });
+   $("#shangjia").click(function(){
+     $(".inputWrap input[type='text']").attr("placeholder","输入商家店铺名");
+     });
+   });
+   
+ </script>
+   @include('layout.search_type')
+
 </body>
 </html>

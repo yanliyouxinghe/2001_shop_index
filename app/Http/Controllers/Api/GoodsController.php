@@ -9,6 +9,8 @@ use App\Model\GoodsAttrModel;
 use App\Model\Goods_AttrModel;
 use App\Model\Shop_HistoryModel;
 use App\Model\CollectModel;
+use App\Model\CouponsModel;
+use App\Model\User_CouponsModel;
 use Illuminate\Support\Facades\Redis;
 class GoodsController extends Controller
 {
@@ -42,6 +44,15 @@ class GoodsController extends Controller
             return json_encode($data2);
         }
         
+    }
+
+    //领取优惠券视图
+    public function coupons(){
+        $id = request()->goods_id;
+        // return $id;
+        $data=CouponsModel::where(['goods_id'=>$id])->get();
+        // print_r($data);die;
+        return $data;
     }
 
     /**API个人收藏  添加*/
@@ -130,7 +141,7 @@ class GoodsController extends Controller
         }
         return true;
     }
-
+   
    
    
 }
