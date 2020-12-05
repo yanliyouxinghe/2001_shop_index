@@ -99,27 +99,12 @@
       }
       if(seuser_pwd!=seuser_pwds){
           alert('密码不一致');
+          return;
       }
         var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
     if(myreg.test(seuser_plone)){
         // alert(1111);
            $.get('/seregdo',{seuser_plone:seuser_plone,seuser_pwd:seuser_pwd,seuser_pwds:seuser_pwds,code:code},function (result) {
-               console.log(result);
-            if(result.code=='00001'){
-                alert(result.message);
-            }
-            if(result.code=='00002'){
-                alert(result.message);
-            }
-            if(result.code=='00003'){
-                alert(result.message);
-            }
-            if(result.code=='00004'){
-                alert(result.message);
-            }
-            if(result.code=='00005'){
-                alert(result.message);
-            }
             if(result.code=='00000'){
                 location.href = "/business"
             }else{

@@ -301,19 +301,20 @@ $(document).on("click",".coupons",function(){
          //规格id
          var goods_attr_id=$('.goods_attr_id').attr('goods_attr_id');
        $.post('/orderinfo',{address_id:address_id,pay_type:pay_type,order_leave:order_leave,cart_id:cart_id,total_price:total_price,goods_id:goods_id,goods_attr_id:goods_attr_id,coupons_id:coupons_id},function(ret){
+            // console.log(ret);
             if(ret.code == 1){
-              location.href="/login?refer="+location.href;
+             location.href="/login?refer="+location.href;
             }
             if(ret.code == 0){
               var order_id =ret.data;
-              location.href="/pay/"+order_id;
+             location.href="/pay/"+order_id;
             }else{
               window.history.go(-1); //返回上一页
               window.location.href=document.referrer;
               alert(ret.msg);
             }
        },'json');
-      //  
+       
     });
 
 
