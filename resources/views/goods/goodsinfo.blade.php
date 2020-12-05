@@ -202,8 +202,7 @@ $(document).ready(function(){
  <article>
   <ul class="item_tab">
    <li><a class="curr_li">商品详情</a></li>
-   <li><a>商品评价（2893）</a></li>
-   <li><a>成交记录（1892）</a></li>
+   <li><a>在线聊天（1892）</a></li>
   </ul>
   
   <!--商品详情-->
@@ -213,57 +212,20 @@ $(document).ready(function(){
 {!! $v['goods_desc'] !!}
   </div>
   @endforeach
-  <!--商品评价-->
+  <!--在线聊天-->
   <div class="cont_wrap">
-   <table class="table">
-    <tr>
-     <td width="20%" align="center">李*锋</td>
-     <td width="60%">这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦</td>
-     <td width="20%" align="center"><time>2013-01-13 15:06</time></td>
-    </tr>
+  <table class="table">
    
-   </table>
-   
-   <!--分页-->
-   <div class="paging">
-    <a>第一页</a>
-    <a class="active">2</a>
-    <a>3</a>
-    <a>...</a>
-    <a>89</a>
-    <a>最后一页</a>
-   </div>
-  </div>
-  <!--成交记录-->
-  <div class="cont_wrap">
-   <table class="table">
-    <tr>
-     <th>买家</th>
-     <th>产品属性</th>
-     <th>数量</th>
-     <th>成交时间</th>
-    </tr>
-    <tr>
-     <td align="center">李**强</td>
-     <td>
-      <p>颜色：黑色<p>
-      <p>规格：M<p>
-     </td>
-     <td align="center"><b>1</b></td>
-     <td align="center"><time>2013-01-13 15:25:39</time></td>
-    </tr>
-   </table>
-  
-   <!--分页-->
-   <div class="paging">
-    <a>第一页</a>
-    <a class="active">2</a>
-    <a>3</a>
-    <a>...</a>
-    <a>89</a>
-    <a>最后一页</a>
-   </div>
-  </div>
+   <h1>Websocket 聊天室</h1>
+
+
+    <div id="rev_cont">
+    </div>
+    <hr>
+    <input type="text" id="msg" style="width: 300px;height: 30px">
+    <input type="button" id="btn_msg" style="width:100px;height: 30px" value="发送">
+  </table>
+  <!-- </div> -->
  </article>
  <aside>
   <dl class="aside_pro_list">
@@ -285,71 +247,34 @@ $(document).ready(function(){
  </aside>
 </section>
 <!--footer-->
-<footer>
- <!--help-->
- <ul class="wrap help">
-  <li>
-   <dl>
-    <dt>消费者保障</dt>
-    <dd><a href="article_read.html">保障范围</a></dd>
-    <dd><a href="article_read.html">退换货流程</a></dd>
-    <dd><a href="article_read.html">服务中心</a></dd>
-    <dd><a href="article_read.html">更多服务特色</a></dd>
-   </dl>
-  </li>
-  <li>
-   <dl>
-    <dt>新手上路</dt>
-    <dd><a href="article_read.html">保障范围</a></dd>
-    <dd><a href="article_read.html">退换货流程</a></dd>
-    <dd><a href="article_read.html">服务中心</a></dd>
-    <dd><a href="article_read.html">更多服务特色</a></dd>
-   </dl>
-  </li>
-  <li>
-   <dl>
-    <dt>付款方式</dt>
-    <dd><a href="article_read.html">保障范围</a></dd>
-    <dd><a href="article_read.html">退换货流程</a></dd>
-    <dd><a href="article_read.html">服务中心</a></dd>
-    <dd><a href="article_read.html">更多服务特色</a></dd>
-   </dl>
-  </li>
-  <li>
-   <dl>
-    <dt>服务保障</dt>
-    <dd><a href="article_read.html">保障范围</a></dd>
-    <dd><a href="article_read.html">退换货流程</a></dd>
-    <dd><a href="article_read.html">服务中心</a></dd>
-    <dd><a href="article_read.html">更多服务特色</a></dd>
-   </dl>
-  </li>
- </ul>
- <dl class="wrap otherLink">
-  <dt>友情链接</dt>
-  <dd><a href="#" target="_blank">素材网站</a></dd>
-  <dd><a href="#/pins/24448.html">HTML5模块化后台管理模板</a></dd>
-  <dd><a href="#/pins/15966.html">绿色清爽后台管理系统模板</a></dd>
-  <dd><a href="#/pins/14931.html">黑色的cms商城网站后台管理模板</a></dd>
-  <dd><a href="http://www.bootstrapmb.com" target="_blank">前端博客</a></dd>
-  <dd><a href="http://www.bootstrapmb.com" target="_blank">博客</a></dd>
-  <dd><a href="http://www.bootstrapmb.com" target="_blank">新码笔记</a></dd>
-  <dd><a href="http://www.bootstrapmb.com" target="_blank">DethGhost</a></dd>
-  <dd><a href="#">当当</a></dd>
-  <dd><a href="#">优酷</a></dd>
-  <dd><a href="#">土豆</a></dd>
-  <dd><a href="#">新浪</a></dd>
-  <dd><a href="#">钉钉</a></dd>
-  <dd><a href="#">支付宝</a></dd>
- </dl>
- <div class="wrap btmInfor">
-  <p>© 2013 DeathGhost.cn 版权所有 网络文化经营许可证：浙网文[2013]***-027号 增值电信业务经营许可证：浙B2-200***24-1 信息网络传播视听节目许可证：1109***4号</p>
-  <address>联系地址：陕西省西安市雁塔区XXX号</address>
- </div>
-</footer>
+@include('layout.foot')
 </body>
 </html>
 <script src="/static/js/jquery.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/js.cookie-2.2.1.min.js"></script>
+<script>
+
+    var url = 'ws://ws.1910.com';      //websocket 服务器地址
+    var ws = new WebSocket(url);
+    var user_name = Cookies.get('u')
+    console.log(user_name);
+
+    ws.onopen = function(){
+        //点击发送
+        $("#btn_msg").on('click',function(){
+            ws.send($("#msg").val());
+        });
+
+    }
+    //接收服务器响应
+    ws.onmessage = function(d){
+        $("#rev_cont").append( "<p>" + "[" + user_name + "]: "  + d.data + "</p>" )
+        $("#msg").val("")
+    }
+
+
+</script>
 <script>
 //浏览历史记录页面加载事件
 // $(document).ready(function(){
