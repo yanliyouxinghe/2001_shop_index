@@ -221,19 +221,14 @@ $(document).ready(function(){
   <strong>
    <a href="channel.html">热卖商品</a>
   </strong>
-  <!-- <span class="classLi">
-   <a href="product_list.html">夏装</a>
-   <a href="product_list.html">连衣裙</a>
-   <a href="product_list.html">开衫</a>
-   <a href="product_list.html">牛仔裤</a>
-   <a href="product_list.html">背带裤</a>
-   <a href="product_list.html">T恤</a>
-  </span> -->
  </h2>
  <div class="ltArea">
   <!--ad:category pic-->
-   <a href="product_list.html"><img src="static/upload/bestCategoryPic02.jpg"/></a>
+  @foreach($goodsInfo['goodshot'] as $v)
+   <a href="{{url('goods/'.$v['goods_id'])}}"><img src="{{$v['goods_img']}}"/></a>
+   @endforeach
  </div>
+ 
  <div class="ctLi">
   <ul>
    @foreach($goodsInfo['goodshot'] as $v)
