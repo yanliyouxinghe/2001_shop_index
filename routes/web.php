@@ -74,7 +74,7 @@ Route::post('/selogin','Admin\BusinessController@selogin');//商家执行登录
 Route::get('/loginout','Admin\BusinessController@loginout');//商家退出
 Route::get('/goods','Admin\GoodsController@goods');//商家后台商品添加
 Route::post('/goods/store','Admin\GoodsController@store');//商家后台商品添加
-Route::any('/upload','Admin\GoodsController@upload');//图片上传接口
+Route::post('/uploadimg','Admin\GoodsController@upload');//图片上传接口
 Route::any('/uploads','Admin\GoodsController@uploads');//图片上传接口
 Route::post('/goods/pruct','Admin\GoodsController@pruct');//货品入库跳转列表
 Route::get('/goods/jyl/{id}','Admin\GoodsController@item');//查看商品
