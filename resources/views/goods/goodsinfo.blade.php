@@ -153,14 +153,14 @@ $(document).ready(function(){
       <dd>230</dd>
      </dl>
     </li>
+    @if(count($coupons) > 0)
     <li>
      <dl class="horizontal">
       <dt>优惠券：</dt>
-      <dd><strong class="univalent"><a href="/coupons/{{$v['goods_id']}}">点击领取优惠券</a></strong></dd>
-    <li>
+      <dd><strong class="univalent"><a href="/coupons/{{$v['goods_id']}}">点击领取优惠券</a></strong></dd> 
      </dl>
-    </li>
-   
+     <li>
+    @endif   
     @foreach($attr as $kk => $vv)
      <dl class="horizontal horizontal_attr">
       <dt>{{$vv['attr_name']}}</dt>      

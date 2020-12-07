@@ -14,18 +14,49 @@ class IndexController extends Controller
     public function index(){
         //轮播图展示
         $url = "http://2001.shop.api.com/slideshow";
-        $slideshow = geturl($url);
+        $slideshow = geturl($url);    
+        //  print_r($slideshow);
+        $slideshow = serialize($slideshow);
+        Redis::set('slideshow',$slideshow);
+        $slideshow = unserialize($slideshow);
+
+    //    $get = Redis::get('slideshow');
+    //    $get = unserialize($get);
+    //     print_r($get);exit;
 
          //首页商品数据
+         $user_id=Redis::hmget('reg','user_id','user_plone');
          $url = "http://2001.shop.api.com/goodsInfo";
          $goodsInfo= geturl($url);
-         $user_id=Redis::hmget('reg','user_id','user_plone');
+        //  print_r($goodsInfo);exit;
+
+         $goodsInfo = serialize($goodsInfo);
+         Redis::set('goodsInfo',$goodsInfo);
+         $goodsInfo = unserialize($goodsInfo);
+        //  $get = Redis::get('goodsInfo');
+        //  $get = unserialize($get);
+        //  print_r($get);exit;
+
+
+
+         //goodslove   is_new
+        //  $goodslove = serialize($goodsInfo);
+        //  Reids::set('goodslove',$goodslove);
+        //  $goodslove = unserialize($goodslove);
+
+         //goodshot   is_hot
+         //goodsbest  is_best
+
+    
 
         //首页公告数据
-        // $user_id="1";
-        // $data['user_id']=$user_id;
         $url = "http://2001.shop.api.com/noticeinfo";
         $noticeinfo = geturl($url);
+
+        $noticeinfo = serialize($noticeinfo);
+        Redis::set('noticeinfo',$noticeinfo);
+        $noticeinfo = unserialize($noticeinfo);
+        
 
         return view('index.index',['slideshow'=>$slideshow['data'],'goodsInfo'=>$goodsInfo['data'],'user_id'=>$user_id,'noticeinfo'=>$noticeinfo['data']]);
        

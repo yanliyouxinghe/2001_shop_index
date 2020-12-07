@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use App\Model\UseraddressModel;
 use App\Model\RegionModel;
 use App\Model\UserModel;
+use App\Model\Order_InfoModel;
+use App\Model\Order_GoodsModel;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redis;
-
 use function AlibabaCloud\Client\json;
 
 class UserController extends Controller
@@ -47,7 +48,9 @@ class UserController extends Controller
         $data['user_id'] = $user[0];
         $url = "http://2001.shop.api.com/obligation";
         $data_json = posturl($url,$data);
+        // print_r($data_json);die;
         $data = $data_json['data'];
+        // print_r($data);die;
         return view('user.order_list',compact('data'));
         
     }
@@ -74,6 +77,9 @@ class UserController extends Controller
             return json_encode(['code'=>'3','msg'=>'修改失败']);
         }
     }
+
+
+
 
 
 }

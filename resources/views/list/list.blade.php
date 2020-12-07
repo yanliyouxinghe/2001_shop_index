@@ -104,7 +104,7 @@ $(document).ready(function(){
     
        <!--分页-->
        <div class="paging">
-
+          
        </div>
     </section>
 
@@ -121,55 +121,33 @@ $(document).ready(function(){
       </a>
       </dd>
    @endforeach
-
-  </dl>
+    <!-- <p align="right">清空历史浏览记录</p>  -->
+  </dl>  
  </aside>
+
 </section>
 <!--footer-->
 @include('layout.foot')
 </body>
 <script src="/static/js/jquery.js"></script>
    <script>
-   //       $(function(){
-   //         $('.redhover').each(function(i,k){
-   //             var s_key = $(this).parent().attr('field');
-   //             var s_val = $(this).parent().attr('value');
-  
-   //             if(s_key=='brand_id'){
-   //                 var s_val = $(this).parent().attr('title');
-   //             }
-   //         });
-   //     });
-
- 
-
+     //搜索
       $(document).ready(function(){
          $('.searc').click(function(){ 
-            // alert(11);
             $(this).find('a').addClass('redhover');
             $(this).siblings().find('a').removeClass('redhover');
-
             var searc = '';
-
             // var s_val=$('.redhover').val();
-
             $('.redhover').each(function(i,k){
                var s_key = $(this).parent().attr('field');
-               //alert(s_key);
                var s_val = $(this).parent().attr('value');
                searc += s_key+'='+s_val+'&';
               
            });
             var url="{{$urls}}";
-            // alert(url);
-            // return false;
             //将搜索条件中多余符号删除
             if(searc){
-               // alert(searc);
-               // return false;
                url += '?'+searc.substring(0, searc.length -1);
-               // alert(url);
-               // return false;
                location.href=url;
             }
           

@@ -20,7 +20,6 @@ class IndexController extends Controller
     /**首页商品表中轮播图数据 */
     public function slideshow(){
         $slideshow = GoodsModel::getslicedata();
-
         $reposer = [
             'code'=>0,
             'msg'=>'OK',
@@ -89,11 +88,8 @@ class IndexController extends Controller
                 'msg'=>'Error',
                 'data'=>[],
             ]; 
-        }
-        // print_r($reposer);die;
-      
+        }    
         return json_encode($reposer);
-
 
     }
 

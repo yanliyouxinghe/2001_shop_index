@@ -94,6 +94,8 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('user','Api\UserController@user'); //用户信息
     Route::post('obligation','Api\UserController@obligation'); //未付款订单
 
+
+
     
 
 });

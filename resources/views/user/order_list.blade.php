@@ -78,7 +78,7 @@ $(document).ready(function(){
     <table class="order_table">
      <caption>
       <strong>订单编号：{{$v['order_sn']}}</strong>
-      <em class="shop_name">二号店</em>
+      <em class="shop_name">{{$v['seuser_plone']}}</em>
       @if($v['is_paid'] == 0)
       <a href="/pay/{{$v['order_id']}}" class="a_btn">支付</a>
       @elseif($v['is_paid'] == 1 && $v['order_status'] == 0 && $v['is_deliver'] == 0 && $v['is_evaluate'] == 0)
