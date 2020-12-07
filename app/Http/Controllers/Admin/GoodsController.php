@@ -180,6 +180,7 @@ class GoodsController extends Controller
      //文件上传
      public function upload(Request $request)
      {
+        // print_r(123);die;
          //接收文件上传的值
          $photo = $request->file();
          //判断文件上传是否有文件或者有没有出错
