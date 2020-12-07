@@ -6,20 +6,22 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Model\Shop_HistoryModel;
 use Illuminate\Support\Facades\Redis;
+use App\Model\CouponsModel;
 class GoodsController extends Controller
 {
     function goodsinfo($id){
-      
+    //   print_r($id);exit;
         // $id['id'] =  request()->input('id');
         $url = 'http://2001.shop.api.com/goods/'.$id;
         $data = geturl($url);
         $goodsinfo=$data['goodsinfo'];
         $attr=$data['attr'];
         $recommended=$data['recommended'];
-
+        $coupons=CouponsModel::where(['goods_id'=>$id])->get();
+        // print_r($coupons);exit;
         //历史浏览记录
         $this->history($id);
-        return view('/goods/goodsinfo',['goodsinfo'=>$goodsinfo,'attr'=>$attr,'recommended'=>$recommended]);
+        return view('/goods/goodsinfo',['goodsinfo'=>$goodsinfo,'attr'=>$attr,'recommended'=>$recommended,'coupons'=>$coupons]);
     }
 
    /**个人收藏 展示*/

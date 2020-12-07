@@ -100,33 +100,39 @@ class OrderController extends Controller
     }
 
         public function orderinfo(){
-           
-            
+            $user_id=Redis::hget('reg','user_id');
+            // print_r($user_id);exit;
         
-            $goods_attr_id = request()->goods_attr_id;
-            $goods_attr_id= explode('|',$goods_attr_id);
+            // $goods_attr_id = request()->goods_attr_id;
+            // $goods_attr_id= explode('|',$goods_attr_id);
+            
+            // $attr_price = Goods_AttrModel::whereIn('goods_attr_id',$goods_attr_id)
+            // ->sum('attr_price');
+
             $coupons_id = request()->coupons_id;
-            $attr_price = Goods_AttrModel::whereIn('goods_attr_id',$goods_attr_id)
-            ->sum('attr_price');
             // print_r($attr_price);die;            
                //  dd($attr_price);
                 //    print_r($attr_price);die;
                 $goods_id = request()->goods_id;
-                $goods_id=implode(',',$goods_id);    
+                // print_r($goods_id);exit;
+                $goods_id=implode(',',$goods_id);  
                 // print_r($goods_id);exit;
                 $goods_id=explode(',',$goods_id);
             //  print_r($goods_id);exit;
-        $shop_price=GoodsModel::whereIn('goods_id',$goods_id)->sum('shop_price')+$attr_price;
-
+        $shop_price=CartModel::where('user_id',$user_id)->whereIn('goods_id',$goods_id)->sum('shop_price');
+        // $se_shop_price=CartModel::where('user_id',$user_id)->whereIn('goods_id',$goods_id)->get();
+        // $se_price=[];
+        // $shop_price=GoodsModel::whereIn('goods_id',$goods_id)->get();
+        // print_r($shop_price);exit;
         // print_r($ashop_price);die;
         $coupons_price=CouponsModel::where(['coupons_id'=>$coupons_id])->value('coupons_price');
-        // print_r($coupons_price);die;
+        // print_r($coupons_price);exit;
         $deal_price=$shop_price-$coupons_price;
-        // print_r($deal_price);die;
+        // print_r($deal_price);exit;
        $deal_price = number_format($deal_price,2,".","");
 
 
-            $user_id=Redis::hget('reg','user_id');
+           
             if(!$user_id){
                 return json_encode(['code'=>1,'msg'=>'Error,请登录']);
             }
@@ -196,11 +202,13 @@ class OrderController extends Controller
                 ->get();
                 //   print_r($v);exit;
                
-
-
+                // foreach($goodsinfo as $v){
+                //     $price[]=$v->shop_price;
+                //     $goods_id[]=$v->goods_id;
+                // }
                 $order_sn = $this->order_sn($user_id);
                   
-               
+                // $order_data['total_price']=0;
                 $order_data = [
                     
                     'seuser_id'=>$v,
@@ -224,27 +232,37 @@ class OrderController extends Controller
                     'deal_price'=>$deal_price
                     
                 ];
+                
+                
+
                                
                       //生成商户订单
                     //   print_r($order_data);exit;
                 $se_order_id=Se_Order_InfoModel::insertGetId($order_data);
                     //  print_r($se_order_id);exit;
-            
+                    // Se_Order_InfoModel::where(['se_order_id'=>$se_order_id])->whereIn('goods_id',$)->update(['total_price'=>$price])
                
                 $goodsinfo = CartModel::select('sh_cart.goods_id','sh_cart.goods_sn','sh_cart.product_id','sh_cart.goods_name','sh_cart.shop_price','sh_cart.buy_number','sh_cart.goods_attr_id','sh_cart.seuser_id')
                         ->whereIn('cart_id',$cart_id)
                         ->get();
                         // print_r($goodsinfo);exit;
                     
-
+                    //     foreach($se_order_id as $v){
+                    //         print_r($v);exit;
+                    //     $goods_data[$k]['se_order_id'] = $v;
+                    // }
                     }
 
                 // if(!count($goodsinfo->toArray())){
                 //     throw new Exception('购物车内没有此商品');
                 // }
-                
+                // foreach($se_order_id as $val){
+                   
                         $goods_data = [];
+                        // foreach($se_order_id as $val){
                         foreach($goodsinfo as $k=>$v){
+                            // print_r($v);exit;
+                            // print_r($se_order_id);exit;
                             $goods_data[$k]['order_id'] = $order_id;
                             $goods_data[$k]['goods_id'] = $v->goods_id;
                             $goods_data[$k]['goods_sn'] = $v->goods_sn;
@@ -256,18 +274,25 @@ class OrderController extends Controller
                             $goods_data[$k]['seuser_id']=$v->seuser_id?$v->seuser_id:'';
                             
                         }
+                    // }
+                        
                         // print_r($goods_data);exit;
                         //添加到订单商品表
                         // Se_Order_Info::update('total_price' ,$goodsinfo->shop_price);
                 $ret = Order_GoodsModel::insert($goods_data);
-                    
+                    // }
                 if($ret){
                     User_CouponsModel::where(['user_id'=>$user_id,'coupons_id'=>$coupons_id])->update(['coupons_state'=>1]);
                 }
                 foreach($cart_id as $k=>$v){
                     CartModel::destroy($v);
                 }
-                
+            //     foreach($seuser_id as $val){
+            //     foreach($goodsinfo as $v){
+            //     Se_Order_Info::where(['seuser_id'=>$val,'order_id'=>$order_id])->update(['total_price'=>$v->shop_price]);
+
+            //     }
+            // }
                 DB::commit();
                 return json_encode(['code'=>0,'msg'=>'订单生成成功','data'=>$order_id]);
             }
@@ -276,7 +301,7 @@ class OrderController extends Controller
         
         catch (\Exception $e) {
             // DB::commit();
-            //print_r(123);exit;
+            print_r(123);exit;
                 DB::rollBack();
                 echo $e->getMessage();
                 return json_encode(['code'=>3,'msg'=>'订单生成失败']);
