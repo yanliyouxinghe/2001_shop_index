@@ -125,6 +125,7 @@ $(document).ready(function(){
   @endforeach
     @endif
    </td>
+   <td class="center">所属商家：{{$vv['seuser_plone']}}</td>
    <td class="center"><span class="rmb_icon">{{$vv['shop_price']}}</span></td>
    <td class="center"><span>{{$vv['buy_number']}}</span></td>
    <td class="center"><strong class="rmb_icon">{{$vv['buy_number']*$vv['shop_price']}}</strong></td>

@@ -100,14 +100,11 @@ class OrderController extends Controller
     }
 
         public function orderinfo(){
+
+            $goods_attr_id = request()->goods_attr_id;
+            $goods_attr_id= explode('|',$goods_attr_id);
+
             $user_id=Redis::hget('reg','user_id');
-            // print_r($user_id);exit;
-        
-            // $goods_attr_id = request()->goods_attr_id;
-            // $goods_attr_id= explode('|',$goods_attr_id);
-            
-            // $attr_price = Goods_AttrModel::whereIn('goods_attr_id',$goods_attr_id)
-            // ->sum('attr_price');
 
             $coupons_id = request()->coupons_id;
             // print_r($attr_price);die;            

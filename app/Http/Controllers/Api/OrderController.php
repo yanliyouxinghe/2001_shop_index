@@ -81,8 +81,9 @@ class OrderController extends Controller
        
         $cart_ids = explode(',',$cart_ids);
 
-        $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_img')
+        $cart_data = CartModel::select('sh_cart.*','sh_goods.goods_img','sh_seuser.seuser_plone')
             ->leftjoin('sh_goods','sh_cart.goods_id','=','sh_goods.goods_id')
+            ->leftjoin('sh_seuser','sh_goods.seuser_id','=','sh_seuser.seuser_id')
             ->whereIn('cart_id',$cart_ids)
             ->get();
             // print_r($cart_data);die;

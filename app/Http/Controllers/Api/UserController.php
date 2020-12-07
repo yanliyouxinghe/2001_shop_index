@@ -63,11 +63,11 @@ class UserController extends Controller
 
         //待付款订单
         $obligation = Order_InfoModel::where(['is_paid'=>0,'user_id'=>$user_id,'order_status'=>0,'is_deliver'=>0,'is_evaluate'=>0])->count();
-        // //待发货订单
+        //待发货订单
         $deliver = Order_InfoModel::where(['is_paid'=>1,'user_id'=>$user_id,'order_status'=>0,'is_deliver'=>0,'is_evaluate'=>0])->count();
-        // //待确认订单
+        //待确认订单
         $afrmm = Order_InfoModel::where(['is_paid'=>1,'user_id'=>$user_id,'order_status'=>0,'is_deliver'=>1,'is_evaluate'=>0])->count();
-        // //待评价
+        //待评价
         $evaluate = Order_InfoModel::where(['is_paid'=>1,'user_id'=>$user_id,'order_status'=>1,'is_deliver'=>1,'is_evaluate'=>0])->count();
 
         $respoer = [
@@ -89,8 +89,10 @@ class UserController extends Controller
 
     public function obligation(){
         $user_id = request()->user_id;
-        //待付款订单
-        $obligation = Order_InfoModel::select('order_id','order_sn','is_paid','order_status','is_deliver','is_evaluate')->where(['user_id'=>$user_id])->get()->toArray();
+        $obligation = Order_InfoModel::select('sh_order_goods.seuser_id','sh_order_info.*','sh_seuser.seuser_plone')->leftjoin('sh_order_goods','sh_order_info.order_id','=','sh_order_goods.order_id')->leftjoin('sh_seuser','sh_order_goods.seuser_id','=','sh_seuser.seuser_id')->where(['user_id'=>$user_id])->get()->toArray();
+
+        // 待付款订单
+        // $obligation = Order_InfoModel::select('order_id','order_sn','is_paid','order_status','is_deliver','is_evaluate')->where(['user_id'=>$user_id])->get()->toArray();
         if(count($obligation) <= 0){
             $respoer = [
                 'code'=>'1',
@@ -109,8 +111,6 @@ class UserController extends Controller
             }
             $order_goods_data[$k]['goods_data'] = $goods_data_img;
         }
-
-     
         $respoer = [
             'code'=>'0',
             'msg'=>'OK',
@@ -119,4 +119,6 @@ class UserController extends Controller
     	return json_encode($respoer);
 
     }
+
+
 }

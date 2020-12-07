@@ -34,6 +34,8 @@ Route::post('/notify_url','Index\PayController@notify_url');  //支付宝异步�
 
 
 
+
+
 Route::get('/goods/{goods_id}','Index\GoodsController@goodsinfo');//详情
 Route::get('/getattrprice','Index\CartController@getattrprice');
 Route::post('/addcart','Index\CartController@addcart');//加入购物车
