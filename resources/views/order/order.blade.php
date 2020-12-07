@@ -311,7 +311,6 @@ $(document).on("click",".coupons",function(){
             }else{
               window.history.go(-1); //返回上一页
               window.location.href=document.referrer;
-              alert(ret.msg);
             }
        },'json');
        
