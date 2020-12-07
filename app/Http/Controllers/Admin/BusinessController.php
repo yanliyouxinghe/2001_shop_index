@@ -72,18 +72,21 @@ class BusinessController extends Controller
         // $code ="11223";
         $result = $this->send($name,$code);
         if($result['Message']=='OK'){
-            return  [
+                $respoer = [
                     'code'=>'00001',
                     'message'=>'发送成功',
                     'result'=>''
                 ];
         }else{
-            return  [
+                $respoer = [
                     'code'=>'00002',
                     'message'=>'发送失败',
                     'result'=>''
                 ];
+
         }
+        return json_encode($respoer);
+
     }
     //短信验证
     public function send($name,$code){

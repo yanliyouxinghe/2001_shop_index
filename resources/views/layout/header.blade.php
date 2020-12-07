@@ -19,12 +19,21 @@
    <!--topRightNav-->
     <ul class="topRtNav">
      <li><a href="{{url('/ser')}}">个人中心</a></li>
+
+
      @if($user_id[0]==false||$user_id[1]==false||empty($user_id))
      <li><a href="{{url('/cart')}}" class="cartIcon">购物车<i class="cou">请登录</i></a></li>
      @else
      <li><a href="{{url('/cart')}}" class="cartIcon">购物车<i class="cou">{{request()->count_cart['data']}}</i></a></li>
      @endif
+
+
+     @if($user_id[0]==false||$user_id[1]==false||empty($user_id))
+     <li><a href="{{url('/favorite')}}" class="cartIcon">收藏夹<i class="cou">请登录</i></a></li>
+     @else
      <li><a href="{{url('/favorite')}}" class="favorIcon">收藏夹</a></li>
+     @endif
+
      <li><a href="{{url('/business')}}">商家中心</a></li>
     </ul>
    </div>

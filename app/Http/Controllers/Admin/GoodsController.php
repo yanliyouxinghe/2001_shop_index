@@ -26,7 +26,8 @@ class GoodsController extends Controller
      */
     public function list()
     {
-        $goods = GoodsModel::where(["is_static"=>1])->get();
+        $user=session('seuser_id');
+        $goods=GoodsModel::where(["is_static"=>1,'seuser_id'=>$user])->get();
         return view('admin.goods.list',['goods'=>$goods]);
     }
 

@@ -23,7 +23,6 @@ class GoodsController extends Controller
        }
       
        $recommended=GoodsModel::where(['cat_id'=>$cat_id])->get();
-       //dd($goodsinfo);
         //商品规格
         $attr = Goods_AttrModel::select('goods_attr_id','sh_goods_attr.attr_id','sh_attribute.attr_name','sh_goods_attr.attr_value')
         ->leftjoin('sh_attribute','sh_goods_attr.attr_id','=','sh_attribute.attr_id')
@@ -58,7 +57,6 @@ class GoodsController extends Controller
     /**API个人收藏  添加*/
     public function createcollect(){
         $data= request()->all();
-        // print_r($goods_id);
         $user_id=Redis::hget('reg','user_id');
         $data['user_id'] = $user_id;
 
@@ -66,7 +64,6 @@ class GoodsController extends Controller
             return json_encode(['code'=>'1001','msg'=>'请先登录']);
         }
         $count = CollectModel::where(['user_id'=>$user_id,'goods_id'=>$data['goods_id']])->count();
-        // print_r($count);
         //判断此用户是否收藏过此此商品
         if($count==1){
             return json_encode(['code'=>'1002','msg'=>'您已收藏过,可到收藏夹中查看']);
@@ -121,14 +118,10 @@ class GoodsController extends Controller
 
     /**API登录后  添加历史浏览记录 */
     public function createhistory($goods_id){
-
         //获取用户id
         $user_id=Redis::hget('reg','user_id');
-        // print_r($user_id);
-        // $data['user_id'] = $user_id;
         //根据商品id判断此用户是否浏览过商品
         $history = Shop_HistoryModel::where(['user_id'=>$user_id,'goods_id'=>$goods_id])->count();
-        // print_r($history);
         if($history<1){
             $data = [
                 'user_id'=>$user_id,
