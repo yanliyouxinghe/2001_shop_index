@@ -100,9 +100,6 @@ class OrderController extends Controller
     }
 
         public function orderinfo(){
-           
-            
-        
             $goods_attr_id = request()->goods_attr_id;
             $goods_attr_id= explode('|',$goods_attr_id);
             $coupons_id = request()->coupons_id;
