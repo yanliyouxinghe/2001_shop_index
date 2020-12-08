@@ -45,9 +45,9 @@ Route::domain('2001.shop.api.com')->group(function () {
 
     //list
     Route::get('/listhistory','Api\ListController@listhistory');    //Api 登录后 展示历史浏览记录
+    Route::post('/delhistory','Api\ListController@delhistory');    //登录后清空 历史浏览记录
 
     Route::post('addcart','Api\CartController@addcart');//加入购物车
-
     Route::get('getlist/{id}','Api\ListController@getlist'); //列表页品牌数据
     
     //index

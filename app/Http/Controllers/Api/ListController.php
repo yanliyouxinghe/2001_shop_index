@@ -95,14 +95,14 @@ class ListController extends Controller
 
 
 
-    // /**API登录后 展示历史浏览记录 */
+    /**API登录后 展示历史浏览记录 */
     public function listhistory(){
-        // $user_id = request()->input('user_id');
         //获取用户id
         $user_id=Redis::hget('reg','user_id');
         $listhistory = Shop_HistoryModel::select('sh_shop_history.*','sh_goods.goods_id','sh_goods.goods_img','sh_goods.goods_name','sh_goods.shop_price')
                             ->leftjoin('sh_goods','sh_shop_history.goods_id','=','sh_goods.goods_id')
                             ->where('sh_shop_history.user_id',$user_id)
+                            ->where('is_del',1)
                             ->orderBy('add_time','desc')
                             ->limit(8)
                             ->get(); 
@@ -113,6 +113,19 @@ class ListController extends Controller
             'listhistory'=>$listhistory,
         ];
         return json_encode($response);
+    }
+
+    /**登录后 清空历史浏览记录 */
+    public function delhistory(){
+        $user_id=Redis::hget('reg','user_id');
+        $delhistory = Shop_HistoryModel::where('user_id',$user_id)->update(['is_del'=>2]);
+        $response = [
+            'code'=>0,
+            'msg'=>'OK',
+            'delhistory'=>$delhistory,
+        ];
+        return json_encode($response);
+
     }
 
   

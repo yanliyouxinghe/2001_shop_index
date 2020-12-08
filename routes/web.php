@@ -26,6 +26,10 @@ Route::get('/noticeinfo','Index\IndexController@noticeinfo');    //前台首页�
 Route::view('/notice_list','index/notice_list');    //前台首页公告展示页
 Route::view('/notice_read','index/notice_read');    //前台首页公告详情页
 Route::post('/listhistory','Index\ListController@listhistory');    //登录后历史浏览记录展示
+Route::get('/delhistorys','Index\ListController@delhistorys');    //登录后清空 历史浏览记录
+
+Route::get('/cookiehistory/{goods_id?}','Index\GoodsController@cookiehistory');    //cookie 添加历史浏览记录
+Route::get('/cookielist','Index\ListController@cookielist');    //cookie 历史浏览记录展示
 
 Route::get('/pay/{order_id}','Index\PayController@pay');  //支付
 Route::get('/return_url','Index\PayController@return_url');   //支付宝同步跳转
@@ -102,8 +106,6 @@ Route::get('/logistics','Index\LogisticsController@logistics');  //查看物流
 
 
 Route::get('/coupons/{goods_id}','Index\GoodsController@coupons');//优惠券
-
-
 Route::get('/maopao','Index\IndexController@maopao');//优惠券
 
 
