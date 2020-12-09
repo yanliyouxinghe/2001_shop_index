@@ -18,17 +18,14 @@ class GoodsController extends Controller
         $attr=$data['attr'];
         $recommended=$data['recommended'];
         $coupons=CouponsModel::where(['goods_id'=>$id])->get();
-        // print_r($coupons);exit;
-        //调用cookie添加历史浏览记录
-        // $this->cookiehistory($goods_id);
-        //print_r($res);die;
+       
         $user_id = Redis::hget('reg','user_id');
         if(!$user_id){
             //不登录 添加历史浏览记录
             $this->cookiehistory($id);
         }else{
             //登录后 添加历史浏览记录
-            $url = 'http://2001.shop.api.com/createhistory/'.$goods_id;
+            $url = 'http://2001.shop.api.com/createhistory/'.$id;
             geturl($url);
         }
 
@@ -68,45 +65,31 @@ class GoodsController extends Controller
 
    /**cookie 添加历史浏览记录 不用入库*/
     public function cookiehistory($goods_id){
-        //  Cookie::queue('historyInfo',$goods_id);
-        $cookiehistory = $_COOKIE['historyInfo']??'';
-        // print_r($cookiehistory);die;
-       //判断cookie是否存在  从cookie中去值
-        // $cookiehistory = Cookie::get('historyInfo');
-        // var_dump($history);
-            //  print_r($goods_ids);die;
-                //如果商品已存在,将浏览时间更新为当前时间,并将信息从新加入cookie
-    
-        $cookiehistorys = unserialize($cookiehistory);
-        //  print_r($cookiehistorys);exit; 
-
-        if(!empty($cookiehistorys)){
+        $cookiehistory = Cookie::get('historyInfo');
+        $cookiehistory = unserialize($cookiehistory);
+       
+        if(!empty($cookiehistory)){
             //从cookie中取出goods_id一列,判断当前商品是否存在
-            $cookiehistorys [$goods_id] = ['goods_id'=>$goods_id,'add_time'=>time()];
-            $cookiehistorys = serialize($cookiehistorys);
-            setcookie('historyInfo',$cookiehistorys);
-
-            // $goods_ids =array_column($cookiehistorys,'goods_id');
+            $goods_ids =array_column($cookiehistory,'goods_id');
             //  print_r($goods_ids);die;
-            // if(in_array($goods_id,$goods_ids)){
-            //     //如果商品已存在,将浏览时间更新为当前时间,并将信息从新加入cookie
-            //     $cookiehistorys['goods_id'] = $goods_id;
-            //     $cookiehistorys['add_time'] = time(); 
-            //     $cookiehistorys = serialize($cookiehistorys);
-            //     setcookie('historyInfo',$cookiehistorys);
-            //     return;
-            // }else{
-            //     //如果商品不存在cookie 则进行添加
-            //     $cookiehistorys[$goods_id] = ['goods_id'=>$goods_id,'add_time'=>time()];
-            //     $cookiehistorys = serialize($cookiehistorys);
-            //     setcookie('historyInfo',$cookiehistorys);
-            //     return;
-            // }
+            if(in_array($goods_id,$goods_ids)){
+                //如果商品已存在,将浏览时间更新为当前时间,并将信息从新加入cookie
+                $cookiehistory['goods_id']['add_time'] = time();
+                $cookiehistory = serialize($cookiehistory);
+                Cookie::queue('historyInfo',$cookiehistory);
+                return;
+            }else{
+                //如果商品不存在cookie 则进行添加
+                $cookiehistory[$goods_id] = ['goods_id'=>$goods_id,'add_time'=>time()];
+                $cookiehistorys = serialize($cookiehistory);
+                Cookie::queue('historyInfo',$cookiehistorys);
+                return;
+            }
         }else{
             //如果cookie不存在 存cookie
-            $cookiehistorys [$goods_id] = ['goods_id'=>$goods_id,'add_time'=>time()];
-            $cookiehistorys = serialize($cookiehistorys);
-            setcookie('historyInfo',$cookiehistorys);
+            $cookiehistory [$goods_id] = ['goods_id'=>$goods_id,'add_time'=>time()];
+            $cookiehistory = serialize($cookiehistory);
+            Cookie::queue('historyInfo',$cookiehistory);
         }
 
     }
