@@ -1,1 +1,1 @@
-document.write('<img src="http://2001.shop.admin.com/upload/aG3PvZtnIjFxjBDlRmZ4qXEIpEmPymC2ad2nrRi5.jpeg" width="73" height="190">')
+document.write('<img src="" width="73" height="190">')
