@@ -13,7 +13,8 @@
 
 Route::middleware(['header'])->group(function () {
 
-Route::post('/search','Index\IndexController@search');//搜索
+Route::post('/search','Index\IndexController@search');//搜
+Route::get('/seuser/{id}','Index\IndexController@seuser');//搜索
 Route::get('/','Index\IndexController@index');  //前台首页
 Route::get('/list/{id}','Index\ListController@list');  //列表页
 Route::get('/confirm','Index\OrderController@index');  //提交订单视图页面
