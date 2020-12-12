@@ -1,1 +1,0 @@
-document.write('<img src="" width="73" height="190">')

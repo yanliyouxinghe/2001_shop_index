@@ -56,8 +56,8 @@ $(document).ready(function(){
    <li class="user_icon">
     <input type="text" class="textbox" name="user_plone" placeholder="手机号码"/><span></span>
    </li>
-   <li class="link_li">
-    <button type="button" id="aaa" value="获取手机校验码" class="get_num_btn"/>获取手机校验码</button>
+   <li class="link_li btn">
+    <button type="button" id="span_tel" value="获取手机校验码" class="get_num_btn"/>获取手机校验码</button>
    </li>
    <li class="user_cc">
     <input type="text" class="textbox" name="code" placeholder="手机校验码"/><span></span>
@@ -154,35 +154,10 @@ $(document).ready(function(){
     }
     });
     $('button').click(function () {
-        var count = 60; //间隔函数，1秒执行
-        var InterValObj1; //timer变量，控制时间
-        var count1; //当前剩余秒数
-          // alert(111);
-            count1=count; 		 
-          
-            // 设置button效果，开始计时
-            $("#aaa").attr("disabled", "true");
-            $("#aaa").val( + count1 + "秒再获取");
-            InterValObj1=window.setInterval(SetRemainTime1,1000); //启动计时器，1秒执行一次
-            // 向后台发送处理数据
-            $.ajaxSetup({
-              headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              }
-            }); 
-
-
-              function SetRemainTime1(){
-                if (count1 == 0) {                
-                  window.clearInterval(InterValObj1);//停止计时器
-                  $("#aaa").removeAttr("disabled");//启用按钮
-                  $("#aaa").val("重新发送");
-                }else{
-                  count1--;
-                  $("#aaa").val( + count1 + "秒再获取");
-                }
-		          }
-        var name = $('input[name="user_plone"]').val();
+      var _this = $(this);
+       var name = $('input[name="user_plone"]').val();
+        _this.text('60s');
+				times = setInterval(goTime, 1000);
         // alert(name);
         var mobilereg=/^[1][3,4,5,7,8][0-9]{9}$/;
         if(mobilereg.test(name)){
@@ -199,5 +174,21 @@ $(document).ready(function(){
              alert('请输入正确的手机号');
         }
     })
+
+    function goTime(){
+			var c = $("#span_tel").text();
+			// console.log(s);
+			c = parseInt(c);
+			//倒计时停止
+			if(c <= 0){
+				clearInterval(times);
+				$("#span_tel").text('获取');
+				$(".btn").css('pointer-events','auto');
+			}else{
+				c = c-1;
+				$("#span_tel").text(c+'s');
+				$('.btn').css('pointer-events','none');
+			}
+		}
 </script>
   

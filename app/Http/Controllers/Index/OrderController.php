@@ -297,8 +297,6 @@ class OrderController extends Controller
 
         
         catch (\Exception $e) {
-            // DB::commit();
-            print_r(123);exit;
                 DB::rollBack();
                 echo $e->getMessage();
                 return json_encode(['code'=>3,'msg'=>'订单生成失败']);
