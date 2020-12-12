@@ -58,7 +58,7 @@ $(document).ready(function(){
     <input type="text" class="textbox text1" placeholder="手机号码"/>
     <span class="span1" style="color: red;"></span>
    </li>
-   <li class="link_li bin">
+   <li class="link_li btn">
     <input type="button" id="span_tel" value="获取手机校验码" class="get_num_btn"/>
    </li>
    <li class="user_cc">
@@ -87,7 +87,7 @@ $(document).ready(function(){
     $(document).on('click','.get_num_btn',function(){
         var _this = $(this);
         var plone = $('.text1').val();
-        _this.text('60s');
+        _this.val('60s');
 		times = setInterval(goTime, 1000);
         if(!plone){
             $('.span1').html("手机号码不能为空");
@@ -103,24 +103,24 @@ $(document).ready(function(){
         }
         $.post('/find_pwddo',{plone:plone},function(res){
                 if(res.code == 0){
-                    alert(res.msg);
+                    console.log(res.msg);
                 }else{
                    alert(res.msg);
                 }
             },'json');
     });
       function goTime(){
-			var c = $("#span_tel").text();
+			var c = $("#span_tel").val();
 			// console.log(s);
 			c = parseInt(c);
 			//倒计时停止
 			if(c <= 0){
 				clearInterval(times);
-				$("#span_tel").text('获取');
+				$("#span_tel").val('获取');
 				$(".btn").css('pointer-events','auto');
 			}else{
 				c = c-1;
-				$("#span_tel").text(c+'s');
+				$("#span_tel").val(c+'s');
 				$('.btn').css('pointer-events','none');
 			}
 		}

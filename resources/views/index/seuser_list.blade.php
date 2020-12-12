@@ -6,9 +6,9 @@
 <meta name="keywords"  content="DeathGhost" />
 <meta name="description" content="DeathGhost" />
 <meta name="author" content="DeathGhost,deathghost@deathghost.cn">
-<link rel="icon" href="/static/images/icon/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="/static/css/style.css" /><script src="/static/js/html5.js"></script>
-<script src="/static/js/jquery.js"></script>
+<link rel="icon" href="static/images/icon/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="static/css/style.css" /><script src="static/js/html5.js"></script>
+<script src="static/js/jquery.js"></script>
 <script>
 $(document).ready(function(){
   $("nav .indexAsideNav").hide();
@@ -56,13 +56,15 @@ $(document).ready(function(){
  
 <section class="wrap shop_goods_li">
   <ul class="favorite_list">
-   @if(count($search_data) > 0)
-   @foreach($search_data as $v)
+   @if(count($data) > 0)
+   @foreach($data as $v)
+  
    <li>
-    <a href="/goods/{{$v['goods_id']}}">
-     <img src="{{$v['goods_img']}}"/>
-     <h3>{{$v['goods_name']}}</h3>
-     <p class="price"><span class="rmb_icon">298.00</span></p>
+    <a href="/seuser/{{$v['seuser_id']}}">
+    @foreach($v['logo'] as $vv)
+     <img src="{{$vv['firm_imgs']}}"/>
+   @endforeach
+    
     </a>
    </li>
    @endforeach
@@ -72,7 +74,7 @@ $(document).ready(function(){
  <div class="shop_infor">
   <h2 class="user_vip accredited" title="认证企业">Error</h2>
   <p>
-   <span>未搜索/查找到相关商品</span>
+   <span>未搜索到相关商家</span>
    <span></span>
    <span></span>
   </p>
