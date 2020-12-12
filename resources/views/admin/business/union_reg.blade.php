@@ -24,6 +24,10 @@
     <span>账号：</span>
     <input type="text" name="seuser_plone" placeholder="输入账号" class="txtbox"/><span></span>
    </dd>
+    <dd>
+    <span>名称：</span>
+    <input type="text" name="seuser_name" placeholder="输入账号" class="txtbox"/><span></span>
+   </dd>
    <dd>
     <span>手机验证码：</span>
     <button type="button" id="aaa" value="获取手机校验码" class="get_num_btn"/>获取手机校验码</button>
@@ -41,7 +45,7 @@
     <input type="password" name="seuser_pwds" placeholder="输入密码" class="txtbox"/><span></span>
    </dd>
    <dd>
-    <input type="button" value="立 即 注 册" class="loginBtn"/>
+    <input type="button" value="提 交 审 核" class="loginBtn"/>
    </dd>
    <dd>
     <a href="{{url('/business')}}" title="登录账号" class="fl">已有账号，立即登录？</a>
@@ -65,6 +69,15 @@
             } else {
                 $("input[name='seuser_plone']+span").html("<font color='green'>√</font>");
                 falg = true;
+        }
+         var afalg = false;
+      var seuser_name = $('input[name="seuser_name"]').val();
+      if (seuser_name == '') {
+                $("input[name='seuser_name']+span").html("<font color='red'>名称不能为空</font>");
+                afalg = false;
+            } else {
+                $("input[name='seuser_name']+span").html("<font color='green'>√</font>");
+                afalg = true;
         }
       var pfalg = false;
       var seuser_pwd = $('input[name="seuser_pwd"]').val();
@@ -94,7 +107,7 @@
                 ifalg = true;
             }
             // alert(code);
-      if(falg === false || pfalg === false || ofalg === false || ifalg === false){
+      if(falg === false || pfalg === false || ofalg === false || ifalg === false || afalg === false){
           return false;
       }
       if(seuser_pwd!=seuser_pwds){
@@ -104,7 +117,23 @@
         var myreg=/^[1][3,4,5,7,8][0-9]{9}$/;
     if(myreg.test(seuser_plone)){
         // alert(1111);
-           $.get('/seregdo',{seuser_plone:seuser_plone,seuser_pwd:seuser_pwd,seuser_pwds:seuser_pwds,code:code},function (result) {
+           $.get('/seregdo',{seuser_plone:seuser_plone,seuser_name:seuser_name,seuser_pwd:seuser_pwd,seuser_pwds:seuser_pwds,code:code},function (result) {
+               console.log(result);
+            if(result.code=='00001'){
+                alert(result.message);
+            }
+            if(result.code=='00002'){
+                alert(result.message);
+            }
+            if(result.code=='00003'){
+                alert(result.message);
+            }
+            if(result.code=='00004'){
+                alert(result.message);
+            }
+            if(result.code=='00005'){
+                alert(result.message);
+            }
             if(result.code=='00000'){
                 location.href = "/business"
             }else{
