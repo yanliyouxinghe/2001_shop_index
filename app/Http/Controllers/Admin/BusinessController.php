@@ -18,6 +18,7 @@ class BusinessController extends Controller
     }
     public function seregdo(Request $request){
         $seuser_plone = $request->post('seuser_plone');
+        $seuser_name = $request->post('seuser_name');
         $seuser_pwd = $request->post('seuser_pwd');
 
         $seuser_pwds = $request->post('seuser_pwds');
@@ -39,6 +40,7 @@ class BusinessController extends Controller
                     'result'=>''
                 ];
         }
+        
 
         
         $seuser_pwd = bcrypt($seuser_pwd);
@@ -47,6 +49,7 @@ class BusinessController extends Controller
     
              $data = [
             'seuser_plone' => $seuser_plone,
+            'seuser_name'=>$seuser_name,
             'seuser_pwd'=>$seuser_pwd,
             ];
              $res = SeuserModel::insert($data);
