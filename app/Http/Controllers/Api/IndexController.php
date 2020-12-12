@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Redis;
 use App\Model\GoodsModel;
 use App\Model\CartgoryModel;
 use App\Model\NoticeModel;
+use App\Model\FirmModel;
+use App\Model\SeuserModel;
+use function AlibabaCloud\Client\json;
 class IndexController extends Controller
 {
     /**首页分类数据 */
