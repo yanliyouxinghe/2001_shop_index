@@ -85,9 +85,9 @@ $(document).ready(function(){
 <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
 <script>
     $(document).on('click','.get_num_btn',function(){
+        var _this = $(this);
         var plone = $('.text1').val();
-        _this.val('60s');
-		times = setInterval(goTime, 1000);
+       
         if(!plone){
             $('.span1').html("手机号码不能为空");
             return false;
@@ -102,12 +102,31 @@ $(document).ready(function(){
         }
         $.post('/find_pwddo',{plone:plone},function(res){
                 if(res.code == 0){
-                    alert(res.msg);
+                    _this.val('60s');
+		            times = setInterval(goTime, 1000);
                 }else{
                    alert(res.msg);
                 }
             },'json');
     });
+
+    function goTime(){
+        var c = $("#span_tel").text();
+        // console.log(s);
+        c = parseInt(c);
+        //倒计时停止 
+        if(c<=0){
+        clearInterval(times);
+        $("#span_tel").text('获取');
+        $(".btn").css('pointer-events','auto');
+        }else{
+        c = c-1;
+        $("#span_tel").text(c+'s');
+        $('.btn').css('pointer-events','none');
+        }
+ }
+
+
     $('.sbmt_btn').click(function(){
 
         //手机号验证条件
@@ -188,6 +207,8 @@ $(document).ready(function(){
 
 
     });
+
+
 
 </script>
 
