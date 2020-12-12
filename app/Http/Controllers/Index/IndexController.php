@@ -62,7 +62,6 @@ class IndexController extends Controller
        
     }
 
-    //搜索
     public function search(){
         $search_val = request()->input('search_val');
         if(!$search_val){
@@ -79,6 +78,7 @@ class IndexController extends Controller
             $url = "http://2001.shop.api.com/search";
             $search_data = posturl($url,$data);
             $data = $search_data['data'];
+            // print_r($data);die;
             return view('index.search_list',['search_data'=>$data]);
         }else{
             $data['search_val'] = $search_val;
@@ -96,8 +96,13 @@ class IndexController extends Controller
            echo "参数丢失";
            return false;
         }
-        
+        $data['id'] = $id;
+        $url = "http://2001.shop.api.com/seuser_goods";
+        $search_goods = posturl($url,$data);
+        $data = $search_goods['data'];
+        return view('index.search_list',['search_data'=>$data]);
     }
+
 
 
 
