@@ -6,9 +6,9 @@
 <meta name="keywords"  content="DeathGhost" />
 <meta name="description" content="DeathGhost" />
 <meta name="author" content="DeathGhost,deathghost@deathghost.cn">
-<link rel="icon" href="/static/images/icon/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="/static/css/style.css" /><script src="/static/js/html5.js"></script>
-<script src="/static/js/jquery.js"></script>
+<link rel="icon" href="static/images/icon/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="static/css/style.css" /><script src="static/js/html5.js"></script>
+<script src="static/js/jquery.js"></script>
 <script>
 $(document).ready(function(){
   $("nav .indexAsideNav").hide();
@@ -58,13 +58,11 @@ $(document).ready(function(){
   <ul class="favorite_list">
    @if(count($data) > 0)
    @foreach($data as $v)
-  
    <li>
     <a href="/seuser/{{$v['seuser_id']}}">
     @foreach($v['logo'] as $vv)
      <img src="{{$vv['firm_imgs']}}"/>
-   @endforeach
-    
+     @endforeach
     </a>
    </li>
    @endforeach
