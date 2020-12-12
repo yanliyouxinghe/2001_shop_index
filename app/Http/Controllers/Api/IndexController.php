@@ -92,5 +92,67 @@ class IndexController extends Controller
         return json_encode($reposer);
 
     }
+    public function search_a(){
+        $search_val = request()->input('search_val');
+        if(!$search_val){
+            $reposer = [
+                'code'=>1,
+                'msg'=>'Error',
+                'data'=>[],
+            ]; 
+        }
+        $where1 = [];
+        $where1[] = ['seuser_name','like',"%$search_val%"];
+        $where1[] = ['seuser_start','=',1];
+
+        $search_id = SeuserModel::select('seuser_id')->where($where1)->get();
+        $search_data = [];
+        foreach($search_id as $k=>$v){
+            $v['logo'] = FirmModel::select('firm_imgs')->where(['seuser_id'=>$v['seuser_id']])->get();
+            $search_data[] = $v;
+        }
+        if(count($search_data) >= 1){
+            $reposer = [
+                'code'=>0,
+                'msg'=>'OK',
+                'data'=>$search_data,
+            ]; 
+        }else{
+            $reposer = [
+                'code'=>2,
+                'msg'=>'Error',
+                'data'=>[],
+            ]; 
+        }    
+        return json_encode($reposer);
+    }
+
+
+    public function seuser_goods(){
+        $id = request()->input('id');
+        if(!$id){
+            $reposer = [
+                'code'=>1,
+                'msg'=>'Error',
+                'data'=>[],
+            ]; 
+        }
+
+        $seuser_goods = GoodsModel::select('goods_id','goods_name','goods_img')->where('seuser_id',$id)->get();
+        if($seuser_goods){
+            $reposer = [
+                'code'=>0,
+                'msg'=>'OK',
+                'data'=>$seuser_goods,
+            ]; 
+        }else{
+            $reposer = [
+                'code'=>2,
+                'msg'=>'Error',
+                'data'=>[],
+            ]; 
+        }    
+        return json_encode($reposer);
+    }
 
 }
