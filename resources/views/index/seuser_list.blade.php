@@ -58,13 +58,11 @@ $(document).ready(function(){
   <ul class="favorite_list">
    @if(count($data) > 0)
    @foreach($data as $v)
-  
    <li>
     <a href="/seuser/{{$v['seuser_id']}}">
     @foreach($v['logo'] as $vv)
      <img src="{{$vv['firm_imgs']}}"/>
-   @endforeach
-    
+     @endforeach
     </a>
    </li>
    @endforeach
