@@ -142,7 +142,6 @@ class BusinessController extends Controller
         }
          session(['seuser_plone'=>$admin->seuser_plone,'seuser_id'=>$admin->seuser_id]);
          session(['seuser_id'=>$admin->seuser_id]);
-         //Redis::Hmset('reg','token',$res['token'],'user_id',$res['user']["user_id"],'user_plone',$res['user']["user_plone"]);
         return json_encode(['code'=>'00000','msg'=>'登录成功']);
    }
    //商家退出

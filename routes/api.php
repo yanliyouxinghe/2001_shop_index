@@ -57,10 +57,10 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('noticeinfo','Api\IndexController@noticeinfo'); //首页公告数据
     Route::get('/','Api\IndexController@index');   //前台首页
     Route::post('search','Api\IndexController@search');   //前台搜索
-    Route::post('search_a','Api\IndexController@search_a');   //前台商家搜索
-    Route::post('seuser_goods','Api\IndexController@seuser_goods');   //前台商家商品
 
     
+
+
     //cart
     Route::post('addcart','Api\CartController@addcart');//加入购物车
     Route::post('cart_count','Api\CartController@cart_count'); //购物车数据条数

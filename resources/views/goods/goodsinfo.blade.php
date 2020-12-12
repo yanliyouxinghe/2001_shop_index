@@ -202,7 +202,8 @@ $(document).ready(function(){
  <article>
   <ul class="item_tab">
    <li><a class="curr_li">商品详情</a></li>
-   <li><a>在线聊天（1892）</a></li>
+   <li><a>商品评价（2893）</a></li>
+   <li><a>成交记录（1892）</a></li>
   </ul>
   
   <!--商品详情-->
@@ -212,20 +213,57 @@ $(document).ready(function(){
 {!! $v['goods_desc'] !!}
   </div>
   @endforeach
-  <!--在线聊天-->
+  <!--商品评价-->
   <div class="cont_wrap">
-  <table class="table">
+   <table class="table">
+    <tr>
+     <td width="20%" align="center">李*锋</td>
+     <td width="60%">这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦这里是评论内容哦</td>
+     <td width="20%" align="center"><time>2013-01-13 15:06</time></td>
+    </tr>
    
-   <h1>Websocket 聊天室</h1>
-
-
-    <div id="rev_cont">
-    </div>
-    <hr>
-    <input type="text" id="msg" style="width: 300px;height: 30px">
-    <input type="button" id="btn_msg" style="width:100px;height: 30px" value="发送">
-  </table>
-  <!-- </div> -->
+   </table>
+   
+   <!--分页-->
+   <div class="paging">
+    <a>第一页</a>
+    <a class="active">2</a>
+    <a>3</a>
+    <a>...</a>
+    <a>89</a>
+    <a>最后一页</a>
+   </div>
+  </div>
+  <!--成交记录-->
+  <div class="cont_wrap">
+   <table class="table">
+    <tr>
+     <th>买家</th>
+     <th>产品属性</th>
+     <th>数量</th>
+     <th>成交时间</th>
+    </tr>
+    <tr>
+     <td align="center">李**强</td>
+     <td>
+      <p>颜色：黑色<p>
+      <p>规格：M<p>
+     </td>
+     <td align="center"><b>1</b></td>
+     <td align="center"><time>2013-01-13 15:25:39</time></td>
+    </tr>
+   </table>
+  
+   <!--分页-->
+   <div class="paging">
+    <a>第一页</a>
+    <a class="active">2</a>
+    <a>3</a>
+    <a>...</a>
+    <a>89</a>
+    <a>最后一页</a>
+   </div>
+  </div>
  </article>
  <aside>
   <dl class="aside_pro_list">
@@ -246,37 +284,12 @@ $(document).ready(function(){
   </dl>
  </aside>
 </section>
-
-<!--footer-->
+<!--foot-->
 @include('layout.foot')
 
 </body>
 </html>
 <script src="/static/js/jquery.js"></script>
-<script src="/js/jquery.min.js"></script>
-<script src="/js/js.cookie-2.2.1.min.js"></script>
-<script>
-
-    var url = 'ws://ws.1910.com';      //websocket 服务器地址
-    var ws = new WebSocket(url);
-    var user_name = Cookies.get('u')
-    console.log(user_name);
-
-    ws.onopen = function(){
-        //点击发送
-        $("#btn_msg").on('click',function(){
-            ws.send($("#msg").val());
-        });
-
-    }
-    //接收服务器响应
-    ws.onmessage = function(d){
-        $("#rev_cont").append( "<p>" + "[" + user_name + "]: "  + d.data + "</p>" )
-        $("#msg").val("")
-    }
-
-
-</script>
 <script>
 // //浏览历史记录 cookie
 // $(document).ready(function(){

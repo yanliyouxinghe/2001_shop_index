@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>后台布局</title>
+
   <link rel="stylesheet" href="/static/admin/css/layui.css">
 
-   
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -81,14 +82,13 @@
 
 //JavaScript代码区域
 layui.use(['element','form','layedit'], function(){
-  
   var element = layui.element,
       form = layui.form;
       var layedit = layui.layedit;
        //日期
       layedit.set({
       uploadImage: {
-        url: '/uploadimg' //接口url
+        url: '/upload' //接口url
         ,type: 'post' //默认post
         ,height: 800 //设置编辑器高度
         ,width : 1000
