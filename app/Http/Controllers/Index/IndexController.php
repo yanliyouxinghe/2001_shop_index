@@ -101,7 +101,6 @@ class IndexController extends Controller
         $url = "http://2001.shop.api.com/seuser_goods";
         $search_goods = posturl($url,$data);
         $data = $search_goods['data'];
-        // print_r($data);die;
         return view('index.search_list',['search_data'=>$data]);
     }
 
