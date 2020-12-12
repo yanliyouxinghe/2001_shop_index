@@ -6,9 +6,9 @@
 <meta name="keywords"  content="DeathGhost" />
 <meta name="description" content="DeathGhost" />
 <meta name="author" content="DeathGhost,deathghost@deathghost.cn">
-<link rel="icon" href="/static/images/icon/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="/static/css/style.css" /><script src="/static/js/html5.js"></script>
-<script src="/static/js/jquery.js"></script>
+<link rel="icon" href="static/images/icon/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="static/css/style.css" /><script src="static/js/html5.js"></script>
+<script src="static/js/jquery.js"></script>
 <script>
 $(document).ready(function(){
   $("nav .indexAsideNav").hide();
@@ -72,7 +72,7 @@ $(document).ready(function(){
  <div class="shop_infor">
   <h2 class="user_vip accredited" title="认证企业">Error</h2>
   <p>
-   <span>未搜索/查找到相关商品</span>
+   <span>未搜索到相关商品</span>
    <span></span>
    <span></span>
   </p>

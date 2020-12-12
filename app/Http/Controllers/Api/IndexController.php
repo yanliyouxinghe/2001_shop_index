@@ -11,7 +11,6 @@ use App\Model\NoticeModel;
 use App\Model\FirmModel;
 use App\Model\SeuserModel;
 use function AlibabaCloud\Client\json;
-
 class IndexController extends Controller
 {
     /**首页分类数据 */
@@ -79,6 +78,7 @@ class IndexController extends Controller
         }
 
         $search_data = GoodsModel::select('goods_id','goods_name','goods_img')->where($where1)->get();
+        // print_r($search_data);die;
         if($search_data){
             $reposer = [
                 'code'=>0,
@@ -95,8 +95,6 @@ class IndexController extends Controller
         return json_encode($reposer);
 
     }
-
-
     public function search_a(){
         $search_val = request()->input('search_val');
         if(!$search_val){

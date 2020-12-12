@@ -60,7 +60,7 @@ Route::domain('2001.shop.api.com')->group(function () {
     Route::post('search_a','Api\IndexController@search_a');   //前台商家搜索
     Route::post('seuser_goods','Api\IndexController@seuser_goods');   //前台商家商品
 
-    
+
     //cart
     Route::post('addcart','Api\CartController@addcart');//加入购物车
     Route::post('cart_count','Api\CartController@cart_count'); //购物车数据条数

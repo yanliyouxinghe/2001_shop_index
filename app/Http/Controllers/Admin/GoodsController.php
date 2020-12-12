@@ -26,10 +26,8 @@ class GoodsController extends Controller
      */
     public function list()
     {
-        $user =  session('seuser_id');
-        // print_r($user);
-        $goods = GoodsModel::where(["is_static"=>1,'seuser_id'=>$user])->get();
-
+        $user=session('seuser_id');
+        $goods=GoodsModel::where(["is_static"=>1,'seuser_id'=>$user])->get();
         return view('admin.goods.list',['goods'=>$goods]);
     }
 
@@ -181,7 +179,6 @@ class GoodsController extends Controller
      //文件上传
      public function upload(Request $request)
      {
-        // print_r(123);die;
          //接收文件上传的值
          $photo = $request->file();
          //判断文件上传是否有文件或者有没有出错

@@ -25,8 +25,8 @@
     <input type="text" name="seuser_plone" placeholder="输入账号" class="txtbox"/><span></span>
    </dd>
    <dd>
-    <span class="link_li btn">手机验证码：</span>
-    <button type="button" id="span_tel" value="获取手机校验码" class="get_num_btn"/>获取手机校验码</button>
+    <span>手机验证码：</span>
+    <button type="button" id="aaa" value="获取手机校验码" class="get_num_btn"/>获取手机校验码</button>
    </dd>
     <dd>
     <span>手机校验码：</span>
@@ -117,11 +117,7 @@
      
   })
     $('button').click(function () {
-        var _this = $(this);
         var name = $('input[name="seuser_plone"]').val();
-        _this.text('60s');
-		times = setInterval(goTime, 1000);
-        
         // alert(name);
         var mobilereg = /^1[3|5|6|7|8|9]\d{9}$/;
         if(mobilereg.test(name)){
@@ -143,21 +139,7 @@
         return;
     })
 
- function goTime(){
-			var c = $("#span_tel").text();
-			// console.log(s);
-			c = parseInt(c);
-			//倒计时停止
-			if(c <= 0){
-				clearInterval(times);
-				$("#span_tel").text('获取');
-				$(".btn").css('pointer-events','auto');
-			}else{
-				c = c-1;
-				$("#span_tel").text(c+'s');
-				$('.btn').css('pointer-events','none');
-			}
-		}
+
 
 
 
