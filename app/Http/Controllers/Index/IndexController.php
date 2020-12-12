@@ -81,8 +81,22 @@ class IndexController extends Controller
             $data = $search_data['data'];
             return view('index.search_list',['search_data'=>$data]);
         }else{
-            echo "2";die;
+            $data['search_val'] = $search_val;
+            $url = "http://2001.shop.api.com/search_a";
+            $search_data = posturl($url,$data);
+            $data = $search_data['data'];
+            
+            return view('index.seuser_list',['data'=>$data]);
         }
+    }
+
+    //商家商品
+    public function seuser($id){
+        if(!$id){
+           echo "参数丢失";
+           return false;
+        }
+        
     }
 
 
