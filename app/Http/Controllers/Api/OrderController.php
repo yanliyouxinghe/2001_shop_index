@@ -91,10 +91,8 @@ class OrderController extends Controller
                 $coupons=[];
             foreach($cart_data as $k=>$v){
                 $goods_id[]=$v['goods_id'];
-               
-                // print_r($v);die;
+
                 $attr = [];
-                
                 
                 if(isset($v->goods_attr_id) && $v->goods_attr_id!=''){
                     $goods_attr_id = explode('|',$v->goods_attr_id);

@@ -13,7 +13,8 @@
 
 Route::middleware(['header'])->group(function () {
 
-Route::post('/search','Index\IndexController@search');//搜索
+Route::post('/search','Index\IndexController@search');//搜
+Route::get('/seuser/{id}','Index\IndexController@seuser');//搜索
 Route::get('/','Index\IndexController@index');  //前台首页
 Route::get('/list/{id}','Index\ListController@list');  //列表页
 Route::get('/confirm','Index\OrderController@index');  //提交订单视图页面
@@ -26,15 +27,14 @@ Route::get('/noticeinfo','Index\IndexController@noticeinfo');    //前台首页�
 Route::view('/notice_list','index/notice_list');    //前台首页公告展示页
 Route::view('/notice_read','index/notice_read');    //前台首页公告详情页
 Route::post('/listhistory','Index\ListController@listhistory');    //登录后历史浏览记录展示
+Route::get('/delhistorys','Index\ListController@delhistorys');    //登录后清空 历史浏览记录
+
+Route::get('/cookiehistory/{goods_id?}','Index\GoodsController@cookiehistory');    //cookie 添加历史浏览记录
+Route::get('/cookielist','Index\ListController@cookielist');    //cookie 历史浏览记录展示
 
 Route::get('/pay/{order_id}','Index\PayController@pay');  //支付
 Route::get('/return_url','Index\PayController@return_url');   //支付宝同步跳转
 Route::post('/notify_url','Index\PayController@notify_url');  //支付宝异步跳转
-
-
-
-
-
 
 Route::get('/goods/{goods_id}','Index\GoodsController@goodsinfo');//详情
 Route::get('/getattrprice','Index\CartController@getattrprice');
@@ -43,11 +43,6 @@ Route::get('/login','Index\LoginController@login');//登录
 Route::get('/find_pwd','Index\LoginController@find_pwd');//忘记密码
 Route::post('/find_pwddo','Index\LoginController@find_pwddo');//忘记密码验证码
 Route::post('/find_pwds','Index\LoginController@find_pwds');//忘记密码修改密码
-
-
-
-
-
 
 
 Route::get('/reg','Index\LoginController@reg');//注册
@@ -74,7 +69,7 @@ Route::post('/selogin','Admin\BusinessController@selogin');//商家执行登录
 Route::get('/loginout','Admin\BusinessController@loginout');//商家退出
 Route::get('/goods','Admin\GoodsController@goods');//商家后台商品添加
 Route::post('/goods/store','Admin\GoodsController@store');//商家后台商品添加
-Route::post('/uploadimg','Admin\GoodsController@upload');//图片上传接口
+Route::any('/upload','Admin\GoodsController@upload');//图片上传接口
 Route::any('/uploads','Admin\GoodsController@uploads');//图片上传接口
 Route::post('/goods/pruct','Admin\GoodsController@pruct');//货品入库跳转列表
 Route::get('/goods/jyl/{id}','Admin\GoodsController@item');//查看商品
@@ -102,8 +97,6 @@ Route::get('/logistics','Index\LogisticsController@logistics');  //查看物流
 
 
 Route::get('/coupons/{goods_id}','Index\GoodsController@coupons');//优惠券
-
-
 Route::get('/maopao','Index\IndexController@maopao');//优惠券
 
 

@@ -115,13 +115,13 @@ $(document).ready(function(){
    <dt>历史浏览记录</dt>
    @foreach($listhistory as $k=>$v)
       <dd>
-      <a href="{{url('goods/'.$v['goods_id'])}}">
-      <img src="{{$v['goods_img']}}"/>
-      <!-- <p>{{$v['goods_name']}}</p> -->
-      </a>
+         <a href="{{url('goods/'.$v['goods_id'])}}">
+         <img src="{{$v['goods_img']}}"/>
+         <!-- <p>{{$v['goods_name']}}</p> -->
+         </a>
       </dd>
    @endforeach
-    <!-- <p align="right">清空历史浏览记录</p>  -->
+   <a href="javascript:void(0)" class="delhistory">清空历史浏览记录</a>
   </dl>  
  </aside>
 
@@ -153,6 +153,18 @@ $(document).ready(function(){
           
          })
       })
+
+      //登录后 清空历史浏览记录
+      $(document).on('click','.delhistory',function(){
+         $.get('http://2001.shop.index.com/delhistorys',function(res){
+            if(res.code==0){
+               alert(res.msg);
+               location.reload()
+            }
+         },'json')
+      })
+
+
 
 
   
