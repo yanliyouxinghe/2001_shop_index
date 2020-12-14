@@ -126,11 +126,4 @@ class IndexController extends Controller
         }
         print_r($arr);die;
     }
-
-
-    
-
-
-
-
 }
