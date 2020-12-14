@@ -18,7 +18,7 @@ class ListController extends Controller
         $query=request()->all();
         $query = $_SERVER['REDIRECT_QUERY_STRING']??'';
         $query = $query?'?'.$query:'';
-        
+        // print_r($query);die;
         $url = 'http://2001.shop.api.com/getlist/'.$id.$query;
 
         /**历史浏览记录 展示*/
@@ -32,8 +32,8 @@ class ListController extends Controller
             // print_r(12222);die;
             $urlv = 'http://2001.shop.api.com/listhistory';
             $story = geturl($urlv);
-            // print_r($story);die;
             $listhistory=$story['listhistory'];
+          
 
         }
         
@@ -43,11 +43,13 @@ class ListController extends Controller
         // }
         $urls = request()->url();
         $getlist = geturl($url);
+        // print_r($getlist);die;
 
         $brandInfo=$getlist['data']['brandInfo'];
         $priceInfo=$getlist['data']['priceInfo'];
         $goodsInfo=$getlist['data']['goodsInfo'];
         $query=$getlist['data']['query'];
+        // print_r($query);
         return view('list.list',['brandInfo'=>$brandInfo,'priceInfo'=>$priceInfo,'goodsInfo'=>$goodsInfo,'urls'=>$urls,'listhistory'=>$listhistory,'query'=>$query]);
     }
 

@@ -35,7 +35,6 @@ class ListController extends Controller
                 'brand_id','=',$query['brand_id']
             ];
         }
-        // dd($brand_id);
         //判断此分类下有无子分类
         $cat_id = CartgoryModel::where('parent_id',$id)->pluck('cat_id');
         $cat_id=$cat_id?$cat_id->toArray():[];    //没有子分类给个空

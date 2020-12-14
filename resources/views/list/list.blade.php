@@ -147,7 +147,7 @@ $(document).ready(function(){
             var url="{{$urls}}";
             //将搜索条件中多余符号删除
             if(searc){
-               url += '?'+searc.substring(0, searc.length -1);
+               url+='?'+searc.substring(0,searc.length-1);
                location.href=url;
             }
           
