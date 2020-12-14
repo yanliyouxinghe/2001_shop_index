@@ -29,10 +29,14 @@ class ListController extends Controller
             // $listhistory=$listhistory['listhistory'];
         }else{
             //登录后  历史浏览记录展示
+            // print_r(12222);die;
             $urlv = 'http://2001.shop.api.com/listhistory';
             $story = geturl($urlv);
-            $listhistory = $story['listhistory'];
+            // print_r($story);die;
+            $listhistory=$story['listhistory'];
+
         }
+        
         
         // foreach($listhistory['listhistory'] as $v){
         // Redis::hmset('history','h_id',$v['h_id'],'user_id',$v['user_id'],'goods_id',$v['goods_id'],'add_time',$v['add_time'],'goods_name',$v['goods_name'],'goods_img',$v['goods_img'],'shop_price',$v['shop_price']);
