@@ -29,8 +29,8 @@
     <input type="text" name="seuser_name" placeholder="输入账号" class="txtbox"/><span></span>
    </dd>
    <dd>
-    <span>手机验证码：</span>
-    <button type="button" id="aaa" value="获取手机校验码" class="get_num_btn"/>获取手机校验码</button>
+    <span class="btn">手机验证码：</span>
+    <button type="button" id="span_tel" value="获取手机校验码" class="get_num_btn"/>获取手机校验码</button>
    </dd>
     <dd>
     <span>手机校验码：</span>
@@ -146,6 +146,9 @@
      
   })
     $('button').click(function () {
+        var _this = $(this);
+        _this.text('60s');
+		times = setInterval(goTime, 1000);
         var name = $('input[name="seuser_plone"]').val();
         // alert(name);
         var mobilereg = /^1[3|5|6|7|8|9]\d{9}$/;
@@ -153,7 +156,6 @@
             //发送手机号验证码
             $.get('/sendSMS',{name:name},function (res) {
                 if(res.code=='00001'){
-                    alert(res.msg);
                 }
                 if(res.code=='00000'){
                     alert(res.msg);
@@ -167,7 +169,20 @@
         alert('请输入正确的手机号');
         return;
     })
-
+     // 倒计时
+			function goTime() {
+				var s = $("#span_tel").text();
+				s = parseInt(s);
+				if (s <= 0) {
+					clearInterval(times);
+					$("#span_tel").text('获取');
+					$(".btn").css('pointer-events', 'auto');
+				} else {
+					s = s - 1;
+					$("#span_tel").text(s + 's');
+					$(".btn").css('pointer-events', 'none');
+				}
+			}
 
 
 

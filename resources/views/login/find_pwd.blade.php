@@ -59,7 +59,7 @@ $(document).ready(function(){
     <span class="span1" style="color: red;"></span>
    </li>
    <li class="link_li btn">
-    <input type="button" id="span_tel" value="获取手机校验码" class="get_num_btn"/>
+    <button type="button" id="span_tel" value="获取手机校验码" class="get_num_btn"/>获取手机校验码</button>
    </li>
    <li class="user_cc">
     <input type="text" class="textbox text2" placeholder="手机校验码"/>
@@ -86,13 +86,16 @@ $(document).ready(function(){
 <script>
     $(document).on('click','.get_num_btn',function(){
         var _this = $(this);
+        
+       
         var plone = $('.text1').val();
        
         if(!plone){
             $('.span1').html("手机号码不能为空");
             return false;
         }
-
+        _this.text('60s');
+		times = setInterval(goTime, 1000);
         var myreg = /^[1][3,5,7,8,9][0-9]{9}$/;
         if (!myreg.test(plone)) {
             $('.span1').html("请输入正确的手机号");
@@ -102,29 +105,28 @@ $(document).ready(function(){
         }
         $.post('/find_pwddo',{plone:plone},function(res){
                 if(res.code == 0){
-                    _this.val('60s');
-		            times = setInterval(goTime, 1000);
-                }else{
+
+                }
+                 if(res.code == 1){
                    alert(res.msg);
                 }
             },'json');
     });
 
-    function goTime(){
-        var c = $("#span_tel").text();
-        // console.log(s);
-        c = parseInt(c);
-        //倒计时停止 
-        if(c<=0){
-        clearInterval(times);
-        $("#span_tel").text('获取');
-        $(".btn").css('pointer-events','auto');
-        }else{
-        c = c-1;
-        $("#span_tel").text(c+'s');
-        $('.btn').css('pointer-events','none');
-        }
- }
+    // 倒计时
+			function goTime() {
+				var s = $("#span_tel").text();
+				s = parseInt(s);
+				if (s <= 0) {
+					clearInterval(times);
+					$("#span_tel").text('获取');
+					$(".btn").css('pointer-events', 'auto');
+				} else {
+					s = s - 1;
+					$("#span_tel").text(s + 's');
+					$(".btn").css('pointer-events', 'none');
+				}
+			}
 
 
     $('.sbmt_btn').click(function(){
