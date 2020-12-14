@@ -41,8 +41,8 @@ class ListController extends Controller
         $cat_id=$cat_id?$cat_id->toArray():[];    //没有子分类给个空
         array_push($cat_id,$id);
          //获取商品数据
-        $goodsInfo= GoodsModel::whereIn('cat_id',$cat_id)->where($where)->get();  
-        $goodsInfo =  $goodsInfo? $goodsInfo->toArray():[];
+        $goodsInfo=GoodsModel::whereIn('cat_id',$cat_id)->where($where)->get();  
+        $goodsInfo=$goodsInfo?$goodsInfo->toArray():[];
         // print_r($goodsInfo);die;
 
         $goods_brand = array_column($goodsInfo,'brand_id');
